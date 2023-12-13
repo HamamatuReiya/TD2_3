@@ -2,6 +2,8 @@
 #include "TextureManager.h"
 #include <cassert>
 
+#include "AxisIndicator.h"
+
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {}
@@ -12,8 +14,30 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	// ビューポートプロジェクションの初期化
+	// ビュープロジェクションの初期化
+	viewProjection_.farZ = 600;
 	viewProjection_.Initialize();
+
+	// 天球
+	//  3Dモデルの生成
+	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
+	// 天球の生成
+	skydome_ = std::make_unique<Skydome>();
+	// 天球の初期化
+	skydome_->Initialize(modelSkydome_.get());
+
+#ifdef _DEBUG	
+
+	// デバッグカメラの生成
+	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
+
+	// 軸方向表示の表示を有効にする
+	AxisIndicator::GetInstance()->SetVisible(true);
+	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+#endif // _DEBUG
+
+	
 
 	#pragma region 自キャラ
 
@@ -27,7 +51,34 @@ void GameScene::Initialize() {
 	#pragma endregion
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+
+	// デバッグカメラ
+	debugCamera_->Update();
+
+	// Cを押して起動
+	if (input_->TriggerKey(DIK_C) && isDebugCameraActive_ == false) {
+		isDebugCameraActive_ = true;
+	}
+	// Cを押して解除
+	if (input_->TriggerKey(DIK_V) && isDebugCameraActive_ == true) {
+		isDebugCameraActive_ = false;
+	}
+
+	// カメラの処理
+	if (isDebugCameraActive_ == true) {
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+		// ビュープロジェクション行列の転送
+		viewProjection_.TransferMatrix();
+	} else {
+		// ビュープロジェクション行列の転送
+		viewProjection_.UpdateMatrix();
+	}
+
+	// 天球の更新
+	skydome_->Update();
+}
 
 void GameScene::Draw() {
 
@@ -58,6 +109,9 @@ void GameScene::Draw() {
 
 	//自キャラの描画
 	player_->Draw(viewProjection_);
+
+	// 天球の描画
+	skydome_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

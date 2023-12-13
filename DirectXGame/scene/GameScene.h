@@ -8,6 +8,11 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "DebugCamera.h"
+
+#include <memory>
+
+#include "Skydome.h"
 
 #include"Player.h"
 
@@ -61,4 +66,19 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	
+	// ワールドトランスフォーム
+	WorldTransform worldTransform_;
+	// ビュープロジェクション
+	ViewProjection viewProjection_;
+
+	// デバッグカメラ有効
+	bool isDebugCameraActive_ = false;
+	// デバッグカメラ
+	std::unique_ptr<DebugCamera> debugCamera_; 
+	
+	// 天球
+	std::unique_ptr<Skydome> skydome_;
+	//   3Dモデル
+	std::unique_ptr<Model> modelSkydome_;
 };
