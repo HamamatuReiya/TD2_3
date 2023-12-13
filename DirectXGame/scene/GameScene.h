@@ -60,9 +60,6 @@ private: // メンバ変数
 
 	Vector3 PlayerPosition;
 
-	//ビュープロジェクション
-	ViewProjection viewProjection_;
-
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
