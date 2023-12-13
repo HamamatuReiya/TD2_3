@@ -26,6 +26,11 @@ void GameScene::Initialize() {
 	// 天球の初期化
 	skydome_->Initialize(modelSkydome_.get());
 
+	// カメラの生成
+	camera_ = std::make_unique<Camera>();
+	// カメラの初期化
+	camera_->Initialize();
+
 #ifdef _DEBUG	
 
 	// デバッグカメラの生成
@@ -53,9 +58,13 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
+	// カメラの更新
+	camera_->Update();
+
 	// デバッグカメラ
 	debugCamera_->Update();
 
+#ifdef _DEBUG
 	// Cを押して起動
 	if (input_->TriggerKey(DIK_C) && isDebugCameraActive_ == false) {
 		isDebugCameraActive_ = true;
@@ -64,6 +73,7 @@ void GameScene::Update() {
 	if (input_->TriggerKey(DIK_V) && isDebugCameraActive_ == true) {
 		isDebugCameraActive_ = false;
 	}
+#endif // _DEBUG
 
 	// カメラの処理
 	if (isDebugCameraActive_ == true) {
@@ -72,8 +82,10 @@ void GameScene::Update() {
 		// ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
 	} else {
+		viewProjection_.matView = camera_->GetViewProjection().matView;
+		viewProjection_.matProjection = camera_->GetViewProjection().matProjection;
 		// ビュープロジェクション行列の転送
-		viewProjection_.UpdateMatrix();
+		viewProjection_.TransferMatrix();
 	}
 
 	// 天球の更新
