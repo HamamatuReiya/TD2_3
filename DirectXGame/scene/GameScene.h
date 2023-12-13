@@ -15,6 +15,7 @@
 #include"Player.h"
 #include "Skydome.h"
 #include "Camera.h"
+#include "Scene.h"
 
 /// <summary>
 /// ゲームシーン
@@ -46,6 +47,14 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
+
+	// シーンのリセット
+	void sceneReset();
+
+	bool isSceneEnd = false;
+
+	bool IsSceneEnd() { return isSceneEnd; }
+	SceneType NextScene() { return SceneType::kTitle; }
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
