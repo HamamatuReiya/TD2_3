@@ -13,6 +13,7 @@
 #include <memory>
 
 #include"Player.h"
+#include"Enemy.h"
 #include "Skydome.h"
 #include "Camera.h"
 
@@ -59,6 +60,12 @@ private: // メンバ変数
 	std::unique_ptr<Player> player_;
 
 	Vector3 PlayerPosition;
+
+	// 敵の3Dモデル
+	std::unique_ptr<Model> modelEnemy_;
+
+	// 敵のモデル
+	std::unique_ptr<Enemy> enemy_;
 
 	/// <summary>
 	/// ゲームシーン用

@@ -1,17 +1,17 @@
-#include "Enemy.h"
+ï»¿#include "Enemy.h"
 
 void Enemy::Initialize(Model* model) {
-	// ˆø”‚©‚çƒf[ƒ^‚ğó‚¯æ‚é
+	// å¼•æ•°ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å—ã‘å–ã‚‹
 	model_ = model;
-	// ƒ[ƒ‹ƒh•ÏŠ·‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ã®åˆæœŸåŒ–
 	worldTransform_.Initialize();
 	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_.translation_ = {0.0f, 0.0f, 50.0f};
+	worldTransform_.translation_ = {0.0f, 5.0f, 50.0f};
 }
 
 void Enemy::Update() {
-	// s—ñ‚ÌXV
+	// è¡Œåˆ—ã®æ›´æ–°
 	worldTransform_.UpdateMatrix();
 }
 
