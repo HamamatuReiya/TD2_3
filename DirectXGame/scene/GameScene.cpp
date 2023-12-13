@@ -18,6 +18,25 @@ void GameScene::Initialize() {
 	viewProjection_.farZ = 600;
 	viewProjection_.Initialize();
 
+	#pragma region 自キャラ
+
+	//自キャラ関連
+	player_ = std::make_unique<Player>();
+	modelPlayer_.reset(Model::CreateFromOBJ("Player", true));
+	//(自キャラの位置)
+	PlayerPosition = {0, 0, 0};
+	player_->Initialize(modelPlayer_.get(), PlayerPosition);
+
+	#pragma endregion
+
+	#pragma region 敵
+
+	enemy_ = std::make_unique<Enemy>();
+	modelEnemy_.reset(Model::CreateFromOBJ("cube", true));
+	enemy_->Initialize(modelEnemy_.get());
+
+#pragma endregion
+
 	// 天球
 	//  3Dモデルの生成
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
@@ -44,22 +63,16 @@ void GameScene::Initialize() {
 
 	
 
-	#pragma region 自キャラ
-
-	//自キャラ関連
-	player_ = std::make_unique<Player>();
-	modelPlayer_.reset(Model::CreateFromOBJ("Player", true));
-	//(自キャラの位置)
-	PlayerPosition = {0, 0, 0};
-	player_->Initialize(modelPlayer_.get(), PlayerPosition);
-
-	#pragma endregion
 }
 
 void GameScene::Update() {
 
+	//敵の更新
+	enemy_->Update();
 	// カメラの更新
 	camera_->Update();
+	// 天球の更新
+	skydome_->Update();
 
 	// デバッグカメラ
 	debugCamera_->Update();
@@ -88,8 +101,6 @@ void GameScene::Update() {
 		viewProjection_.TransferMatrix();
 	}
 
-	// 天球の更新
-	skydome_->Update();
 }
 
 void GameScene::Draw() {
@@ -121,6 +132,9 @@ void GameScene::Draw() {
 
 	//自キャラの描画
 	player_->Draw(viewProjection_);
+
+	//敵の描画
+	enemy_->Draw(viewProjection_);
 
 	// 天球の描画
 	skydome_->Draw(viewProjection_);
