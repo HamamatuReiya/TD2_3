@@ -7,10 +7,11 @@ void Enemy::Initialize(Model* model) {
 	worldTransform_.Initialize();
 	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_.translation_ = {0.0f, 5.0f, 50.0f};
+	worldTransform_.translation_ = {0.0f, 20.0f, 50.0f};
 }
 
 void Enemy::Update() {
+	worldTransform_.translation_.y -= 0.05f;
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
 }
