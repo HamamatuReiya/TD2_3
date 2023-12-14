@@ -9,7 +9,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model);
+	void Initialize(Model* model,const Vector3& position,const Vector3& velocity);
 
 	/// <summary>
 	/// 更新
@@ -30,4 +30,6 @@ private:
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
+	// 速度
+	Vector3 velocity_;
 };
