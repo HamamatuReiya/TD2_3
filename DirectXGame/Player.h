@@ -7,15 +7,20 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "compute.h"
 
 class Player {
 public:
 
 	void Initialize(Model* model, Vector3 position);
 
-	void Update();
+	void Update(ViewProjection& viewProjection);
 
 	void Draw(ViewProjection& viewProjection);
+
+	void MouseMove();
+
+	
 
 	private:
 

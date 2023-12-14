@@ -76,6 +76,9 @@ void GameScene::Update() {
 		viewProjection_.UpdateMatrix();
 	}
 
+	//プレイヤーの更新
+	player_->Update(viewProjection_);
+
 	// 天球の更新
 	skydome_->Update();
 }
