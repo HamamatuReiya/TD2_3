@@ -6,7 +6,11 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() {
+	for (Enemy* enemy : enemys_) {
+		delete enemy;
+	}
+}
 
 void GameScene::Initialize() {
 
@@ -31,9 +35,10 @@ void GameScene::Initialize() {
 
 	#pragma region 敵
 
-	enemy_ = std::make_unique<Enemy>();
+	Enemy* enemy = new Enemy;
 	modelEnemy_.reset(Model::CreateFromOBJ("cube", true));
-	enemy_->Initialize(modelEnemy_.get());
+	enemy->Initialize(modelEnemy_.get());
+	enemys_.push_back(enemy);
 
 #pragma endregion
 
@@ -68,7 +73,9 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 
 	//敵の更新
-	enemy_->Update();
+	for (Enemy* enemy : enemys_) {
+		enemy->Update();
+	}
 	// カメラの更新
 	camera_->Update();
 	// 天球の更新
@@ -134,7 +141,9 @@ void GameScene::Draw() {
 	player_->Draw(viewProjection_);
 
 	//敵の描画
-	enemy_->Draw(viewProjection_);
+	for (Enemy* enemy : enemys_) {
+		enemy->Draw(viewProjection_);
+	}
 
 	// 天球の描画
 	skydome_->Draw(viewProjection_);

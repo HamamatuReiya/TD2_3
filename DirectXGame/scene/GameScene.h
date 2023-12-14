@@ -70,11 +70,12 @@ private: // メンバ変数
 
 	Vector3 PlayerPosition;
 
+	// 敵リスト
+	std::list<Enemy*> enemys_;
 	// 敵の3Dモデル
 	std::unique_ptr<Model> modelEnemy_;
-
-	// 敵のモデル
-	std::unique_ptr<Enemy> enemy_;
+	// 敵の生成
+	//std::unique_ptr<Enemy> enemy_;
 
 	/// <summary>
 	/// ゲームシーン用
