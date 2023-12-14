@@ -74,20 +74,4 @@ void Player::Update(ViewProjection& viewProjection) {
 
 void Player::Draw(ViewProjection& viewProjection) { model_->Draw(worldTransform_, viewProjection); }
 
-void Player::MouseMove() { 
 
-	POINT mousePosition;
-	// マウス座標(スクリーン座標)を計算する
-	GetCursorPos(&mousePosition);
-
-	// クライアントエリアに座標を変換する
-	HWND hwnd = WinApp::GetInstance()->GetHwnd();
-	ScreenToClient(hwnd, &mousePosition);
-
-	worldTransform_.translation_ = {(float)mousePosition.x, (float)mousePosition.y, 0};
-
-	ImGui::Begin("Player");
-	ImGui::Text("model:%f,%f", (float)mousePosition.x, (float)mousePosition.y);
-	ImGui::End();
-
-}

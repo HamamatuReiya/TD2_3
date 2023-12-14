@@ -17,9 +17,6 @@ public:
 	void Update(ViewProjection& viewProjection);
 
 	void Draw(ViewProjection& viewProjection);
-
-	void MouseMove();
-
 	
 
 	private:
