@@ -79,6 +79,12 @@ void GameScene::Update() {
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
 	}
+
+	//デスフラグの立ったアイテムを削除
+	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)) {
+
+	}
+
 	// カメラの更新
 	camera_->Update();
 	// 天球の更新
@@ -176,7 +182,7 @@ void GameScene::CheakAllCollisions() {
 	Vector3 posA = {0};
 	Vector3 posB = {0};
 
-	//2間点の距離
+	// 2間点の距離
 	float posAB;
 
 	// 自キャラの半径
@@ -185,24 +191,24 @@ void GameScene::CheakAllCollisions() {
 	float enemyBulletRadius = 10.0f;
 
 #pragma region 自キャラと敵の当たり判定
-	//自キャラのワールド座標を取得
+	// 自キャラのワールド座標を取得
 	posA = player_->GetWorldPosition();
 
 	for (Enemy* enemy : enemys_) {
-	//敵のワールド座標を取得
-	posB = enemy->GetWorldPosition();
-		
-	//AとBの距離を求める
-	posAB =
-		(posB.x - posA.x) * (posB.x - posA.x) + 
-		(posB.y - posA.y) * (posB.y - posA.y) +
-		(posB.z - posA.z) * (posB.z - posA.z);
+		// 敵のワールド座標を取得
+		posB = enemy->GetWorldPosition();
 
-	//球と球との当たり判定
-	if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
-		// 自キャラの衝突時コールバックを呼び出す
-		player_->OnCollision();
-		// 敵弾の衝突時コールバックを呼び出す
-		enemy->OnCollision();
+		// AとBの距離を求める
+		posAB = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) +
+		        (posB.z - posA.z) * (posB.z - posA.z);
+
+		// 球と球との当たり判定
+		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
+			// 自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			enemy->OnCollision();
+		}
 	}
-	}
+}
+
