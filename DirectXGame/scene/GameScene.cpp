@@ -32,13 +32,16 @@ void GameScene::Initialize() {
 	player_->Initialize(modelPlayer_.get(), PlayerPosition);
 
 	#pragma endregion
-
+	
 	#pragma region 敵
 
-	Enemy* enemy = new Enemy;
+	Vector3 enemyPos = {0.0f, 20.0f, -50.0f};
+	Vector3 enemySpeed = {0.0f, -0.05f, 0.0f};
+	
 	modelEnemy_.reset(Model::CreateFromOBJ("cube", true));
-	enemy->Initialize(modelEnemy_.get());
-	enemys_.push_back(enemy);
+	EnemySpawn(enemyPos,enemySpeed);
+	
+	
 
 #pragma endregion
 
@@ -170,3 +173,10 @@ void GameScene::Draw() {
 }
 
 void GameScene::sceneReset() {}
+
+void GameScene::EnemySpawn(Vector3& position, Vector3& velocity) { 
+	Enemy* enemy = new Enemy;
+	
+	enemy->Initialize(modelEnemy_.get(),position,velocity);
+	enemys_.push_back(enemy);
+}

@@ -57,6 +57,8 @@ public: // メンバ関数
 	bool IsSceneEnd() { return isSceneEnd; }
 	SceneType NextScene() { return SceneType::kTitle; }
 
+	void EnemySpawn(Vector3& position, Vector3& velocity);
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
