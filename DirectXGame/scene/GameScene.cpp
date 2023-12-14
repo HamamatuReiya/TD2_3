@@ -38,7 +38,7 @@ void GameScene::Initialize() {
 	Vector3 enemyPos = {0.0f, 20.0f, -50.0f};
 	Vector3 enemySpeed = {0.0f, -0.05f, 0.0f};
 	
-	modelEnemy_.reset(Model::CreateFromOBJ("cube", true));
+	modelEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
 	EnemySpawn(enemyPos,enemySpeed);
 	
 	
