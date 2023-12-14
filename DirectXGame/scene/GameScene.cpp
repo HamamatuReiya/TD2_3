@@ -6,7 +6,11 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() {
+	for (Enemy* enemy : enemys_) {
+		delete enemy;
+	}
+}
 
 void GameScene::Initialize() {
 
@@ -18,6 +22,26 @@ void GameScene::Initialize() {
 	viewProjection_.farZ = 600;
 	viewProjection_.Initialize();
 
+	#pragma region 自キャラ
+
+	//自キャラ関連
+	player_ = std::make_unique<Player>();
+	modelPlayer_.reset(Model::CreateFromOBJ("Player", true));
+	//(自キャラの位置)
+	PlayerPosition = {0, 0, 0};
+	player_->Initialize(modelPlayer_.get(), PlayerPosition);
+
+	#pragma endregion
+
+	#pragma region 敵
+
+	Enemy* enemy = new Enemy;
+	modelEnemy_.reset(Model::CreateFromOBJ("cube", true));
+	enemy->Initialize(modelEnemy_.get());
+	enemys_.push_back(enemy);
+
+#pragma endregion
+
 	// 天球
 	//  3Dモデルの生成
 	modelSkydome_.reset(Model::CreateFromOBJ("skydome", true));
@@ -25,6 +49,11 @@ void GameScene::Initialize() {
 	skydome_ = std::make_unique<Skydome>();
 	// 天球の初期化
 	skydome_->Initialize(modelSkydome_.get());
+
+	// カメラの生成
+	camera_ = std::make_unique<Camera>();
+	// カメラの初期化
+	camera_->Initialize();
 
 #ifdef _DEBUG	
 
@@ -39,23 +68,26 @@ void GameScene::Initialize() {
 
 	
 
-	#pragma region 自キャラ
-
-	//自キャラ関連
-	player_ = std::make_unique<Player>();
-	modelPlayer_.reset(Model::CreateFromOBJ("Player", true));
-	//(自キャラの位置)
-	PlayerPosition = {0, 0, 0};
-	player_->Initialize(modelPlayer_.get(), PlayerPosition);
-
-	#pragma endregion
 }
 
 void GameScene::Update() {
 
+	//プレイヤーの更新
+	player_->Update(viewProjection_);
+
+	//敵の更新
+	for (Enemy* enemy : enemys_) {
+		enemy->Update();
+	}
+	// カメラの更新
+	camera_->Update();
+	// 天球の更新
+	skydome_->Update();
+
 	// デバッグカメラ
 	debugCamera_->Update();
 
+#ifdef _DEBUG
 	// Cを押して起動
 	if (input_->TriggerKey(DIK_C) && isDebugCameraActive_ == false) {
 		isDebugCameraActive_ = true;
@@ -64,6 +96,7 @@ void GameScene::Update() {
 	if (input_->TriggerKey(DIK_V) && isDebugCameraActive_ == true) {
 		isDebugCameraActive_ = false;
 	}
+#endif // _DEBUG
 
 	// カメラの処理
 	if (isDebugCameraActive_ == true) {
@@ -72,15 +105,12 @@ void GameScene::Update() {
 		// ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
 	} else {
+		viewProjection_.matView = camera_->GetViewProjection().matView;
+		viewProjection_.matProjection = camera_->GetViewProjection().matProjection;
 		// ビュープロジェクション行列の転送
-		viewProjection_.UpdateMatrix();
+		viewProjection_.TransferMatrix();
 	}
 
-	//プレイヤーの更新
-	player_->Update(viewProjection_);
-
-	// 天球の更新
-	skydome_->Update();
 }
 
 void GameScene::Draw() {
@@ -113,6 +143,11 @@ void GameScene::Draw() {
 	//自キャラの描画
 	player_->Draw(viewProjection_);
 
+	//敵の描画
+	for (Enemy* enemy : enemys_) {
+		enemy->Draw(viewProjection_);
+	}
+
 	// 天球の描画
 	skydome_->Draw(viewProjection_);
 
@@ -133,3 +168,5 @@ void GameScene::Draw() {
 
 #pragma endregion
 }
+
+void GameScene::sceneReset() {}

@@ -12,9 +12,11 @@
 
 #include <memory>
 
-#include "Skydome.h"
-
 #include"Player.h"
+#include"Enemy.h"
+#include "Skydome.h"
+#include "Camera.h"
+#include "Scene.h"
 
 /// <summary>
 /// ゲームシーン
@@ -47,6 +49,14 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	// シーンのリセット
+	void sceneReset();
+
+	bool isSceneEnd = false;
+
+	bool IsSceneEnd() { return isSceneEnd; }
+	SceneType NextScene() { return SceneType::kTitle; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -59,6 +69,13 @@ private: // メンバ変数
 	std::unique_ptr<Player> player_;
 
 	Vector3 PlayerPosition;
+
+	// 敵リスト
+	std::list<Enemy*> enemys_;
+	// 敵の3Dモデル
+	std::unique_ptr<Model> modelEnemy_;
+	// 敵の生成
+	//std::unique_ptr<Enemy> enemy_;
 
 	/// <summary>
 	/// ゲームシーン用
@@ -73,6 +90,9 @@ private: // メンバ変数
 	bool isDebugCameraActive_ = false;
 	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_; 
+
+	// 固定カメラ
+	std::unique_ptr<Camera> camera_;
 	
 	// 天球
 	std::unique_ptr<Skydome> skydome_;
