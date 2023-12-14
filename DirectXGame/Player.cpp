@@ -56,7 +56,7 @@ void Player::Update(ViewProjection& viewProjection) {
 		mouseDirection = Normalize(mouseDirection);
 
 		// カメラから照準オブジェクトの距離
-		const float kDistanceTestObject = 10.0f;
+		const float kDistanceTestObject = 50.0f;
 
 		worldTransform_.translation_ = Add(posNear, Multiply(kDistanceTestObject, mouseDirection));
 
