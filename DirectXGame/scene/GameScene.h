@@ -52,6 +52,9 @@ public: // メンバ関数
 	// シーンのリセット
 	void sceneReset();
 
+	//衝突判定
+	void CheakAllCollisions();
+
 	bool isSceneEnd = false;
 
 	bool IsSceneEnd() { return isSceneEnd; }
