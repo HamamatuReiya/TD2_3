@@ -76,7 +76,6 @@ void GameScene::Update() {
 	// 敵キャラの更新
 	UpdateEnemyPopCommands();
 
-
 	//敵の更新
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
@@ -177,13 +176,16 @@ void GameScene::EnemySpawn(Vector3 position, Vector3 velocity) {
 	Enemy* enemy = new Enemy;
 	
 	enemy->Initialize(modelEnemy_.get(),position,velocity);
+
 	enemys_.push_back(enemy);
 }
 
 void GameScene::LoadEnemyPopData() {
+	enemyPopCommands.clear();
+
 	// ファイルを開く
 	std::ifstream file;
-	file.open("Resources/enemyPop.csv");
+	file.open("./Resources/enemyPop.csv");
 	assert(file.is_open());
 
 	// ファイルの内容を文字列ストリームにコピー
@@ -237,7 +239,7 @@ void GameScene::UpdateEnemyPopCommands() {
 			float z = (float)std::atof(word.c_str());
 
 			// 敵を発生させる
-			EnemySpawn({x, y, z}, {0.0f, 0.2f, 0.0f});
+			EnemySpawn(Vector3(x, y, z), {0.0f, -0.2f, 0.0f});
 		}
 		// WAITコマンド
 		else if (word.find("WAIT") == 0) {
