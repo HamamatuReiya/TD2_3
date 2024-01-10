@@ -19,6 +19,8 @@ void Player::Initialize(Model* model, Vector3 position) {
 void Player::Update(ViewProjection& viewProjection) { 
 
 	{
+		//
+
 		// 自機の現在座標を取得
 		Vector2 playerPosition = {worldTransform_.translation_.x, worldTransform_.translation_.y};
 
@@ -59,6 +61,9 @@ void Player::Update(ViewProjection& viewProjection) {
 		const float kDistanceTestObject = 100.0f;
 
 		worldTransform_.translation_ = Add(posNear, Multiply(kDistanceTestObject, mouseDirection));
+
+		////Z軸を固定化
+		//worldTransform_.translation_.z = 0.0f;
 
 		ImGui::Begin("Player");
 		ImGui::Text(

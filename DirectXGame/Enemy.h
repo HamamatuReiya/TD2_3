@@ -27,6 +27,8 @@ public:
 	// コールバック関数
 	void OnCollision();
 
+	bool IsDead() const { return isDead_; }
+
 private:
 
 	// ワールド変換データ

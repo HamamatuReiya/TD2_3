@@ -81,11 +81,22 @@ void GameScene::Update() {
 	// 敵キャラの更新
 	UpdateEnemyPopCommands();
 
+	CheakAllCollisions();
+
 
 	//敵の更新
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
 	}
+
+	//敵の消滅
+	enemys_.remove_if([](Enemy* enemy) {
+		if (enemy->IsDead()) {
+			delete enemy;
+			return true;
+		}
+		return false;
+	});
 
 	////デスフラグの立ったアイテムを削除
 	//enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)) {
@@ -193,9 +204,10 @@ void GameScene::CheakAllCollisions() {
 	float posAB;
 
 	// 自キャラの半径
-	float playerRadius = 10.0f;
+	float playerRadius = 1.5f;
+
 	// 敵弾の半径
-	float enemyBulletRadius = 10.0f;
+	float enemyBulletRadius = 1.5f;
 
 #pragma region 自キャラと敵の当たり判定
 	// 自キャラのワールド座標を取得
@@ -206,8 +218,8 @@ void GameScene::CheakAllCollisions() {
 		posB = enemy->GetWorldPosition();
 
 		// AとBの距離を求める
-		posAB = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) +
-		        (posB.z - posA.z) * (posB.z - posA.z);
+		posAB = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y);
+	   //(posB.z - posA.z) * (posB.z - posA.z);
 
 		// 球と球との当たり判定
 		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
