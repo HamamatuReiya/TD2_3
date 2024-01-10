@@ -54,6 +54,9 @@ public:
 	// シーンのリセット
 	void sceneReset();
 
+	//衝突判定
+	void CheakAllCollisions();
+
 private:
 	/// <summary>
 	/// 敵の発生

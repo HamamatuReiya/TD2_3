@@ -21,6 +21,9 @@ public:
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
+	// コールバック関数
+	void OnCollision();
+
 	private:
 
 	//ワールド変換データ

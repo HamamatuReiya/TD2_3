@@ -1,5 +1,6 @@
 ﻿#include "Enemy.h"
 #include <compute.h>
+#include"ImGuiManager.h"
 
 void Enemy::Initialize(Model* model,const Vector3& position, const Vector3& velocity) {
 	// 引数からデータを受け取る
@@ -19,6 +20,12 @@ void Enemy::Update() {
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
+
+		ImGui::Begin("ENEMY");
+	    ImGui::Text(
+	    "model:%f,%f,%f", worldTransform_.translation_.x, worldTransform_.translation_.y,
+	    worldTransform_.translation_.z);
+	    ImGui::End();
 }
 
 void Enemy::Draw(ViewProjection& viewProjection) {
@@ -35,3 +42,5 @@ Vector3 Enemy::GetWorldPosition() {
 
 	return worldPos;
 }
+
+void Enemy::OnCollision() { isDead_ = true; }

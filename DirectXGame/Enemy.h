@@ -24,12 +24,19 @@ public:
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
+	// コールバック関数
+	void OnCollision();
+
+	bool IsDead() const { return isDead_; }
+
 private:
 
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
+
+	bool isDead_ = false;
 	// 速度
 	Vector3 velocity_;
 };
