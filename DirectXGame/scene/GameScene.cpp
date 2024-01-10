@@ -37,12 +37,9 @@ void GameScene::Initialize() {
 	
 	#pragma region 敵
 
-	
-	
 	modelEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
 
-	
-	
+	LoadEnemyPopData();
 
 #pragma endregion
 
@@ -58,8 +55,6 @@ void GameScene::Initialize() {
 	camera_ = std::make_unique<Camera>();
 	// カメラの初期化
 	camera_->Initialize();
-
-	LoadEnemyPopData();
 
 #ifdef _DEBUG	
 
