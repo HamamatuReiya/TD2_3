@@ -36,8 +36,13 @@ void GameScene::Initialize() {
 	#pragma endregion
 	
 	#pragma region 敵
+
 	
-	modelEnemy_.reset(Model::CreateFromOBJ("cube", true));
+	
+	modelEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
+
+	
+	
 
 #pragma endregion
 
