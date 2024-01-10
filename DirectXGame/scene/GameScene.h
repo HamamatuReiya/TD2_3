@@ -49,20 +49,41 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+public:
+
 	// シーンのリセット
 	void sceneReset();
 
+private:
+	/// <summary>
+	/// 敵の発生
+	/// </summary>
+	void EnemySpawn(Vector3 position, Vector3 velocity);
+
+	/// <summary>
+	/// 敵発生データの読み込み
+	/// </summary>
+	void LoadEnemyPopData();
+
+	/// <summary>
+	/// 敵発生コマンドの更新
+	/// </summary>
+	void UpdateEnemyPopCommands();
+
+public:
 	bool isSceneEnd = false;
 
 	bool IsSceneEnd() { return isSceneEnd; }
 	SceneType NextScene() { return SceneType::kTitle; }
 
-	void EnemySpawn(Vector3& position, Vector3& velocity);
-
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
+
+	/// <summary>
+	/// ゲームシーン用
+	/// </summary>
 
 	//自キャラの3Dモデル
 	std::unique_ptr<Model> modelPlayer_;
@@ -76,12 +97,13 @@ private: // メンバ変数
 	std::list<Enemy*> enemys_;
 	// 敵の3Dモデル
 	std::unique_ptr<Model> modelEnemy_;
-	// 敵の生成
-	//std::unique_ptr<Enemy> enemy_;
 
-	/// <summary>
-	/// ゲームシーン用
-	/// </summary>
+	// 敵発生コマンド
+	std::stringstream enemyPopCommands;
+	// 敵の待機中のフラグ
+	bool enemyPopWaitFlag = true;
+	// 待機タイマー
+	int32_t enemyPopWaitTimer = 0;
 	
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;

@@ -3,6 +3,8 @@
 #include <cassert>
 
 #include "AxisIndicator.h"
+#include <fstream>
+#include "Vector3.h"
 
 GameScene::GameScene() {}
 
@@ -34,14 +36,8 @@ void GameScene::Initialize() {
 	#pragma endregion
 	
 	#pragma region 敵
-
-	Vector3 enemyPos = {0.0f, 20.0f, -50.0f};
-	Vector3 enemySpeed = {0.0f, -0.05f, 0.0f};
 	
 	modelEnemy_.reset(Model::CreateFromOBJ("cube", true));
-	EnemySpawn(enemyPos,enemySpeed);
-	
-	
 
 #pragma endregion
 
@@ -58,6 +54,8 @@ void GameScene::Initialize() {
 	// カメラの初期化
 	camera_->Initialize();
 
+	LoadEnemyPopData();
+
 #ifdef _DEBUG	
 
 	// デバッグカメラの生成
@@ -68,15 +66,16 @@ void GameScene::Initialize() {
 	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 #endif // _DEBUG
-
-	
-
 }
 
 void GameScene::Update() {
 
 	//プレイヤーの更新
 	player_->Update(viewProjection_);
+
+	// 敵キャラの更新
+	UpdateEnemyPopCommands();
+
 
 	//敵の更新
 	for (Enemy* enemy : enemys_) {
@@ -174,9 +173,85 @@ void GameScene::Draw() {
 
 void GameScene::sceneReset() {}
 
-void GameScene::EnemySpawn(Vector3& position, Vector3& velocity) { 
+void GameScene::EnemySpawn(Vector3 position, Vector3 velocity) { 
 	Enemy* enemy = new Enemy;
 	
 	enemy->Initialize(modelEnemy_.get(),position,velocity);
 	enemys_.push_back(enemy);
+}
+
+void GameScene::LoadEnemyPopData() {
+	// ファイルを開く
+	std::ifstream file;
+	file.open("Resources/enemyPop.csv");
+	assert(file.is_open());
+
+	// ファイルの内容を文字列ストリームにコピー
+	enemyPopCommands << file.rdbuf();
+
+	// ファイルを閉じる
+	file.close();
+}
+
+void GameScene::UpdateEnemyPopCommands() {
+	// 待機処理
+	if (enemyPopWaitFlag) {
+		enemyPopWaitTimer--;
+		if (enemyPopWaitTimer <= 0) {
+			// 待機完了
+			enemyPopWaitFlag = false;
+		}
+		return;
+	}
+
+	// 1行分の文字列を入れる変数
+	std::string line;
+
+	/// コマンド実行ループ
+	while (getline(enemyPopCommands, line)) {
+		// 1行文の文字列をストリームに変換して解析しやすくする
+		std::istringstream line_stream(line);
+
+		std::string word;
+		//,区切りで行の先頭文字列を取得
+		getline(line_stream, word, ',');
+
+		// "//"から始まる行はコメント
+		if (word.find("//") == 0) {
+			// コメント行を飛ばす
+			continue;
+		}
+
+		// POPコマンド
+		if (word.find("POP") == 0) {
+			// x座標
+			getline(line_stream, word, ',');
+			float x = (float)std::atof(word.c_str());
+
+			// y座標
+			getline(line_stream, word, ',');
+			float y = (float)std::atof(word.c_str());
+
+			// z座標
+			getline(line_stream, word, ',');
+			float z = (float)std::atof(word.c_str());
+
+			// 敵を発生させる
+			EnemySpawn({x, y, z}, {0.0f, 0.2f, 0.0f});
+		}
+		// WAITコマンド
+		else if (word.find("WAIT") == 0) {
+			getline(line_stream, word, ',');
+
+			// 待ち時間
+			int32_t waitTime = atoi(word.c_str());
+
+			// 待機開始
+			enemyPopWaitFlag = true;
+			enemyPopWaitTimer = waitTime;
+
+			// コマンドループを抜ける
+			break;
+		}
+	}
 }
