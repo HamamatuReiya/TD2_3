@@ -80,10 +80,10 @@ void GameScene::Update() {
 		enemy->Update();
 	}
 
-	//デスフラグの立ったアイテムを削除
-	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)) {
-
-	}
+	////デスフラグの立ったアイテムを削除
+	//enemys_.remove_if([](std::unique_ptr<Enemy> & enemy)){
+	//
+	//};
 
 	// カメラの更新
 	camera_->Update();
