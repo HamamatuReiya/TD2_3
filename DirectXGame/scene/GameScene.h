@@ -14,6 +14,7 @@
 
 #include"Player.h"
 #include"Enemy.h"
+#include "StrongEnemy.h"
 #include "Skydome.h"
 #include "Camera.h"
 #include "Scene.h"
@@ -73,6 +74,21 @@ private:
 	/// </summary>
 	void UpdateEnemyPopCommands();
 
+	/// <summary>
+	/// 敵の発生
+	/// </summary>
+	void StrongEnemySpawn(Vector3 position, Vector3 velocity);
+
+	/// <summary>
+	/// 敵発生データの読み込み
+	/// </summary>
+	void LoadStrongEnemyPopData();
+
+	/// <summary>
+	/// 敵発生コマンドの更新
+	/// </summary>
+	void UpdateStrongEnemyPopCommands();
+
 public:
 	bool isSceneEnd = false;
 
@@ -107,6 +123,18 @@ private: // メンバ変数
 	bool enemyPopWaitFlag = true;
 	// 待機タイマー
 	int32_t enemyPopWaitTimer = 0;
+
+	// リスト
+	std::list<StrongEnemy*> strongEnemys_;
+	// 3Dモデル
+	std::unique_ptr<Model> modelStrongEnemy_;
+
+	// 敵発生コマンド
+	std::stringstream strongEnemyPopCommands;
+	// 敵の待機中のフラグ
+	bool strongEnemyPopWaitFlag = true;
+	// 待機タイマー
+	int32_t strongEnemyPopWaitTimer = 0;
 	
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;

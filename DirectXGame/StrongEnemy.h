@@ -2,17 +2,25 @@
 #include "Model.h"
 #include "WorldTransform.h"
 
-class Enemy {
+class StrongEnemy {
 public:
-	// デストラクタ
+	/// <summary>
+	/// コンストクラタ
+	/// </summary>
+	StrongEnemy();
+
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~StrongEnemy();
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model,const Vector3& position,const Vector3& velocity);
+	void Initialize(Model* model, const Vector3& position, const Vector3& velocity);
 
 	/// <summary>
-	/// 更新
+	/// 毎フレーム処理
 	/// </summary>
 	void Update();
 
@@ -22,6 +30,7 @@ public:
 	void Draw(ViewProjection& viewProjection);
 
 public:
+
 	// コールバック関数
 	void OnCollision();
 
@@ -31,7 +40,6 @@ public:
 	bool IsDead() const { return isDead_; }
 
 private:
-
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	// モデル
