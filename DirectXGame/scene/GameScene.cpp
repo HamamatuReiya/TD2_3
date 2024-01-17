@@ -41,6 +41,10 @@ void GameScene::Initialize() {
 
 	LoadEnemyPopData();
 
+	modelStrongEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
+
+	LoadStrongEnemyPopData();
+
 #pragma endregion
 
 	// 天球
@@ -76,12 +80,17 @@ void GameScene::Update() {
 	// 敵キャラの更新
 	UpdateEnemyPopCommands();
 
-	CheakAllCollisions();
+	UpdateStrongEnemyPopCommands();
 
+	CheakAllCollisions();
 
 	//敵の更新
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
+	}
+
+	for (StrongEnemy* strongEnemy : strongEnemys_) {
+		strongEnemy->Update();
 	}
 
 	//敵の消滅
@@ -167,6 +176,10 @@ void GameScene::Draw() {
 		enemy->Draw(viewProjection_);
 	}
 
+	for (StrongEnemy* strongEnemy : strongEnemys_) {
+		strongEnemy->Draw(viewProjection_);
+	}
+
 	// 天球の描画
 	skydome_->Draw(viewProjection_);
 
@@ -187,8 +200,6 @@ void GameScene::Draw() {
 
 #pragma endregion
 }
-
-void GameScene::sceneReset() {}
 
 void GameScene::CheakAllCollisions() {
 	// 対象物A(自機)とB(敵)
@@ -311,4 +322,97 @@ void GameScene::UpdateEnemyPopCommands() {
 			break;
 		}
 	}
+}
+
+void GameScene::StrongEnemySpawn(Vector3 position, Vector3 velocity) {
+	StrongEnemy* strongEnemy = new StrongEnemy;
+
+	strongEnemy->Initialize(modelStrongEnemy_.get(), position, velocity);
+
+	strongEnemys_.push_back(strongEnemy);
+}
+
+void GameScene::LoadStrongEnemyPopData() {
+	strongEnemyPopCommands.clear();
+
+	// ファイルを開く
+	std::ifstream file;
+	file.open("./Resources/strongEnemyPop.csv");
+	assert(file.is_open());
+
+	// ファイルの内容を文字列ストリームにコピー
+	strongEnemyPopCommands << file.rdbuf();
+
+	// ファイルを閉じる
+	file.close();
+}
+
+void GameScene::UpdateStrongEnemyPopCommands() {
+	// 待機処理
+	if (strongEnemyPopWaitFlag) {
+		strongEnemyPopWaitTimer--;
+		if (strongEnemyPopWaitTimer <= 0) {
+			// 待機完了
+			strongEnemyPopWaitFlag = false;
+		}
+		return;
+	}
+
+	// 1行分の文字列を入れる変数
+	std::string line;
+
+	/// コマンド実行ループ
+	while (getline(strongEnemyPopCommands, line)) {
+		// 1行文の文字列をストリームに変換して解析しやすくする
+		std::istringstream line_stream(line);
+
+		std::string word;
+		//,区切りで行の先頭文字列を取得
+		getline(line_stream, word, ',');
+
+		// "//"から始まる行はコメント
+		if (word.find("//") == 0) {
+			// コメント行を飛ばす
+			continue;
+		}
+
+		// POPコマンド
+		if (word.find("POP") == 0) {
+			// x座標
+			getline(line_stream, word, ',');
+			float x = (float)std::atof(word.c_str());
+
+			// y座標
+			getline(line_stream, word, ',');
+			float y = (float)std::atof(word.c_str());
+
+			// z座標
+			getline(line_stream, word, ',');
+			float z = (float)std::atof(word.c_str());
+
+			// 敵を発生させる
+			StrongEnemySpawn(Vector3(x, y, z), {0.0f, -0.2f, 0.0f});
+		}
+		// WAITコマンド
+		else if (word.find("WAIT") == 0) {
+			getline(line_stream, word, ',');
+
+			// 待ち時間
+			int32_t waitTime = atoi(word.c_str());
+
+			// 待機開始
+			strongEnemyPopWaitFlag = true;
+			strongEnemyPopWaitTimer = waitTime;
+
+			// コマンドループを抜ける
+			break;
+		}
+	}
+}
+
+void GameScene::sceneReset() {
+	//敵のリセット
+	enemys_.clear();
+	//シーン移行のリセット
+	isSceneEnd = false;
 }
