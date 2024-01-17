@@ -56,12 +56,12 @@ void Player::Update(ViewProjection& viewProjection) {
 		mouseDirection = Normalize(mouseDirection);
 
 		// カメラから照準オブジェクトの距離
-		const float kDistanceTestObject = 100.0f;
+		const float kDistanceTestObject = 200.0f;
 
 		worldTransform_.translation_ = Add(posNear, Multiply(kDistanceTestObject, mouseDirection));
 
 		////Z軸を固定化
-		//worldTransform_.translation_.z = 0.0f;
+		worldTransform_.translation_.z = 150.0f;
 
 		ImGui::Begin("Player");
 		ImGui::Text(
