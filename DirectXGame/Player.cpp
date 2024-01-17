@@ -19,8 +19,6 @@ void Player::Initialize(Model* model, Vector3 position) {
 void Player::Update(ViewProjection& viewProjection) { 
 
 	{
-		//
-
 		// 自機の現在座標を取得
 		Vector2 playerPosition = {worldTransform_.translation_.x, worldTransform_.translation_.y};
 
