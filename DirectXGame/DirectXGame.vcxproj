@@ -109,6 +109,7 @@
     <ClCompile Include="2d\ImGuiManager.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Borderline.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="compute.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="base\StringUtility.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="Borderline.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="compute.h" />
     <ClInclude Include="Enemy.h" />

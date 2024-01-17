@@ -99,6 +99,9 @@
     <ClCompile Include="StrongEnemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+     <ClCompile Include="Borderline.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -210,6 +213,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="StrongEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+     <ClInclude Include="Borderline.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
