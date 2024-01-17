@@ -70,6 +70,9 @@ void Player::Update(ViewProjection& viewProjection) {
 		    "model:%f,%f,%f", worldTransform_.translation_.x,
 			worldTransform_.translation_.y,
 		    worldTransform_.translation_.z);
+
+		ImGui::Text(
+		    "model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
 		ImGui::End();
 	}
 	
