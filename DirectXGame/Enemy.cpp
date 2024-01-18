@@ -8,7 +8,7 @@ void Enemy::Initialize(
 	// 引数からデータを受け取る
 	model_ = model;
 	
-	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_.scale_ = {2.0f, 2.0f, 2.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_.translation_ = position;
 
@@ -25,7 +25,7 @@ void Enemy::Update() {
 
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
 
-	velocity_.y -= 0.01f;
+	velocity_.y -= 0.002f;
 
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
