@@ -22,6 +22,10 @@ void StrongEnemy::Initialize(Model* model, const Vector3& position, const Vector
 
 void StrongEnemy::Update() {
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
+
+	// 敵キャラの横回転
+	worldTransform_.rotation_.z += 0.01f;
+
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
 
