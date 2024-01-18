@@ -26,6 +26,9 @@ void Enemy::Update() {
 	
 
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
+
+	velocity_.y -= 0.01f;
+
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
 
