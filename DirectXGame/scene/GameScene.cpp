@@ -212,8 +212,8 @@ void GameScene::CheakAllCollisions() {
 	// 自キャラの半径
 	float playerRadius = 1.5f;
 
-	// 敵弾の半径
-	float enemyBulletRadius = 1.5f;
+	// 雑魚敵の半径
+	float enemyBulletRadius = 3.0f;
 
 #pragma region 自キャラと敵の当たり判定
 	// 自キャラのワールド座標を取得
