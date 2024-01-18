@@ -61,7 +61,7 @@ void Player::Update(ViewProjection& viewProjection) {
 		worldTransform_.translation_ = Add(posNear, Multiply(kDistanceTestObject, mouseDirection));
 
 		////Z軸を固定化
-		worldTransform_.translation_.z = 150.0f;
+		worldTransform_.translation_.z = 37.0f;
 
 		ImGui::Begin("Player");
 		ImGui::Text(
