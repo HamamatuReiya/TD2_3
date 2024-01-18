@@ -8,7 +8,7 @@ void Enemy::Initialize(
 	// 引数からデータを受け取る
 	model_ = model;
 	
-	worldTransform_.scale_ = {3.0f, 3.0f, 3.0f};
+	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_.translation_ = position;
 
