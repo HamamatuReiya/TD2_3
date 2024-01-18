@@ -245,8 +245,12 @@ void GameScene::CheakAllCollisions() {
 		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
 			// 自キャラの衝突時コールバックを呼び出す
 			player_->OnCollision();
+			//敵ダメージ判定を出す
+			enemy->HitJudge(player_->GetAttackPow());
 			// 敵弾の衝突時コールバックを呼び出す
-			enemy->OnCollision();
+			//enemy->OnCollision();
+		} else {
+			enemy->NotCollision();
 		}
 	}
 }
