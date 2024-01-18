@@ -18,12 +18,17 @@ void CurveEnemy::Initialize(Model* model, const Vector3& position, const Vector3
 
 	velocity_ = velocity;
 
+	InitializeCurveGimmick();
+
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
 }
 
 void CurveEnemy::Update() {
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
+
+	UpdateCurveGimmick();
+
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
 
@@ -64,7 +69,7 @@ void CurveEnemy::UpdateCurveGimmick() {
 	curveParameter_ = std::fmod(curveParameter_, 2.0f * float(M_PI));
 
 	// 浮遊の振幅<m>
-	const float floatingSwing = 0.1f;
+	const float floatingSwing = 100.0f;
 	// 浮遊を座標に反映
 	worldTransform_.translation_.x = std::sin(curveParameter_) * floatingSwing;
 }
