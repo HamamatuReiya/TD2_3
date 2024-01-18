@@ -191,18 +191,18 @@ void GameScene::Draw() {
 	//自キャラの描画
 	player_->Draw(viewProjection_);
 
-	////敵の描画
-	//for (Enemy* enemy : enemys_) {
-	//	enemy->Draw(viewProjection_);
-	//}
-	////強めの敵の描画
-	//for (StrongEnemy* strongEnemy : strongEnemys_) {
-	//	strongEnemy->Draw(viewProjection_);
-	//}
-	////反射する敵の描画
-	//for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
-	//	reflectEnemy->Draw(viewProjection_);
-	//}
+	//敵の描画
+	for (Enemy* enemy : enemys_) {
+		enemy->Draw(viewProjection_);
+	}
+	//強めの敵の描画
+	for (StrongEnemy* strongEnemy : strongEnemys_) {
+		strongEnemy->Draw(viewProjection_);
+	}
+	//反射する敵の描画
+	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+		reflectEnemy->Draw(viewProjection_);
+	}
 	//曲がる敵の描画
 	for (CurveEnemy* curveEnemy : curveEnemys_) {
 		curveEnemy->Draw(viewProjection_);
