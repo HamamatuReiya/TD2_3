@@ -17,7 +17,8 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model, const Vector3& position, const Vector3& velocity);
+	void Initialize(
+	    Model* model, const Vector3& position, const Vector3& velocity, bool directionFlag);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -43,7 +44,7 @@ private:
 	void InitializeCurveGimmick();
 	//カーブの更新
 	void UpdateCurveGimmick();
-
+	
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -59,4 +60,9 @@ private:
 
 	// フレーム数
 	const float kCurveFPS = 10.0f * 60.0f;
+
+	//左右のフラグ
+	bool directionFlag_ = false;
+
+	float direction_ = 0;
 };
