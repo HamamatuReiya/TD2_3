@@ -58,5 +58,5 @@ private:
 	float curveParameter_ = 0.0f;
 
 	// フレーム数
-	const float kCurveFPS = 60.0f;
+	const float kCurveFPS = 10.0f * 60.0f;
 };

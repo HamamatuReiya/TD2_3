@@ -17,6 +17,7 @@
 #include"Enemy.h"
 #include "StrongEnemy.h"
 #include "ReflectEnemy.h"
+#include "CurveEnemy.h"
 
 #include "Skydome.h"
 #include "Camera.h"
@@ -169,17 +170,29 @@ private: // メンバ変数
 	// 強めの敵の待機タイマー
 	int32_t strongEnemyPopWaitTimer = 0;
 	
-	// 敵リスト
+	// 反射する敵リスト
 	std::list<ReflectEnemy*> reflectEnemys_;
-	// 敵の3Dモデル
+	// 反射する敵の3Dモデル
 	std::unique_ptr<Model> modelReflectEnemy_;
 
-	// 敵発生コマンド
+	// 反射する敵発生コマンド
 	std::stringstream reflectEnemyPopCommands;
-	// 敵の待機中のフラグ
+	// 反射する敵の待機中のフラグ
 	bool reflectEnemyPopWaitFlag = true;
-	// 待機タイマー
+	// 反射する敵の待機タイマー
 	int32_t reflectEnemyPopWaitTimer = 0;
+
+	// 曲がる敵リスト
+	std::list<CurveEnemy*> curveEnemys_;
+	// 曲がるの3Dモデル
+	std::unique_ptr<Model> modelCurveEnemy_;
+
+	// 曲がる敵発生コマンド
+	std::stringstream curveEnemyPopCommands;
+	// 曲がるの待機中のフラグ
+	bool curveEnemyPopWaitFlag = true;
+	// 曲がる敵の待機タイマー
+	int32_t curveEnemyPopWaitTimer = 0;
 
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;

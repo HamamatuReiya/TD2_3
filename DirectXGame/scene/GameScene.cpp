@@ -49,6 +49,10 @@ void GameScene::Initialize() {
 
 	LoadReflectEnemyPopData();
 
+	modelCurveEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
+
+	LoadCurveEnemyPopData(); 
+
 #pragma endregion
 
 	// 天球
@@ -87,7 +91,9 @@ void GameScene::Update() {
 	UpdateStrongEnemyPopCommands();
 	//反射する敵の更新
 	UpdateReflectEnemyPopCommands();
-
+	//曲がる敵の更新
+	UpdateCurveEnemyPopCommands();
+	//当たり判定
 	CheakAllCollisions();
 
 	//敵の更新
@@ -101,6 +107,10 @@ void GameScene::Update() {
 
 	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
 		reflectEnemy->Update();
+	}
+
+	for (CurveEnemy* curveEnemy : curveEnemys_) {
+		curveEnemy->Update();
 	}
 
 	//敵の消滅
@@ -181,17 +191,21 @@ void GameScene::Draw() {
 	//自キャラの描画
 	player_->Draw(viewProjection_);
 
-	//敵の描画
-	for (Enemy* enemy : enemys_) {
-		enemy->Draw(viewProjection_);
-	}
-
-	for (StrongEnemy* strongEnemy : strongEnemys_) {
-		strongEnemy->Draw(viewProjection_);
-	}
-
-	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
-		reflectEnemy->Draw(viewProjection_);
+	////敵の描画
+	//for (Enemy* enemy : enemys_) {
+	//	enemy->Draw(viewProjection_);
+	//}
+	////強めの敵の描画
+	//for (StrongEnemy* strongEnemy : strongEnemys_) {
+	//	strongEnemy->Draw(viewProjection_);
+	//}
+	////反射する敵の描画
+	//for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+	//	reflectEnemy->Draw(viewProjection_);
+	//}
+	//曲がる敵の描画
+	for (CurveEnemy* curveEnemy : curveEnemys_) {
+		curveEnemy->Draw(viewProjection_);
 	}
 
 	// 天球の描画
@@ -437,7 +451,7 @@ void GameScene::LoadReflectEnemyPopData() {
 
 	// ファイルを開く
 	std::ifstream file;
-	file.open("./Resources/enemyPop.csv");
+	file.open("./Resources/reflectEnemyPop.csv");
 	assert(file.is_open());
 
 	// ファイルの内容を文字列ストリームにコピー
@@ -511,11 +525,91 @@ void GameScene::UpdateReflectEnemyPopCommands() {
 	}
 }
 
-void GameScene::CurveEnemySpawn(Vector3 position, Vector3 velocity) {}
+void GameScene::CurveEnemySpawn(Vector3 position, Vector3 velocity) {
+	CurveEnemy* curveEnemy = new CurveEnemy;
 
-void GameScene::LoadCurveEnemyPopData() {}
+	curveEnemy->Initialize(modelCurveEnemy_.get(), position, velocity);
 
-void GameScene::UpdateCurveEnemyPopCommands() {}
+	curveEnemys_.push_back(curveEnemy);
+}
+
+void GameScene::LoadCurveEnemyPopData() {
+	reflectEnemyPopCommands.clear();
+
+	// ファイルを開く
+	std::ifstream file;
+	file.open("./Resources/curveEnemyPop.csv");
+	assert(file.is_open());
+
+	// ファイルの内容を文字列ストリームにコピー
+	curveEnemyPopCommands << file.rdbuf();
+
+	// ファイルを閉じる
+	file.close();
+}
+
+void GameScene::UpdateCurveEnemyPopCommands() {
+	// 待機処理
+	if (curveEnemyPopWaitFlag) {
+		curveEnemyPopWaitTimer--;
+		if (curveEnemyPopWaitTimer <= 0) {
+			// 待機完了
+			curveEnemyPopWaitFlag = false;
+		}
+		return;
+	}
+
+	// 1行分の文字列を入れる変数
+	std::string line;
+
+	/// コマンド実行ループ
+	while (getline(curveEnemyPopCommands, line)) {
+		// 1行文の文字列をストリームに変換して解析しやすくする
+		std::istringstream line_stream(line);
+
+		std::string word;
+		//,区切りで行の先頭文字列を取得
+		getline(line_stream, word, ',');
+
+		// "//"から始まる行はコメント
+		if (word.find("//") == 0) {
+			// コメント行を飛ばす
+			continue;
+		}
+
+		// POPコマンド
+		if (word.find("POP") == 0) {
+			// x座標
+			getline(line_stream, word, ',');
+			float x = (float)std::atof(word.c_str());
+
+			// y座標
+			getline(line_stream, word, ',');
+			float y = (float)std::atof(word.c_str());
+
+			// z座標
+			getline(line_stream, word, ',');
+			float z = (float)std::atof(word.c_str());
+
+			// 敵を発生させる
+			CurveEnemySpawn(Vector3(x, y, z), {0.0f, -0.2f, 0.0f});
+		}
+		// WAITコマンド
+		else if (word.find("WAIT") == 0) {
+			getline(line_stream, word, ',');
+
+			// 待ち時間
+			int32_t waitTime = atoi(word.c_str());
+
+			// 待機開始
+			curveEnemyPopWaitFlag = true;
+			curveEnemyPopWaitTimer = waitTime;
+
+			// コマンドループを抜ける
+			break;
+		}
+	}
+}
 
 void GameScene::sceneReset() {
 	//敵のリセット
