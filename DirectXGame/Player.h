@@ -24,7 +24,13 @@ public:
 	// コールバック関数
 	void OnCollision();
 
+	//自分の攻撃力を渡す関数
+	int GetAttackPow() { return attackPower; }
+
 	private:
+
+	//プレイヤーの攻撃力
+	int attackPower = 1;
 
 	//ワールド変換データ
 	WorldTransform worldTransform_;
