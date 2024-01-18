@@ -119,8 +119,22 @@ void GameScene::Update() {
 			delete enemy;
 			return true;
 		}
+		if (enemy->GetWorldPosition().y <= -40.0f) {
+			delete enemy;
+			return true;
+		}
 		return false;
 	});
+
+	// 強い敵の消滅
+	strongEnemys_.remove_if([](StrongEnemy* strongEnemy) {
+		if (strongEnemy->GetWorldPosition().y <= -40.0f) {
+			delete strongEnemy;
+			return true;
+		}
+		return false;
+	});
+
 
 	////デスフラグの立ったアイテムを削除
 	//enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)) {
