@@ -545,10 +545,10 @@ void GameScene::UpdateReflectEnemyPopCommands() {
 	}
 }
 
-void GameScene::CurveEnemySpawn(Vector3 position, Vector3 velocity) {
+void GameScene::CurveEnemySpawn(Vector3 position, Vector3 velocity, bool directionFlag) {
 	CurveEnemy* curveEnemy = new CurveEnemy;
 
-	curveEnemy->Initialize(modelCurveEnemy_.get(), position, velocity);
+	curveEnemy->Initialize(modelCurveEnemy_.get(), position, velocity, directionFlag);
 
 	curveEnemys_.push_back(curveEnemy);
 }
@@ -611,8 +611,15 @@ void GameScene::UpdateCurveEnemyPopCommands() {
 			getline(line_stream, word, ',');
 			float z = (float)std::atof(word.c_str());
 
+			unsigned int currentTime = (int)time(nullptr);
+			srand(currentTime);
+
+			int r = (int)rand();
+
+			int directionFlag = r % 2;
+
 			// 敵を発生させる
-			CurveEnemySpawn(Vector3(x, y, z), {0.0f, -0.2f, 0.0f});
+			CurveEnemySpawn(Vector3(x, y, z), {0.0f, -0.2f, 0.0f}, directionFlag);
 		}
 		// WAITコマンド
 		else if (word.find("WAIT") == 0) {

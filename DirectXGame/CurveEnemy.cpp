@@ -8,7 +8,8 @@ CurveEnemy::CurveEnemy() {}
 
 CurveEnemy::~CurveEnemy() {}
 
-void CurveEnemy::Initialize(Model* model, const Vector3& position, const Vector3& velocity) {
+void CurveEnemy::Initialize(
+    Model* model, const Vector3& position, const Vector3& velocity, bool directionFlag) {
 	// 引数からデータを受け取る
 	model_ = model;
 
@@ -17,6 +18,8 @@ void CurveEnemy::Initialize(Model* model, const Vector3& position, const Vector3
 	worldTransform_.translation_ = position;
 
 	velocity_ = velocity;
+
+	directionFlag_ = directionFlag;
 
 	InitializeCurveGimmick();
 
@@ -55,7 +58,16 @@ Vector3 CurveEnemy::GetWorldPosition() {
 	return worldPos;
 }
 
-void CurveEnemy::InitializeCurveGimmick() { curveParameter_ = 0.0f; }
+void CurveEnemy::InitializeCurveGimmick() { 
+	curveParameter_ = 0.0f;
+
+	if (directionFlag_ == false) {
+		direction_ = -1;
+	}
+	if (directionFlag_ == true) {
+		direction_ = 1;
+	}
+}
 
 void CurveEnemy::UpdateCurveGimmick() {
 	// 浮遊移動のサイクル<frame>
@@ -69,9 +81,7 @@ void CurveEnemy::UpdateCurveGimmick() {
 	curveParameter_ = std::fmod(curveParameter_, 2.0f * float(M_PI));
 
 	// 浮遊の振幅<m>
-	const float curveSwing = 100.0f;
+	float curveSwing = 100.0f * direction_;
 	// 浮遊を座標に反映
 	worldTransform_.translation_.x = std::sin(curveParameter_) * curveSwing;
 }
-
-

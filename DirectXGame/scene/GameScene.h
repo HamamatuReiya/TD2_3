@@ -111,7 +111,7 @@ private:
    /// <summary>
 	/// 曲がる敵の発生
 	/// </summary>
-	void CurveEnemySpawn(Vector3 position, Vector3 velocity);
+	void CurveEnemySpawn(Vector3 position, Vector3 velocity, bool directionFlag);
 
 	/// <summary>
 	/// 曲がる敵発生データの読み込み
