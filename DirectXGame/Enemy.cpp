@@ -8,7 +8,7 @@ void Enemy::Initialize(
 	// 引数からデータを受け取る
 	model_ = model;
 	
-	worldTransform_.scale_ = {2.0f, 2.0f, 2.0f};
+	worldTransform_.scale_ = {3.0f, 3.0f, 3.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_.translation_ = position;
 
@@ -24,6 +24,8 @@ void Enemy::Initialize(
 void Enemy::Update() {
 
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
+
+	worldTransform_.translation_.z = 130.0f;
 
 	//敵キャラの横回転
 	worldTransform_.rotation_.z += 0.02f;

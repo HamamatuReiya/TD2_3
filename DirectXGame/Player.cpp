@@ -7,6 +7,10 @@ void Player::Initialize(Model* model, Vector3 position) {
 	assert(model);
 	//引数からデータを受け取る
 	model_ = model;
+
+	//スケールの設定
+	worldTransform_.scale_ = {2.0f, 2.0f, 2.0f};
+
 	//ワールド変換の初期化
 	worldTransform_.Initialize();
 	//引数からワールドをもらう
@@ -61,7 +65,7 @@ void Player::Update(ViewProjection& viewProjection) {
 		worldTransform_.translation_ = Add(posNear, Multiply(kDistanceTestObject, mouseDirection));
 
 		////Z軸を固定化
-		worldTransform_.translation_.z = 37.0f;
+		worldTransform_.translation_.z = 130.0f;
 
 		ImGui::Begin("Player");
 		ImGui::Text(
