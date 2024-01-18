@@ -40,6 +40,12 @@ void Enemy::Draw(ViewProjection& viewProjection) {
 
 	model_->Draw(worldTransform_, viewProjection); }
 
+void Enemy::HitJudge(int PlayerAttack) { 
+	if (isDead_ == true) {
+		    enemyHP -= PlayerAttack;
+	    };
+}
+
 void Enemy::ChangePos(ViewProjection& viewProjection) {
 	    Vector2 EnemyPosition = {worldTransform_.translation_.x, worldTransform_.translation_.y};
 
@@ -84,3 +90,5 @@ Vector3 Enemy::GetWorldPosition() {
 }
 
 void Enemy::OnCollision() { isDead_ = true; }
+
+void Enemy::NotCollision() { isDead_ = false; }

@@ -23,11 +23,15 @@ public:
 	/// </summary>
 	void Draw(ViewProjection& viewProjection);
 
+	void HitJudge(int PlayerAttack);
+
 	void ChangePos(ViewProjection& viewProjection);
 
 public:
 	// コールバック関数
 	void OnCollision();
+
+	void NotCollision();
 
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
@@ -40,6 +44,9 @@ private:
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
+
+	//敵の体力
+	int enemyHP = 2;
 
 	bool isDead_ = false;
 	// 速度
