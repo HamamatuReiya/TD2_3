@@ -135,6 +135,24 @@ void GameScene::Update() {
 		return false;
 	});
 
+	// 
+	reflectEnemys_.remove_if([](ReflectEnemy* reflectEnemy) {
+		if (reflectEnemy->GetWorldPosition().y <= -80.0f) {
+			delete reflectEnemy;
+			return true;
+		}
+		return false;
+	});
+
+	// 
+	curveEnemys_.remove_if([](CurveEnemy* curveEnemy) {
+		if (curveEnemy->GetWorldPosition().y <= -80.0f) {
+			delete curveEnemy;
+			return true;
+		}
+		return false;
+	});
+
 
 	////デスフラグの立ったアイテムを削除
 	//enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)) {
