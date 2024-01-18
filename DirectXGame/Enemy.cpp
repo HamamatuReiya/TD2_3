@@ -23,8 +23,6 @@ void Enemy::Initialize(
 
 void Enemy::Update() {
 
-	
-
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
@@ -41,9 +39,14 @@ void Enemy::Draw(ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection); }
 
 void Enemy::HitJudge(int PlayerAttack) { 
-	if (isDead_ == true) {
+	if (isCollision_ == true) {
+		    isCollision_ = false;
 		    enemyHP -= PlayerAttack;
-	    };
+	};
+	
+	if (enemyHP <= 0) {
+	        isDead_ = true;    
+	}
 }
 
 void Enemy::ChangePos(ViewProjection& viewProjection) {
@@ -89,6 +92,6 @@ Vector3 Enemy::GetWorldPosition() {
 	return worldPos;
 }
 
-void Enemy::OnCollision() { isDead_ = true; }
+void Enemy::OnCollision() { isCollision_ = false; }
 
-void Enemy::NotCollision() { isDead_ = false; }
+void Enemy::NotCollision() { isCollision_ = true; }

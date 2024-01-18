@@ -48,6 +48,10 @@ private:
 	//敵の体力
 	int enemyHP = 2;
 
+	//接触判定
+	bool isCollision_ = false;
+
+	//死亡判定
 	bool isDead_ = false;
 	// 速度
 	Vector3 velocity_;
