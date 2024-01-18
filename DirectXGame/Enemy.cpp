@@ -25,6 +25,9 @@ void Enemy::Update() {
 
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
 
+	//敵キャラの横回転
+	worldTransform_.rotation_.z += 0.02f;
+
 	velocity_.y -= 0.002f;
 
 	// 行列の更新
