@@ -41,7 +41,6 @@ void ReflectEnemy::reflectUpdate() {
 	// x 60 //y 40
 	// 移動限界座標
 	const float kMoveLimitX = 35;
-	//const float kMoveLimitY = 20;
 
 	worldTransform_.translation_ = Add(worldTransform_.translation_, velocity_);
 

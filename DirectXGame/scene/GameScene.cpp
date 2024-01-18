@@ -508,9 +508,25 @@ void GameScene::UpdateReflectEnemyPopCommands() {
 			getline(line_stream, word, ',');
 			float z = (float)std::atof(word.c_str());
 
+			unsigned int currentTime = (int)time(nullptr);
+			srand(currentTime);
+
+			int r = (int)rand();
+
+			int direction = r % 2;
+
+			float velocity = 0.0f;
+
+			if (direction == 0) {
+				velocity = 0.2f;
+			}
+
+			if (direction == 1) {
+				velocity = -0.2f;
+			}
 
 			// 敵を発生させる
-			ReflectEnemySpawn(Vector3(x, y, z), {-0.2f, -0.2f, 0.0f});
+			ReflectEnemySpawn(Vector3(x, y, z), {velocity, -0.2f, 0.0f});
 		}
 		// WAITコマンド
 		else if (word.find("WAIT") == 0) {

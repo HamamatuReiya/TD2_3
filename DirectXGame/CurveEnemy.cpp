@@ -69,9 +69,9 @@ void CurveEnemy::UpdateCurveGimmick() {
 	curveParameter_ = std::fmod(curveParameter_, 2.0f * float(M_PI));
 
 	// 浮遊の振幅<m>
-	const float floatingSwing = 100.0f;
+	const float curveSwing = 100.0f;
 	// 浮遊を座標に反映
-	worldTransform_.translation_.x = std::sin(curveParameter_) * floatingSwing;
+	worldTransform_.translation_.x = std::sin(curveParameter_) * curveSwing;
 }
 
 
