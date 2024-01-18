@@ -13,8 +13,11 @@
 #include <memory>
 
 #include"Player.h"
+
 #include"Enemy.h"
 #include "StrongEnemy.h"
+#include "ReflectEnemy.h"
+
 #include "Skydome.h"
 #include "Camera.h"
 #include "Scene.h"
@@ -75,19 +78,49 @@ private:
 	void UpdateEnemyPopCommands();
 
 	/// <summary>
-	/// 敵の発生
+	/// 強めの敵の発生
 	/// </summary>
 	void StrongEnemySpawn(Vector3 position, Vector3 velocity);
 
 	/// <summary>
-	/// 敵発生データの読み込み
+	/// 強めの敵発生データの読み込み
 	/// </summary>
 	void LoadStrongEnemyPopData();
 
 	/// <summary>
-	/// 敵発生コマンドの更新
+	/// 強めの敵発生コマンドの更新
 	/// </summary>
 	void UpdateStrongEnemyPopCommands();
+
+	/// <summary>
+	/// 反射する敵の発生
+	/// </summary>
+	void ReflectEnemySpawn(Vector3 position, Vector3 velocity);
+
+	/// <summary>
+	/// 反射する敵発生データの読み込み
+	/// </summary>
+	void LoadReflectEnemyPopData();
+
+	/// <summary>
+	/// 反射する敵発生コマンドの更新
+	/// </summary>
+	void UpdateReflectEnemyPopCommands();
+
+   /// <summary>
+	/// 曲がる敵の発生
+	/// </summary>
+	void CurveEnemySpawn(Vector3 position, Vector3 velocity);
+
+	/// <summary>
+	/// 曲がる敵発生データの読み込み
+	/// </summary>
+	void LoadCurveEnemyPopData();
+
+	/// <summary>
+	/// 曲がる敵発生コマンドの更新
+	/// </summary>
+	void UpdateCurveEnemyPopCommands();
 
 public:
 	bool isSceneEnd = false;
@@ -124,18 +157,30 @@ private: // メンバ変数
 	// 待機タイマー
 	int32_t enemyPopWaitTimer = 0;
 
-	// リスト
+	// 強めの敵リスト
 	std::list<StrongEnemy*> strongEnemys_;
-	// 3Dモデル
+	// 強めの敵の3Dモデル
 	std::unique_ptr<Model> modelStrongEnemy_;
 
-	// 敵発生コマンド
+	// 強めの敵発生コマンド
 	std::stringstream strongEnemyPopCommands;
-	// 敵の待機中のフラグ
+	// 強めの敵の待機中のフラグ
 	bool strongEnemyPopWaitFlag = true;
-	// 待機タイマー
+	// 強めの敵の待機タイマー
 	int32_t strongEnemyPopWaitTimer = 0;
 	
+	// 敵リスト
+	std::list<ReflectEnemy*> reflectEnemys_;
+	// 敵の3Dモデル
+	std::unique_ptr<Model> modelReflectEnemy_;
+
+	// 敵発生コマンド
+	std::stringstream reflectEnemyPopCommands;
+	// 敵の待機中のフラグ
+	bool reflectEnemyPopWaitFlag = true;
+	// 待機タイマー
+	int32_t reflectEnemyPopWaitTimer = 0;
+
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	// ビュープロジェクション

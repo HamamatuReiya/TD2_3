@@ -14,6 +14,8 @@ Vector3 Subtract(Vector3 v1, Vector3 v2);
 // スカラー倍 (積)
 Vector3 Multiply(float k, Vector3 v1);
 
+Vector3 Multiply(Vector3 v1, Vector3 v2);
+
 // 内積
 float Dot(const Vector3& v1, const Vector3& v2);
 

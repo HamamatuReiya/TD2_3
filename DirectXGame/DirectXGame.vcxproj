@@ -111,9 +111,11 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="compute.cpp" />
+    <ClCompile Include="CurveEnemy.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ReflectEnemy.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="StrongEnemy.cpp" />
@@ -146,6 +148,7 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="compute.h" />
+    <ClInclude Include="CurveEnemy.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
@@ -153,6 +156,7 @@
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="ReflectEnemy.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="Skydome.h" />
