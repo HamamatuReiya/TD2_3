@@ -9,7 +9,9 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model,const Vector3& position,const Vector3& velocity);
+	void Initialize(
+	    Model* model, const Vector3& position, const Vector3& velocity,
+	    ViewProjection& viewProjection);
 
 	/// <summary>
 	/// 更新
@@ -20,6 +22,8 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw(ViewProjection& viewProjection);
+
+	void ChangePos(ViewProjection& viewProjection);
 
 public:
 	// コールバック関数

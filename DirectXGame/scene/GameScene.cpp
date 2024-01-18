@@ -255,7 +255,7 @@ void GameScene::CheakAllCollisions() {
 void GameScene::EnemySpawn(Vector3 position, Vector3 velocity) { 
 	Enemy* enemy = new Enemy;
 	
-	enemy->Initialize(modelEnemy_.get(),position,velocity);
+	enemy->Initialize(modelEnemy_.get(),position,velocity,viewProjection_);
 
 	enemys_.push_back(enemy);
 }
@@ -319,7 +319,7 @@ void GameScene::UpdateEnemyPopCommands() {
 			float z = (float)std::atof(word.c_str());
 
 			// 敵を発生させる
-			EnemySpawn(Vector3(x, y, z), {0.0f, -0.2f, 0.0f});
+			EnemySpawn(Vector3(x, y, z), {0.0f, -0.15f, 0.0f});
 		}
 		// WAITコマンド
 		else if (word.find("WAIT") == 0) {
