@@ -270,7 +270,7 @@ void GameScene::CheakAllCollisions() {
 	float posAB;
 
 	// 自キャラの半径
-	float playerRadius = 1.5f;
+	float playerRadius = 2.5f;
 
 	// 雑魚敵の半径
 	float enemyBulletRadius = 3.0f;
@@ -455,7 +455,7 @@ void GameScene::UpdateStrongEnemyPopCommands() {
 			float z = (float)std::atof(word.c_str());
 
 			// 敵を発生させる
-			StrongEnemySpawn(Vector3(x, y, z), {0.0f, -0.2f, 0.0f});
+			StrongEnemySpawn(Vector3(x, y, z), {0.0f, -0.05f, 0.0f});
 		}
 		// WAITコマンド
 		else if (word.find("WAIT") == 0) {
