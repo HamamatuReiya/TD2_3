@@ -161,6 +161,7 @@ void GameScene::Update() {
 
 	// カメラの更新
 	camera_->Update();
+
 	// 天球の更新
 	skydome_->Update();
 

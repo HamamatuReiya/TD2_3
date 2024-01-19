@@ -2,6 +2,8 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "Input.h"
+#include "Time.h"
+#include <compute.h>
 
 class Camera {
 public:
@@ -15,6 +17,9 @@ public:
 	/// </summary>
 	void Update();
 
+	//カメラ揺れ
+	void CameraShake();
+
 public:
 	/// <summary>
 	/// ビュープロジェクションを取得
@@ -23,6 +28,7 @@ public:
 	const ViewProjection& GetViewProjection() { return viewProjection_; }
 
 	const WorldTransform& GetWorldTransform() { return worldTransform_; }
+
 
 private:
 	// ワールド変換データ
