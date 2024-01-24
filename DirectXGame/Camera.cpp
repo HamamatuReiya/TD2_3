@@ -34,13 +34,8 @@ void Camera::Update() {
 }
 
 void Camera::CameraShake() {
+	if (shakeFlag == true){
 
-	//揺れの時間をタイマーで管理して、揺れた分の幅をリセットするようにする
-	if (shakeFlag == false) {
-		// 揺れる値をリセット
-		shakeTransX = 0;
-		shakeTransY = 0;
-	} else {
 		//タイマーをプラス
 		shakeTimer++;
 		// 揺れる値を入れる変数
@@ -50,12 +45,17 @@ void Camera::CameraShake() {
 		// 揺れる分のVector3
 		Vector3 shakeTrans = {(float)shakeTransX, (float)shakeTransY, 0};
 
-		shakeTransX = rand() % 3 - 1;
-		shakeTransY = rand() % 3 - 1;
+		shakeTransX = rand() % 2 - 1;
+		shakeTransY = rand() % 2 - 1;
 
 		// worldTransform_.translation_ = Add(worldTransform_.translation_, shakeTrans);
 		worldTransform_.translation_.x += shakeTransX;
 		worldTransform_.translation_.y += shakeTransY;
+	} else {
+	
+		// 揺れる値をリセット
+		shakeTransX = 0;
+		shakeTransY = 0;
 	}
 
 	if (shakeTimer >= 10) {
