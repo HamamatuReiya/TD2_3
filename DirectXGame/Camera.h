@@ -19,6 +19,9 @@ public:
 
 	//カメラ揺れ
 	void CameraShake();
+	
+	//カメラ揺れを発生させるフラグ
+	void OnCollision();
 
 public:
 	/// <summary>
@@ -35,4 +38,13 @@ private:
 	WorldTransform worldTransform_;
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
+
+	//シェイクのフラグ
+	bool shakeFlag = false;
+	//シェイクのタイマー
+	int shakeTimer = 0;
+	// 揺れる値を入れる変数
+	int shakeTransX = 0;
+	int shakeTransY = 0;
+
 };

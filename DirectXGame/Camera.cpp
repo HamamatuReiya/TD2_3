@@ -34,21 +34,34 @@ void Camera::Update() {
 }
 
 void Camera::CameraShake() {
-	//揺れる値を入れる変数
-	int shakeTransX=0;
-	int shakeTransY=0;
 
-	//揺れる分のVector3
-	Vector3 shakeTrans = {(float)shakeTransX, (float)shakeTransY, 0};
+	//揺れの時間をタイマーで管理して、揺れた分の幅をリセットするようにする
+	if (shakeFlag == false) {
+		// 揺れる値をリセット
+		shakeTransX = 0;
+		shakeTransY = 0;
+	} else {
+		//タイマーをプラス
+		shakeTimer++;
+		// 揺れる値を入れる変数
+		shakeTransX = 0;
+		shakeTransY = 0;
 
-	shakeTransX = rand() % 3 - 1;
-	shakeTransY = rand() % 3 - 1;
+		// 揺れる分のVector3
+		Vector3 shakeTrans = {(float)shakeTransX, (float)shakeTransY, 0};
 
+		shakeTransX = rand() % 3 - 1;
+		shakeTransY = rand() % 3 - 1;
 
-	//worldTransform_.translation_ = Add(worldTransform_.translation_, shakeTrans);
-	worldTransform_.translation_.x += shakeTransX;
-	worldTransform_.translation_.y += shakeTransY;
+		// worldTransform_.translation_ = Add(worldTransform_.translation_, shakeTrans);
+		worldTransform_.translation_.x += shakeTransX;
+		worldTransform_.translation_.y += shakeTransY;
+	}
 
+	if (shakeTimer >= 10) {
+		shakeTimer = 0;
+		shakeFlag = false;
+	}
 	
 	ImGui::Begin("CAMERA");
 	ImGui::Text("model:%d,%d,\n%f", shakeTransX, shakeTransY, worldTransform_.translation_.x);
@@ -57,3 +70,5 @@ void Camera::CameraShake() {
 	worldTransform_.UpdateMatrix();
 
 }
+
+void Camera::OnCollision() { shakeFlag = true; }
