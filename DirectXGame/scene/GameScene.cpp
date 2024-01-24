@@ -161,6 +161,7 @@ void GameScene::Update() {
 
 	// カメラの更新
 	camera_->Update();
+
 	// 天球の更新
 	skydome_->Update();
 
@@ -293,6 +294,8 @@ void GameScene::CheakAllCollisions() {
 			player_->OnCollision();
 			//敵ダメージ判定を出す
 			enemy->HitJudge(player_->GetAttackPow());
+			//カメラの衝突判定
+			camera_->OnCollision();
 			// 敵弾の衝突時コールバックを呼び出す
 			//enemy->OnCollision();
 		} else {
