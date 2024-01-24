@@ -211,4 +211,7 @@ private: // メンバ変数
 	std::unique_ptr<Skydome> skydome_;
 	//   3Dモデル
 	std::unique_ptr<Model> modelSkydome_;
+
+	// ボーダーライン
+
 };
