@@ -96,19 +96,19 @@ void GameScene::Update() {
 	//当たり判定
 	CheakAllCollisions();
 
-	//敵の更新
+	// 敵の更新
 	for (Enemy* enemy : enemys_) {
 		enemy->Update();
 	}
-
+	// 強い敵
 	for (StrongEnemy* strongEnemy : strongEnemys_) {
 		strongEnemy->Update();
 	}
-
+	// 反射する敵
 	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
 		reflectEnemy->Update();
 	}
-
+	// 曲がる敵
 	for (CurveEnemy* curveEnemy : curveEnemys_) {
 		curveEnemy->Update();
 	}
@@ -119,7 +119,7 @@ void GameScene::Update() {
 			delete enemy;
 			return true;
 		}
-		if (enemy->GetWorldPosition().y <= -40.0f) {
+		if (enemy->GetWorldPosition().y <= -90.0f) {
 			delete enemy;
 			return true;
 		}
@@ -128,14 +128,14 @@ void GameScene::Update() {
 
 	// 強い敵の消滅
 	strongEnemys_.remove_if([](StrongEnemy* strongEnemy) {
-		if (strongEnemy->GetWorldPosition().y <= -40.0f) {
+		if (strongEnemy->GetWorldPosition().y <= -25.0f) {
 			delete strongEnemy;
 			return true;
 		}
 		return false;
 	});
 
-	// 
+	// 反射する敵の消滅
 	reflectEnemys_.remove_if([](ReflectEnemy* reflectEnemy) {
 		if (reflectEnemy->GetWorldPosition().y <= -80.0f) {
 			delete reflectEnemy;
@@ -144,7 +144,7 @@ void GameScene::Update() {
 		return false;
 	});
 
-	// 
+	// 曲がる敵の消滅
 	curveEnemys_.remove_if([](CurveEnemy* curveEnemy) {
 		if (curveEnemy->GetWorldPosition().y <= -80.0f) {
 			delete curveEnemy;
