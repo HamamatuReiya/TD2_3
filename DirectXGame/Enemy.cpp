@@ -16,7 +16,6 @@ void Enemy::Initialize(
 
 	ChangePos(viewProjection);
 
-
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
 }
@@ -53,7 +52,7 @@ void Enemy::HitJudge(int PlayerAttack) {
 	};
 	
 	if (enemyHP <= 0) {
-	        isDead_ = true;    
+	        isDead_ = true; 
 	}
 }
 

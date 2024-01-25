@@ -62,6 +62,9 @@ public:
 	//衝突判定
 	void CheakAllCollisions();
 
+	//敵のHPを受け取ってカメラを揺らす関数
+	void CheakHPCameraShake();
+
 private:
 	/// <summary>
 	/// 敵の発生

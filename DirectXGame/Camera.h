@@ -21,7 +21,7 @@ public:
 	void CameraShake();
 	
 	//カメラ揺れを発生させるフラグ
-	void OnCollision();
+	void ShakeStart(int HP);
 
 public:
 	/// <summary>

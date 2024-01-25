@@ -46,6 +46,9 @@ public:
 
 	bool IsDead() const { return isDead_; }
 
+	// 敵の体力を獲得
+	int GetHP() { return enemyHP; }
+
 private:
 	//カーブの初期化
 	void InitializeCurveGimmick();
