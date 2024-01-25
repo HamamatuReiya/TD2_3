@@ -14,7 +14,7 @@ void CurveEnemy::Initialize(
 	// 引数からデータを受け取る
 	model_ = model;
 
-	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_.scale_ = {3.0f, 3.0f, 3.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_.translation_ = position;
 
@@ -35,6 +35,9 @@ void CurveEnemy::Update() {
 
 	UpdateCurveGimmick();
 
+	////Z軸を固定化
+	worldTransform_.translation_.z = 130.0f;
+
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
 
@@ -48,8 +51,6 @@ void CurveEnemy::Update() {
 void CurveEnemy::Draw(ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection);
 }
-
-void CurveEnemy::OnCollision() { isDead_ = true; }
 
 Vector3 CurveEnemy::GetWorldPosition() { 
 	Vector3 worldPos;
@@ -132,3 +133,7 @@ void CurveEnemy::ChangePos(ViewProjection& viewProjection) {
 
 	worldTransform_.translation_ = Add(posNear, Multiply(kDistanceTestObject, enemyDirection));
 }
+
+void CurveEnemy::OnCollision() { isCollision_ = false; }
+
+void CurveEnemy::NotCollision() { isCollision_ = true; }

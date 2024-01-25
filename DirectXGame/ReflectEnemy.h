@@ -56,7 +56,7 @@ private:
 	// モデル
 	Model* model_ = nullptr;
 
-		// 敵の体力
+	// 敵の体力
 	int enemyHP = 4;
 
 	// 接触判定

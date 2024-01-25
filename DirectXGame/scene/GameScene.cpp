@@ -36,7 +36,7 @@ void GameScene::Initialize() {
 	#pragma endregion
 	
 	#pragma region 敵
-	//敵の生成
+	// 敵の生成
 	modelEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
 	LoadEnemyPopData("./Resources/enemyPop.csv");
 	// 強め(硬め)の生成
@@ -46,7 +46,7 @@ void GameScene::Initialize() {
 	modelReflectEnemy_.reset(Model::CreateFromOBJ("reflectEnemy", true));
 	LoadReflectEnemyPopData("./Resources/reflectEnemyPop.csv");
 	// 曲がる敵の生成
-	modelCurveEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
+	modelCurveEnemy_.reset(Model::CreateFromOBJ("curveEnemy", true));
 	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv"); 
 
 #pragma endregion
@@ -148,8 +148,12 @@ void GameScene::Update() {
 		return false;
 	});
 
-	// 曲がる敵の消滅
+	//カーブする敵の消滅
 	curveEnemys_.remove_if([](CurveEnemy* curveEnemy) {
+		if (curveEnemy->IsDead()) {
+			delete curveEnemy;
+			return true;
+		}
 		if (curveEnemy->GetWorldPosition().y <= -80.0f) {
 			delete curveEnemy;
 			return true;
@@ -359,6 +363,32 @@ void GameScene::CheakAllCollisions() {
 		}
 	}
 
+	for (CurveEnemy* curveEnemy : curveEnemys_) {
+		// 敵のワールド座標を取得
+		posB = curveEnemy->GetWorldPosition();
+
+		// 雑魚敵の半径
+		float enemyBulletRadius = 6.0f;
+
+		// AとBの距離を求める
+		posAB = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y);
+		//(posB.z - posA.z) * (posB.z - posA.z);
+
+		// 球と球との当たり判定
+		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
+			// 自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			// 敵ダメージ判定を出す
+			curveEnemy->HitJudge(player_->GetAttackPow());
+			// カメラの衝突判定
+			camera_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			// enemy->OnCollision();
+		} else {
+			curveEnemy->NotCollision();
+		}
+	}
+
 }
 
 
@@ -372,7 +402,7 @@ void GameScene::EnemySpawn(Vector3 position, Vector3 velocity) {
 
 void GameScene::LoadEnemyPopData(const std::string& fileName) {
 	enemyPopCommands.clear();
-	
+
 	// ファイルを開く
 	std::ifstream file;
 	file.open(fileName);
