@@ -28,9 +28,9 @@ void Enemy::Update() {
 	worldTransform_.translation_.z = 130.0f;
 
 	//敵キャラの横回転
-	worldTransform_.rotation_.z += 0.02f;
+	//worldTransform_.rotation_.z += 0.02f;
 
-	velocity_.y -= 0.002f;
+	velocity_.y -= 0.008f;
 
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
