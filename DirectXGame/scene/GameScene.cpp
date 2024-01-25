@@ -547,13 +547,14 @@ void GameScene::UpdateReflectEnemyPopCommands() {
 			int direction = r % 2;
 
 			float velocity = 0.0f;
+			const float kVelocity = 0.2f;
 
 			if (direction == 0) {
-				velocity = 0.2f;
+				velocity = kVelocity;
 			}
 
 			if (direction == 1) {
-				velocity = -0.2f;
+				velocity = -kVelocity;
 			}
 
 			// 敵を発生させる
