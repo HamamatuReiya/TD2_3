@@ -36,20 +36,18 @@ void GameScene::Initialize() {
 	#pragma endregion
 	
 	#pragma region 敵
-	//敵の生成
+	// 敵の生成
 	modelEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
-	LoadEnemyPopData();
+	LoadEnemyPopData("./Resources/enemyPop.csv");
 	// 強め(硬め)の生成
 	modelStrongEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
-	LoadStrongEnemyPopData();
-
+	LoadStrongEnemyPopData("./Resources/strongEnemyPop.csv");
+	// 反射する敵の生成
 	modelReflectEnemy_.reset(Model::CreateFromOBJ("reflectEnemy", true));
-
-	LoadReflectEnemyPopData();
-
+	LoadReflectEnemyPopData("./Resources/reflectEnemyPop.csv");
+	// 曲がる敵の生成
 	modelCurveEnemy_.reset(Model::CreateFromOBJ("curveEnemy", true));
-
-	LoadCurveEnemyPopData(); 
+	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv"); 
 
 #pragma endregion
 
@@ -402,12 +400,12 @@ void GameScene::EnemySpawn(Vector3 position, Vector3 velocity) {
 	enemys_.push_back(enemy);
 }
 
-void GameScene::LoadEnemyPopData() {
+void GameScene::LoadEnemyPopData(const std::string& fileName) {
 	enemyPopCommands.clear();
 
 	// ファイルを開く
 	std::ifstream file;
-	file.open("./Resources/enemyPop.csv");
+	file.open(fileName);
 	assert(file.is_open());
 
 	// ファイルの内容を文字列ストリームにコピー
@@ -488,12 +486,12 @@ void GameScene::StrongEnemySpawn(Vector3 position, Vector3 velocity) {
 	strongEnemys_.push_back(strongEnemy);
 }
 
-void GameScene::LoadStrongEnemyPopData() {
+void GameScene::LoadStrongEnemyPopData(const std::string& fileName) {
 	strongEnemyPopCommands.clear();
 
 	// ファイルを開く
 	std::ifstream file;
-	file.open("./Resources/strongEnemyPop.csv");
+	file.open(fileName);
 	assert(file.is_open());
 
 	// ファイルの内容を文字列ストリームにコピー
@@ -574,12 +572,12 @@ void GameScene::ReflectEnemySpawn(Vector3 position, Vector3 velocity) {
 	reflectEnemys_.push_back(reflectEnemy);
 }
 
-void GameScene::LoadReflectEnemyPopData() {
+void GameScene::LoadReflectEnemyPopData(const std::string& fileName) {
 	reflectEnemyPopCommands.clear();
 
 	// ファイルを開く
 	std::ifstream file;
-	file.open("./Resources/reflectEnemyPop.csv");
+	file.open(fileName);
 	assert(file.is_open());
 
 	// ファイルの内容を文字列ストリームにコピー
@@ -678,12 +676,12 @@ void GameScene::CurveEnemySpawn(Vector3 position, Vector3 velocity, bool directi
 	curveEnemys_.push_back(curveEnemy);
 }
 
-void GameScene::LoadCurveEnemyPopData() {
+void GameScene::LoadCurveEnemyPopData(const std::string& fileName) {
 	reflectEnemyPopCommands.clear();
 
 	// ファイルを開く
 	std::ifstream file;
-	file.open("./Resources/curveEnemyPop.csv");
+	file.open(fileName);
 	assert(file.is_open());
 
 	// ファイルの内容を文字列ストリームにコピー
