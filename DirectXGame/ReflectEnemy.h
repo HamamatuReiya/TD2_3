@@ -46,6 +46,9 @@ public:
 
 	bool IsDead() const { return isDead_; }
 
+	// 敵の体力を獲得
+	int GetHP() { return enemyHP; }
+
 private:
 	//反射の動作の関数
 	void reflectUpdate();

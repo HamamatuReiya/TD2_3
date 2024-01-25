@@ -111,7 +111,7 @@ void GameScene::Update() {
 		curveEnemy->Update();
 	}
 	
-
+	
 	//敵の消滅
 	enemys_.remove_if([](Enemy* enemy) {
 		if (enemy->IsDead()) {
@@ -305,10 +305,9 @@ void GameScene::CheakAllCollisions() {
 			player_->OnCollision();
 			//敵ダメージ判定を出す
 			enemy->HitJudge(player_->GetAttackPow());
-			//カメラの衝突判定
-			camera_->OnCollision();
 			// 敵弾の衝突時コールバックを呼び出す
 			//enemy->OnCollision();
+			CheakHPCameraShake();
 		} else {
 			enemy->NotCollision();
 		}
@@ -332,7 +331,7 @@ void GameScene::CheakAllCollisions() {
 			// 敵ダメージ判定を出す
 			strongEnemy->HitJudge(player_->GetAttackPow());
 			// カメラの衝突判定
-			camera_->OnCollision();
+			CheakHPCameraShake();
 			// 敵弾の衝突時コールバックを呼び出す
 			// enemy->OnCollision();
 		} else {
@@ -358,7 +357,7 @@ void GameScene::CheakAllCollisions() {
 			// 敵ダメージ判定を出す
 			reflectEnemy->HitJudge(player_->GetAttackPow());
 			// カメラの衝突判定
-			camera_->OnCollision();
+			CheakHPCameraShake();
 			// 敵弾の衝突時コールバックを呼び出す
 			// enemy->OnCollision();
 		} else {
@@ -384,7 +383,7 @@ void GameScene::CheakAllCollisions() {
 			// 敵ダメージ判定を出す
 			curveEnemy->HitJudge(player_->GetAttackPow());
 			// カメラの衝突判定
-			camera_->OnCollision();
+			CheakHPCameraShake();
 			// 敵弾の衝突時コールバックを呼び出す
 			// enemy->OnCollision();
 		} else {
@@ -393,6 +392,21 @@ void GameScene::CheakAllCollisions() {
 	}
 
 }
+
+void GameScene::CheakHPCameraShake() {
+	for (Enemy* enemy : enemys_) {
+		camera_->ShakeStart(enemy->GetHP());
+	 }
+	for (StrongEnemy* strongEnemy : strongEnemys_) {
+		camera_->ShakeStart(strongEnemy->GetHP());
+	}
+	for (CurveEnemy* curveEnemy : curveEnemys_) {
+		camera_->ShakeStart(curveEnemy->GetHP());
+	}
+	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+		camera_->ShakeStart(reflectEnemy->GetHP());
+	}
+	}
 
 
 void GameScene::EnemySpawn(Vector3 position, Vector3 velocity) { 

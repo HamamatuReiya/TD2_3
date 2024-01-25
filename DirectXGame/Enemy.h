@@ -36,6 +36,9 @@ public:
 	// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
+	//敵の体力を獲得
+	int GetHP() { return enemyHP; }
+
 	bool IsDead() const { return isDead_; }
 
 private:
