@@ -20,6 +20,8 @@ void Camera::Initialize() {
 
 void Camera::Update() {
 
+	//カメラのViewProjectionをもう一つ用意して、自機とカメラのシェイクに使っている変数を別々にする
+
 	CameraShake();
 
 	worldTransform_.matWorld_ = MakeAffineMatrix(
