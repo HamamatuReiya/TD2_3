@@ -17,7 +17,9 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model, const Vector3& position, const Vector3& velocity);
+	void Initialize(
+	    Model* model, const Vector3& position, const Vector3& velocity,
+	    ViewProjection& viewProjection);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -29,7 +31,13 @@ public:
 	/// </summary>
 	void Draw(ViewProjection& viewProjection);
 
+	void ChangePos(ViewProjection& viewProjection);
+
 public:
+
+	void HitJudge(int PlayerAttack);
+
+	void NotCollision();
 
 	// コールバック関数
 	void OnCollision();
@@ -44,6 +52,12 @@ private:
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
+
+	// 敵の体力
+	int enemyHP = 2;
+
+	// 接触判定
+	bool isCollision_ = false;
 
 	bool isDead_ = false;
 	// 速度
