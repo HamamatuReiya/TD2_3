@@ -49,7 +49,7 @@ void GameScene::Initialize() {
 
 	LoadReflectEnemyPopData();
 
-	modelCurveEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
+	modelCurveEnemy_.reset(Model::CreateFromOBJ("curveEnemy", true));
 
 	LoadCurveEnemyPopData(); 
 
@@ -152,8 +152,12 @@ void GameScene::Update() {
 		return false;
 	});
 
-	// 
+	//カーブする敵の消滅
 	curveEnemys_.remove_if([](CurveEnemy* curveEnemy) {
+		if (curveEnemy->IsDead()) {
+			delete curveEnemy;
+			return true;
+		}
 		if (curveEnemy->GetWorldPosition().y <= -80.0f) {
 			delete curveEnemy;
 			return true;
@@ -360,6 +364,32 @@ void GameScene::CheakAllCollisions() {
 			// enemy->OnCollision();
 		} else {
 			reflectEnemy->NotCollision();
+		}
+	}
+
+	for (CurveEnemy* curveEnemy : curveEnemys_) {
+		// 敵のワールド座標を取得
+		posB = curveEnemy->GetWorldPosition();
+
+		// 雑魚敵の半径
+		float enemyBulletRadius = 6.0f;
+
+		// AとBの距離を求める
+		posAB = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y);
+		//(posB.z - posA.z) * (posB.z - posA.z);
+
+		// 球と球との当たり判定
+		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
+			// 自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			// 敵ダメージ判定を出す
+			curveEnemy->HitJudge(player_->GetAttackPow());
+			// カメラの衝突判定
+			camera_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			// enemy->OnCollision();
+		} else {
+			curveEnemy->NotCollision();
 		}
 	}
 

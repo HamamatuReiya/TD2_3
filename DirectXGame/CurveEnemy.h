@@ -36,6 +36,8 @@ public:
 	void ChangePos(ViewProjection& viewProjection);
 
 public:
+	void NotCollision();
+
 	// コールバック関数
 	void OnCollision();
 
