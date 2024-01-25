@@ -105,7 +105,10 @@
     <ClCompile Include="CurveEnemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-     <ClCompile Include="Borderline.cpp">
+    <ClCompile Include="Borderline.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerUpgrade.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -227,7 +230,10 @@
     <ClInclude Include="CurveEnemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-     <ClInclude Include="Borderline.h">
+    <ClInclude Include="Borderline.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUpgrade.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

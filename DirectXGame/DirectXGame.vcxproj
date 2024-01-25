@@ -116,6 +116,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerUpgrade.cpp" />
     <ClCompile Include="ReflectEnemy.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="Skydome.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerUpgrade.h" />
     <ClInclude Include="ReflectEnemy.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="scene\GameScene.h" />
