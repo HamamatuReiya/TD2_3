@@ -6,9 +6,7 @@ public:
 	//攻撃力
 	//体力上昇
 	//回復力の上昇
-	void AttackUpgrade();
-	void HitPointUpgrade();
-	void RecoveryUpgrade();
+
 
 private:
 
