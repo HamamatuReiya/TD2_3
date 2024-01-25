@@ -1,11 +1,13 @@
 ﻿#pragma once
+#include "Model.h"
+#include "WorldTransform.h"
 
 class Borderline {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(Model* model);
 
 	/// <summary>
 	/// 更新
@@ -15,9 +17,12 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(ViewProjection& viewProjection);
 
 private:
-	
+	// ワールド変換データ
+	WorldTransform worldTransform_;
+	// モデル
+	Model* model_ = nullptr;
 
 };

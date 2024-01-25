@@ -22,6 +22,7 @@
 #include "Skydome.h"
 #include "Camera.h"
 #include "Scene.h"
+#include "Borderline.h"
 
 /// <summary>
 /// ゲームシーン
@@ -217,6 +218,11 @@ private: // メンバ変数
 	//   3Dモデル
 	std::unique_ptr<Model> modelSkydome_;
 
-	// ボーダーライン
+	//ボーダーライン
+	std::unique_ptr<Borderline> borderline_;
+	// 3Dモデル
+	std::unique_ptr<Model> modelBorderline_;
+	// ボーダーラインの上限
 	int border_ = 5;
+
 };
