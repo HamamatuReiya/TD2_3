@@ -11,6 +11,8 @@ void Camera::Initialize() {
 	/// 乱数の初期化(シード値の設定)
 	srand((unsigned int)time(nullptr));
 
+	
+
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
 
@@ -73,4 +75,8 @@ void Camera::CameraShake() {
 
 }
 
-void Camera::OnCollision() { shakeFlag = true; }
+void Camera::ShakeStart(int HP) { 
+	if (HP <= 0) {
+		shakeFlag = true;
+	}
+}
