@@ -36,21 +36,17 @@ void GameScene::Initialize() {
 	#pragma endregion
 	
 	#pragma region 敵
-
+	//敵の生成
 	modelEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
-
 	LoadEnemyPopData();
-
+	// 強め(硬め)の生成
 	modelStrongEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
-
 	LoadStrongEnemyPopData();
-
+	// 反射する敵の生成
 	modelReflectEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
-
 	LoadReflectEnemyPopData();
-
+	// 曲がる敵の生成
 	modelCurveEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
-
 	LoadCurveEnemyPopData(); 
 
 #pragma endregion
@@ -112,6 +108,7 @@ void GameScene::Update() {
 	for (CurveEnemy* curveEnemy : curveEnemys_) {
 		curveEnemy->Update();
 	}
+	
 
 	//敵の消滅
 	enemys_.remove_if([](Enemy* enemy) {
@@ -581,13 +578,14 @@ void GameScene::UpdateReflectEnemyPopCommands() {
 			int direction = r % 2;
 
 			float velocity = 0.0f;
+			const float kVelocity = 0.2f;
 
 			if (direction == 0) {
-				velocity = 0.2f;
+				velocity = kVelocity;
 			}
 
 			if (direction == 1) {
-				velocity = -0.2f;
+				velocity = -kVelocity;
 			}
 
 			// 敵を発生させる
@@ -700,6 +698,13 @@ void GameScene::UpdateCurveEnemyPopCommands() {
 			// コマンドループを抜ける
 			break;
 		}
+	}
+}
+
+void GameScene::UpdateBorderLine() { 
+	border_ -= 1;
+	if (border_ <= 0) {
+	
 	}
 }
 
