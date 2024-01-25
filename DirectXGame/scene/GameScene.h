@@ -123,6 +123,11 @@ private:
 	/// </summary>
 	void UpdateCurveEnemyPopCommands();
 
+	/// <summary>
+	/// ボーダーライン更新
+	/// </summary>
+	void UpdateBorderLine();
+
 public:
 	bool isSceneEnd = false;
 
@@ -213,5 +218,5 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelSkydome_;
 
 	// ボーダーライン
-
+	int border_ = 5;
 };
