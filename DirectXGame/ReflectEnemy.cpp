@@ -12,7 +12,7 @@ void ReflectEnemy::Initialize(
 	// 引数からデータを受け取る
 	model_ = model;
 
-	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_.scale_ = {8.0f, 8.0f, 8.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_.translation_ = position;
 
@@ -26,6 +26,9 @@ void ReflectEnemy::Initialize(
 
 void ReflectEnemy::Update() {
 	
+		////Z軸を固定化
+	worldTransform_.translation_.z = 130.0f;
+
 	reflectUpdate();
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
@@ -56,8 +59,6 @@ void ReflectEnemy::reflectUpdate() {
 	}
 
 }
-
-void ReflectEnemy::OnCollision() { isDead_ = true; }
 
 Vector3 ReflectEnemy::GetWorldPosition() { 
 	Vector3 worldPos;
@@ -112,3 +113,7 @@ void ReflectEnemy::ChangePos(ViewProjection& viewProjection) {
 
 	worldTransform_.translation_ = Add(posNear, Multiply(kDistanceTestObject, enemyDirection));
 }
+
+void ReflectEnemy::OnCollision() { isCollision_ = false; }
+
+void ReflectEnemy::NotCollision() { isCollision_ = true; }

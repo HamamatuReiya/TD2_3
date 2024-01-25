@@ -42,8 +42,9 @@ void GameScene::Initialize() {
 	// 強め(硬め)の生成
 	modelStrongEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
 	LoadStrongEnemyPopData();
-	// 反射する敵の生成
-	modelReflectEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
+
+	modelReflectEnemy_.reset(Model::CreateFromOBJ("reflectEnemy", true));
+
 	LoadReflectEnemyPopData();
 	// 曲がる敵の生成
 	modelCurveEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
@@ -138,6 +139,10 @@ void GameScene::Update() {
 
 	// 反射する敵の消滅
 	reflectEnemys_.remove_if([](ReflectEnemy* reflectEnemy) {
+		if (reflectEnemy->IsDead()) {
+			delete reflectEnemy;
+			return true;
+		}
 		if (reflectEnemy->GetWorldPosition().y <= -80.0f) {
 			delete reflectEnemy;
 			return true;
@@ -329,6 +334,33 @@ void GameScene::CheakAllCollisions() {
 			strongEnemy->NotCollision();
 		}
 	}
+
+	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+		// 敵のワールド座標を取得
+		posB = reflectEnemy->GetWorldPosition();
+
+		// 雑魚敵の半径
+		float enemyBulletRadius = 6.0f;
+
+		// AとBの距離を求める
+		posAB = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y);
+		//(posB.z - posA.z) * (posB.z - posA.z);
+
+		// 球と球との当たり判定
+		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
+			// 自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			// 敵ダメージ判定を出す
+			reflectEnemy->HitJudge(player_->GetAttackPow());
+			// カメラの衝突判定
+			camera_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			// enemy->OnCollision();
+		} else {
+			reflectEnemy->NotCollision();
+		}
+	}
+
 }
 
 
