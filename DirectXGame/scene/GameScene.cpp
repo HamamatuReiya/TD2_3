@@ -108,6 +108,7 @@ void GameScene::Update() {
 	for (CurveEnemy* curveEnemy : curveEnemys_) {
 		curveEnemy->Update();
 	}
+	
 
 	//敵の消滅
 	enemys_.remove_if([](Enemy* enemy) {
@@ -124,7 +125,11 @@ void GameScene::Update() {
 
 	// 強い敵の消滅
 	strongEnemys_.remove_if([](StrongEnemy* strongEnemy) {
-		if (strongEnemy->GetWorldPosition().y <= -25.0f) {
+		if (strongEnemy->IsDead()) {
+			delete strongEnemy;
+			return true;
+		}
+		if (strongEnemy->GetWorldPosition().y <= -40.0f) {
 			delete strongEnemy;
 			return true;
 		}
@@ -269,9 +274,6 @@ void GameScene::CheakAllCollisions() {
 	// 自キャラの半径
 	float playerRadius = 3.0f;
 
-	// 雑魚敵の半径
-	float enemyBulletRadius = 4.0f;
-
 #pragma region 自キャラと敵の当たり判定
 	// 自キャラのワールド座標を取得
 	posA = player_->GetWorldPosition();
@@ -279,6 +281,9 @@ void GameScene::CheakAllCollisions() {
 	for (Enemy* enemy : enemys_) {
 		// 敵のワールド座標を取得
 		posB = enemy->GetWorldPosition();
+
+		// 雑魚敵の半径
+		float enemyBulletRadius = 4.0f;
 
 		// AとBの距離を求める
 		posAB = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y);
@@ -296,6 +301,32 @@ void GameScene::CheakAllCollisions() {
 			//enemy->OnCollision();
 		} else {
 			enemy->NotCollision();
+		}
+	}
+
+	for (StrongEnemy* strongEnemy : strongEnemys_) {
+		// 敵のワールド座標を取得
+		posB = strongEnemy->GetWorldPosition();
+
+		// 雑魚敵の半径
+		float enemyBulletRadius = 16.0f;
+
+		// AとBの距離を求める
+		posAB = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y);
+		//(posB.z - posA.z) * (posB.z - posA.z);
+
+		// 球と球との当たり判定
+		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
+			// 自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			// 敵ダメージ判定を出す
+			strongEnemy->HitJudge(player_->GetAttackPow());
+			// カメラの衝突判定
+			camera_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			// enemy->OnCollision();
+		} else {
+			strongEnemy->NotCollision();
 		}
 	}
 }
@@ -390,7 +421,7 @@ void GameScene::UpdateEnemyPopCommands() {
 void GameScene::StrongEnemySpawn(Vector3 position, Vector3 velocity) {
 	StrongEnemy* strongEnemy = new StrongEnemy;
 
-	strongEnemy->Initialize(modelStrongEnemy_.get(), position, velocity);
+	strongEnemy->Initialize(modelStrongEnemy_.get(), position, velocity,viewProjection_);
 
 	strongEnemys_.push_back(strongEnemy);
 }
@@ -667,6 +698,13 @@ void GameScene::UpdateCurveEnemyPopCommands() {
 			// コマンドループを抜ける
 			break;
 		}
+	}
+}
+
+void GameScene::UpdateBorderLine() { 
+	border_ -= 1;
+	if (border_ <= 0) {
+	
 	}
 }
 
