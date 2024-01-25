@@ -108,6 +108,7 @@ void GameScene::Update() {
 	for (CurveEnemy* curveEnemy : curveEnemys_) {
 		curveEnemy->Update();
 	}
+	
 
 	//敵の消滅
 	enemys_.remove_if([](Enemy* enemy) {
@@ -667,6 +668,13 @@ void GameScene::UpdateCurveEnemyPopCommands() {
 			// コマンドループを抜ける
 			break;
 		}
+	}
+}
+
+void GameScene::UpdateBorderLine() { 
+	border_ -= 1;
+	if (border_ <= 0) {
+	
 	}
 }
 
