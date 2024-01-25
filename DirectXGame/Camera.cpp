@@ -45,14 +45,14 @@ void Camera::CameraShake() {
 		// 揺れる分のVector3
 		Vector3 shakeTrans = {(float)shakeTransX, (float)shakeTransY, 0};
 
-		shakeTransX = rand() % 2 - 1;
-		shakeTransY = rand() % 2 - 1;
+		shakeTransX = rand() % 3 - 1;
+		shakeTransY = rand() % 3 - 1;
 
 		// worldTransform_.translation_ = Add(worldTransform_.translation_, shakeTrans);
 		worldTransform_.translation_.x += shakeTransX;
 		worldTransform_.translation_.y += shakeTransY;
 	} else {
-	
+		worldTransform_.translation_ = {0.0f, 0.0f, -50.0f};
 		// 揺れる値をリセット
 		shakeTransX = 0;
 		shakeTransY = 0;
