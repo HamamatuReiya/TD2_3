@@ -17,7 +17,9 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Model* model, const Vector3& position, const Vector3& velocity);
+	void Initialize(
+	    Model* model, const Vector3& position, const Vector3& velocity,
+	    ViewProjection& viewProjection);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -28,6 +30,10 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw(ViewProjection& viewProjection);
+
+	void HitJudge(int PlayerAttack);
+
+	void ChangePos(ViewProjection& viewProjection);
 
 public:
 	// コールバック関数
@@ -48,6 +54,13 @@ private:
 	// モデル
 	Model* model_ = nullptr;
 
+		// 敵の体力
+	int enemyHP = 2;
+
+	// 接触判定
+	bool isCollision_ = false;
+
+	// 死亡判定
 	bool isDead_ = false;
 	// 速度
 	Vector3 velocity_;
