@@ -14,7 +14,6 @@ void TitleScene::Update() {
 	if (input_->TriggerKey(DIK_SPACE)) {
 		isSceneEnd = true;
 	}
-	
 }
 
 void TitleScene::Draw() {
