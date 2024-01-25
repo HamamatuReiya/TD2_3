@@ -59,6 +59,13 @@ void GameScene::Initialize() {
 	// 天球の初期化
 	skydome_->Initialize(modelSkydome_.get());
 
+	// ボーダーラインの生成
+	borderline_ = std::make_unique<Borderline>();
+	// 3Dモデルの生成
+	modelBorderline_.reset(Model::CreateFromOBJ("borderline", true));
+	// ボーダーラインの初期化
+	borderline_->Initialize(modelBorderline_.get());
+
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
 	// カメラの初期化
@@ -174,6 +181,9 @@ void GameScene::Update() {
 	// 天球の更新
 	skydome_->Update();
 
+	// ボーダーラインの更新
+	borderline_->Update();
+
 	// デバッグカメラ
 	debugCamera_->Update();
 
@@ -252,6 +262,9 @@ void GameScene::Draw() {
 
 	// 天球の描画
 	skydome_->Draw(viewProjection_);
+
+	// ボーダーラインの描画
+	borderline_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
