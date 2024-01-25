@@ -70,7 +70,7 @@ void CurveEnemy::InitializeCurveGimmick() {
 }
 
 void CurveEnemy::UpdateCurveGimmick() {
-	// 浮遊移動のサイクル<frame>
+	// 左右移動のサイクル<frame>
 	const uint16_t kPeriod = uint16_t(kCurveFPS);
 	// 1フレームでのパラメータ加算値
 	const float kStep = 2.0f * float(M_PI) / float(kPeriod);
@@ -80,8 +80,8 @@ void CurveEnemy::UpdateCurveGimmick() {
 	// 2πを超えたら0に戻す
 	curveParameter_ = std::fmod(curveParameter_, 2.0f * float(M_PI));
 
-	// 浮遊の振幅<m>
+	// 左右の振幅<m>
 	float curveSwing = 100.0f * direction_;
-	// 浮遊を座標に反映
+	// 左右を座標に反映
 	worldTransform_.translation_.x = std::sin(curveParameter_) * curveSwing;
 }

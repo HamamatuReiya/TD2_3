@@ -36,21 +36,17 @@ void GameScene::Initialize() {
 	#pragma endregion
 	
 	#pragma region 敵
-
+	//敵の生成
 	modelEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
-
 	LoadEnemyPopData();
-
+	// 強め(硬め)の生成
 	modelStrongEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
-
 	LoadStrongEnemyPopData();
-
+	// 反射する敵の生成
 	modelReflectEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
-
 	LoadReflectEnemyPopData();
-
+	// 曲がる敵の生成
 	modelCurveEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
-
 	LoadCurveEnemyPopData(); 
 
 #pragma endregion
