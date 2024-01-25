@@ -109,7 +109,6 @@ void GameScene::Update() {
 		curveEnemy->Update();
 	}
 	
-
 	//敵の消滅
 	enemys_.remove_if([](Enemy* enemy) {
 		if (enemy->IsDead()) {
