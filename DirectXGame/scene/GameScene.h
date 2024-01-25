@@ -71,7 +71,7 @@ private:
 	/// <summary>
 	/// 敵発生データの読み込み
 	/// </summary>
-	void LoadEnemyPopData();
+	void LoadEnemyPopData(const std::string& fileName);
 
 	/// <summary>
 	/// 敵発生コマンドの更新
@@ -86,7 +86,7 @@ private:
 	/// <summary>
 	/// 強めの敵発生データの読み込み
 	/// </summary>
-	void LoadStrongEnemyPopData();
+	void LoadStrongEnemyPopData(const std::string& fileName);
 
 	/// <summary>
 	/// 強めの敵発生コマンドの更新
@@ -101,7 +101,7 @@ private:
 	/// <summary>
 	/// 反射する敵発生データの読み込み
 	/// </summary>
-	void LoadReflectEnemyPopData();
+	void LoadReflectEnemyPopData(const std::string& fileName);
 
 	/// <summary>
 	/// 反射する敵発生コマンドの更新
@@ -116,7 +116,7 @@ private:
 	/// <summary>
 	/// 曲がる敵発生データの読み込み
 	/// </summary>
-	void LoadCurveEnemyPopData();
+	void LoadCurveEnemyPopData(const std::string& fileName);
 
 	/// <summary>
 	/// 曲がる敵発生コマンドの更新
