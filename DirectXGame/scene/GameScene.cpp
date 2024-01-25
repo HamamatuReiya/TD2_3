@@ -480,7 +480,7 @@ void GameScene::UpdateStrongEnemyPopCommands() {
 void GameScene::ReflectEnemySpawn(Vector3 position, Vector3 velocity) {
 	ReflectEnemy* reflectEnemy = new ReflectEnemy;
 
-	reflectEnemy->Initialize(modelReflectEnemy_.get(), position, velocity);
+	reflectEnemy->Initialize(modelReflectEnemy_.get(), position, velocity, viewProjection_);
 
 	reflectEnemys_.push_back(reflectEnemy);
 }
@@ -561,7 +561,7 @@ void GameScene::UpdateReflectEnemyPopCommands() {
 			}
 
 			// 敵を発生させる
-			ReflectEnemySpawn(Vector3(x, y, z), {velocity, -0.2f, 0.0f});
+			ReflectEnemySpawn(Vector3(x, y, z), {velocity, -0.08f, 0.0f});
 		}
 		// WAITコマンド
 		else if (word.find("WAIT") == 0) {
@@ -583,7 +583,7 @@ void GameScene::UpdateReflectEnemyPopCommands() {
 void GameScene::CurveEnemySpawn(Vector3 position, Vector3 velocity, bool directionFlag) {
 	CurveEnemy* curveEnemy = new CurveEnemy;
 
-	curveEnemy->Initialize(modelCurveEnemy_.get(), position, velocity, directionFlag);
+	curveEnemy->Initialize(modelCurveEnemy_.get(), position, velocity, directionFlag,viewProjection_);
 
 	curveEnemys_.push_back(curveEnemy);
 }

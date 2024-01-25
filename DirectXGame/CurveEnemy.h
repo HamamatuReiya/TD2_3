@@ -18,7 +18,8 @@ public:
 	/// 初期化
 	/// </summary>
 	void Initialize(
-	    Model* model, const Vector3& position, const Vector3& velocity, bool directionFlag);
+	    Model* model, const Vector3& position, const Vector3& velocity, bool directionFlag,
+	    ViewProjection& viewProjection);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -29,6 +30,10 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw(ViewProjection& viewProjection);
+
+	void HitJudge(int PlayerAttack);
+
+	void ChangePos(ViewProjection& viewProjection);
 
 public:
 	// コールバック関数
@@ -65,4 +70,10 @@ private:
 	bool directionFlag_ = false;
 
 	float direction_ = 0;
+
+	// 敵の体力
+	int enemyHP = 2;
+
+	// 接触判定
+	bool isCollision_ = false;
 };

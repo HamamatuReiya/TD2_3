@@ -20,6 +20,8 @@ void Camera::Initialize() {
 
 void Camera::Update() {
 
+	//カメラのViewProjectionをもう一つ用意して、自機とカメラのシェイクに使っている変数を別々にする
+
 	CameraShake();
 
 	worldTransform_.matWorld_ = MakeAffineMatrix(
@@ -34,13 +36,8 @@ void Camera::Update() {
 }
 
 void Camera::CameraShake() {
+	if (shakeFlag == true){
 
-	//揺れの時間をタイマーで管理して、揺れた分の幅をリセットするようにする
-	if (shakeFlag == false) {
-		// 揺れる値をリセット
-		shakeTransX = 0;
-		shakeTransY = 0;
-	} else {
 		//タイマーをプラス
 		shakeTimer++;
 		// 揺れる値を入れる変数
@@ -56,6 +53,11 @@ void Camera::CameraShake() {
 		// worldTransform_.translation_ = Add(worldTransform_.translation_, shakeTrans);
 		worldTransform_.translation_.x += shakeTransX;
 		worldTransform_.translation_.y += shakeTransY;
+	} else {
+		worldTransform_.translation_ = {0.0f, 0.0f, -50.0f};
+		// 揺れる値をリセット
+		shakeTransX = 0;
+		shakeTransY = 0;
 	}
 
 	if (shakeTimer >= 10) {
