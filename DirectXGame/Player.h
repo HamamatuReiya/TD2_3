@@ -18,7 +18,7 @@ public:
 
 	void Draw(ViewProjection& viewProjection);
 	
-	// ワールド座標を取得
+	/// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
 	// コールバック関数
