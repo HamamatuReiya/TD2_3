@@ -29,7 +29,7 @@ public:
 	//自分の攻撃力を渡す関数
 	int GetAttackPow() { return attackPower; }
 
-
+	int GetHP() { return HP_; }
 
 public:
 	void HitJudge();
@@ -56,4 +56,7 @@ private:
 
 	// 接触判定
 	bool isCollision_ = false;
+
+	// HP
+	int HP_;
 };
