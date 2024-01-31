@@ -29,6 +29,8 @@ public:
 	//自分の攻撃力を渡す関数
 	int GetAttackPow() { return attackPower; }
 
+
+
 public:
 	void HitJudge();
 
