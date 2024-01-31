@@ -228,4 +228,8 @@ private: // メンバ変数
 	// ボーダーラインの上限
 	int border_ = 5;
 
+	// プレイヤーのHP
+	uint_fast32_t playerHPTexture_ = 0;
+	// スプライト
+	Sprite* playerHPSprite_ = nullptr;
 };

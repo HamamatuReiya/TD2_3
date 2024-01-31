@@ -66,6 +66,8 @@ void GameScene::Initialize() {
 	// ボーダーラインの初期化
 	borderline_->Initialize(modelBorderline_.get());
 
+	// プレイヤーのHPのテクスチャ読み込み
+
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
 	// カメラの初期化
