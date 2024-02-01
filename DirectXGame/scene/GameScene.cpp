@@ -72,10 +72,10 @@ void GameScene::Initialize() {
 	// カメラの初期化
 	camera_->Initialize();
 
-#ifdef _DEBUG	
-
 	// デバッグカメラの生成
 	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
+
+#ifdef _DEBUG	
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -197,10 +197,12 @@ void GameScene::Update() {
 	// ボーダーラインの更新
 	borderline_->Update();
 
+
+#ifdef _DEBUG
+
 	// デバッグカメラ
 	debugCamera_->Update();
 
-#ifdef _DEBUG
 	// Cを押して起動
 	if (input_->TriggerKey(DIK_C) && isDebugCameraActive_ == false) {
 		isDebugCameraActive_ = true;
