@@ -68,7 +68,7 @@ void GameScene::Initialize() {
 	// プレイヤーのHPのテクスチャ読み込み
 	playerHPTexture_ = TextureManager::Load("hp.png");
 	// プレイヤーのHPの生成
-	playerHPSprite_ = Sprite::Create(playerHPTexture_, {0, 0});
+	playerHPSprite_ = Sprite::Create(playerHPTexture_, {10, 10});
 
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
@@ -139,7 +139,7 @@ void GameScene::Update() {
 			delete enemy;
 			return true;
 		}
-		if (enemy->GetWorldPosition().y <= -90.0f) {
+		if (enemy->GetWorldPosition().y <= -55.0f) {
 			delete enemy;
 			return true;
 		}
@@ -152,7 +152,7 @@ void GameScene::Update() {
 			delete strongEnemy;
 			return true;
 		}
-		if (strongEnemy->GetWorldPosition().y <= -80.0f) {
+		if (strongEnemy->GetWorldPosition().y <= -45.0f) {
 			delete strongEnemy;
 			return true;
 		}
@@ -165,7 +165,7 @@ void GameScene::Update() {
 			delete reflectEnemy;
 			return true;
 		}
-		if (reflectEnemy->GetWorldPosition().y <= -80.0f) {
+		if (reflectEnemy->GetWorldPosition().y <= -50.0f) {
 			delete reflectEnemy;
 			return true;
 		}
@@ -178,7 +178,7 @@ void GameScene::Update() {
 			delete curveEnemy;
 			return true;
 		}
-		if (curveEnemy->GetWorldPosition().y <= -80.0f) {
+		if (curveEnemy->GetWorldPosition().y <= -55.0f) {
 			delete curveEnemy;
 			return true;
 		}
