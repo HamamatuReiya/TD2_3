@@ -59,7 +59,7 @@ private:
 	//プレイヤーの体力
 	const float kPlayerHP_ = 300.0f;
 	float playerHP_ = kPlayerHP_;
-	float recoveryPower = 10.0f;
+	float recoveryPower = 15.0f;
 
 	// プレイヤーの攻撃力
 	int attackPower = 1;
