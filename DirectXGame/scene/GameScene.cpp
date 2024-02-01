@@ -38,17 +38,13 @@ void GameScene::Initialize() {
 #pragma region 敵
 	// 敵の生成
 	modelEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
-	LoadEnemyPopData("./Resources/enemyPop.csv");
 	// 強め(硬め)の生成
 	modelStrongEnemy_.reset(Model::CreateFromOBJ("strongEnemy", true));
-	LoadStrongEnemyPopData("./Resources/strongEnemyPop.csv");
 	// 反射する敵の生成
 	modelReflectEnemy_.reset(Model::CreateFromOBJ("reflectEnemy", true));
-	LoadReflectEnemyPopData("./Resources/reflectEnemyPop.csv");
 	// 曲がる敵の生成
 	modelCurveEnemy_.reset(Model::CreateFromOBJ("curveEnemy", true));
-	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv"); 
-
+	Wave1Initialize();
 #pragma endregion
 
 	// 天球
@@ -213,6 +209,10 @@ void GameScene::Update() {
 		viewProjection_.TransferMatrix();
 	}
 
+	//ウェーブ切り替えデバッグ用
+	/*if (input_->TriggerKey(DIK_SPACE)) {
+		isWaveEnd = true;
+	}*/
 }
 
 void GameScene::Draw() {
@@ -798,9 +798,26 @@ void GameScene::UpdateBorderLine() {
 	}
 }
 
+void GameScene::Wave1Initialize() {
+	LoadEnemyPopData("./Resources/enemyPop.csv");
+	LoadStrongEnemyPopData("./Resources/strongEnemyPop.csv");
+	LoadReflectEnemyPopData("./Resources/reflectEnemyPop.csv");
+	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv");
+}
+
+void GameScene::Wave2Initialize() {
+	LoadEnemyPopData("./Resources/enemyPop.csv");
+	LoadStrongEnemyPopData("./Resources/strongEnemyPop.csv");
+	LoadReflectEnemyPopData("./Resources/reflectEnemyPop.csv");
+	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv");
+}
+
+void GameScene::WaveReset() { isWaveEnd = false; }
+
 void GameScene::sceneReset() {
 	//敵のリセット
 	enemys_.clear();
 	//シーン移行のリセット
 	isSceneEnd = false;
+
 }

@@ -59,7 +59,6 @@ public:
 
 	// シーンのリセット
 	void sceneReset();
-
 	//衝突判定
 	void CheakAllCollisions();
 
@@ -133,6 +132,22 @@ private:
 	void UpdateBorderLine();
 
 public:
+	void Wave1Initialize();
+
+	void Wave2Initialize();
+
+	void WaveReset();
+
+	enum class Wave {
+		Wave1,
+		Wave2
+	};
+	
+	bool isWaveEnd = false;
+
+	bool IsWaveEnd() { return isWaveEnd; }
+	Wave NextWave() { return Wave::Wave2; }
+
 	bool isSceneEnd = false;
 
 	bool IsSceneEnd() { return isSceneEnd; }

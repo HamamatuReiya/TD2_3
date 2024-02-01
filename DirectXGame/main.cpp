@@ -100,6 +100,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			// ゲームシーンの毎フレーム処理
 			gameScene->Update();
 
+			if (gameScene->IsWaveEnd()) {
+				gameScene->NextWave();
+				gameScene->Wave2Initialize();
+				gameScene->WaveReset();
+			}
+
 			if (gameScene->IsSceneEnd()) {
 				// 次のシーンの値を代入してシーン切り替え
 				sceneNo = gameScene->NextScene();
