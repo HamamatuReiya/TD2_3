@@ -39,7 +39,16 @@ public:
 	//敵の体力を獲得
 	int GetHP() { return enemyHP; }
 
+	//敵の攻撃力を獲得
+	int GetPower() { return enemyAttack; }
+
 	bool IsDead() const { return isDead_; }
+
+	// プレイヤーにダメージを与える関数
+	int AttackPlayer(int playerHP);
+
+	// ダメージフラグをリセットする関数
+	void ResetFlag();
 
 private:
 
@@ -51,8 +60,14 @@ private:
 	//敵の体力
 	int enemyHP = 2;
 
+	//敵の攻撃力
+	int enemyAttack = 2;
+
 	//接触判定
 	bool isCollision_ = false;
+
+	// ダメージを与えるフラグ
+	bool isDamageFlag_ = true;
 
 	//死亡判定
 	bool isDead_ = false;

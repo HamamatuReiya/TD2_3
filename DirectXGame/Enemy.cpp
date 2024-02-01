@@ -99,6 +99,20 @@ Vector3 Enemy::GetWorldPosition() {
 	return worldPos;
 }
 
-void Enemy::OnCollision() { isCollision_ = false; }
+void Enemy::OnCollision() { 
+	isCollision_ = false;
+}
 
-void Enemy::NotCollision() { isCollision_ = true; }
+void Enemy::NotCollision() { 
+	isCollision_ = true;
+}
+
+int Enemy::AttackPlayer(int playerHP) {
+	if (isDamageFlag_ == true) {
+		    playerHP -= enemyAttack;
+		    isDamageFlag_ = false;
+	}
+	return playerHP;
+}
+
+void Enemy::ResetFlag() { isDamageFlag_ = true; }

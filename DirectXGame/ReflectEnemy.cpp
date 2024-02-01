@@ -117,3 +117,13 @@ void ReflectEnemy::ChangePos(ViewProjection& viewProjection) {
 void ReflectEnemy::OnCollision() { isCollision_ = false; }
 
 void ReflectEnemy::NotCollision() { isCollision_ = true; }
+
+int ReflectEnemy::AttackPlayer(int playerHP) {
+	if (isDamageFlag_ == true) {
+		playerHP -= enemyAttack;
+		isDamageFlag_ = false;
+	}
+	return playerHP;
+}
+
+void ReflectEnemy::ResetFlag() { isDamageFlag_ = true; }

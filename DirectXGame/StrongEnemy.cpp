@@ -91,9 +91,23 @@ void StrongEnemy::ChangePos(ViewProjection& viewProjection) {
 	worldTransform_.translation_ = Add(posNear, Multiply(kDistanceTestObject, enemyDirection));
 }
 
-void StrongEnemy::OnCollision() { isCollision_ = false; }
+void StrongEnemy::OnCollision() { 
+	isCollision_ = false;
+}
 
-void StrongEnemy::NotCollision() { isCollision_ = true; }
+void StrongEnemy::NotCollision() {
+	isCollision_ = true;
+}
+
+int StrongEnemy::AttackPlayer(int playerHP) {
+	if (isDamageFlag_ == true) {
+		playerHP -= enemyAttack;
+		isDamageFlag_ = false;
+	}
+	return playerHP;
+}
+
+void StrongEnemy::ResetFlag() { isDamageFlag_ = true; }
 
 Vector3 StrongEnemy::GetWorldPosition() {
 	Vector3 worldPos;

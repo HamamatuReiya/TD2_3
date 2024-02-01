@@ -21,18 +21,16 @@ public:
 	/// ワールド座標を取得
 	Vector3 GetWorldPosition();
 
-	// コールバック関数
-	void OnCollision();
-
-	void NotCollision();
-
 	//自分の攻撃力を渡す関数
 	int GetAttackPow() { return attackPower; }
 
+	//自分のHPを渡す関数
+	int GetHP() { return playerHP_; }
 
+	//敵から減らされたダメージを貰う関数
+	void GetDamageAfter(int hp);
 
 public:
-	void HitJudge();
 
 	bool IsDead() const { return isDead_; }
 
@@ -56,4 +54,7 @@ private:
 
 	// 接触判定
 	bool isCollision_ = false;
+	//ダメージを一瞬だけ受けるためのフラグ
+	bool damageFlag_ = true;
+
 };

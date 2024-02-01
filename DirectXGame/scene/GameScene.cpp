@@ -287,6 +287,8 @@ void GameScene::CheakAllCollisions() {
 	posA = player_->GetWorldPosition();
 
 	for (Enemy* enemy : enemys_) {
+
+
 		// 敵のワールド座標を取得
 		posB = enemy->GetWorldPosition();
 
@@ -299,15 +301,15 @@ void GameScene::CheakAllCollisions() {
 
 		// 球と球との当たり判定
 		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
-			// 自キャラの衝突時コールバックを呼び出す
-			player_->OnCollision();
 			//敵ダメージ判定を出す
 			enemy->HitJudge(player_->GetAttackPow());
-			// 敵弾の衝突時コールバックを呼び出す
-			//enemy->OnCollision();
+
+			player_->GetDamageAfter(enemy->AttackPlayer(player_->GetHP()));
+
 			CheakHPCameraShake();
 		} else {
 			enemy->NotCollision();
+			enemy->ResetFlag();
 		}
 	}
 
@@ -324,16 +326,22 @@ void GameScene::CheakAllCollisions() {
 
 		// 球と球との当たり判定
 		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
-			// 自キャラの衝突時コールバックを呼び出す
-			player_->OnCollision();
 			// 敵ダメージ判定を出す
 			strongEnemy->HitJudge(player_->GetAttackPow());
+			// 敵から攻撃力を貰ってダメージを受ける
+			//player_->Damage(strongEnemy->GetPower());
+			
+			player_->GetDamageAfter(strongEnemy->AttackPlayer(player_->GetHP()));
+
 			// カメラの衝突判定
 			CheakHPCameraShake();
 			// 敵弾の衝突時コールバックを呼び出す
 			// enemy->OnCollision();
 		} else {
 			strongEnemy->NotCollision();
+			strongEnemy->ResetFlag();
+			// ダメージを受けるフラグのリセット
+			//player_->NotDamage();
 		}
 	}
 
@@ -350,16 +358,18 @@ void GameScene::CheakAllCollisions() {
 
 		// 球と球との当たり判定
 		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
-			// 自キャラの衝突時コールバックを呼び出す
-			player_->OnCollision();
 			// 敵ダメージ判定を出す
 			reflectEnemy->HitJudge(player_->GetAttackPow());
+
+			player_->GetDamageAfter(reflectEnemy->AttackPlayer(player_->GetHP()));
+
 			// カメラの衝突判定
 			CheakHPCameraShake();
 			// 敵弾の衝突時コールバックを呼び出す
 			// enemy->OnCollision();
 		} else {
 			reflectEnemy->NotCollision();
+			reflectEnemy->ResetFlag();
 		}
 	}
 
@@ -376,16 +386,18 @@ void GameScene::CheakAllCollisions() {
 
 		// 球と球との当たり判定
 		if (posAB <= (playerRadius + enemyBulletRadius) * (playerRadius + enemyBulletRadius)) {
-			// 自キャラの衝突時コールバックを呼び出す
-			player_->OnCollision();
 			// 敵ダメージ判定を出す
 			curveEnemy->HitJudge(player_->GetAttackPow());
+
+			player_->GetDamageAfter(curveEnemy->AttackPlayer(player_->GetHP()));
+
 			// カメラの衝突判定
 			CheakHPCameraShake();
 			// 敵弾の衝突時コールバックを呼び出す
 			// enemy->OnCollision();
 		} else {
 			curveEnemy->NotCollision();
+			curveEnemy->ResetFlag();
 		}
 	}
 
