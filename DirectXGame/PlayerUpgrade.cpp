@@ -1,14 +1,14 @@
 ﻿#include "PlayerUpgrade.h"
 #include "Player.h"
 
-void PlayerUpgrade::AttackUpgrade(int attackPower) {
+void PlayerUpgrade::AttackUpgrade(float attackPower) {
 	attackPower += attack_; 
 }
 
-void PlayerUpgrade::HitPointUpgrade(int playerHP) { 
+void PlayerUpgrade::HitPointUpgrade(float playerHP) { 
 	playerHP += hitPoint_;
 }
 
-void PlayerUpgrade::RecoveryUpgrade(int recovery) { 
+void PlayerUpgrade::RecoveryUpgrade(float recovery) { 
 	recovery += recovery_; 
 }

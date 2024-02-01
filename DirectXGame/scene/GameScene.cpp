@@ -229,10 +229,14 @@ void GameScene::Update() {
 		viewProjection_.TransferMatrix();
 	}
 
+#ifdef _DEBUG
+
 	//ウェーブ切り替えデバッグ用
-	/*if (input_->TriggerKey(DIK_SPACE)) {
+	if (input_->TriggerKey(DIK_SPACE)) {
 		isWaveEnd = true;
-	}*/
+	}
+
+#endif // _DEBUG
 }
 
 void GameScene::Draw() {
