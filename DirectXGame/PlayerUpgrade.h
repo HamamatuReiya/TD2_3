@@ -4,17 +4,17 @@ class PlayerUpgrade {
 public:
 	//強化内容
 	//攻撃力
-	void AttackUpgrade(int attackPower);
+	void AttackUpgrade(float attackPower);
 	//体力上昇
-	void HitPointUpgrade(int playerHP);
+	void HitPointUpgrade(float playerHP);
 	//回復力の上昇
-	void RecoveryUpgrade(int recovery);
+	void RecoveryUpgrade(float recovery);
 
 private:
 	//加算する攻撃力
-	int attack_ = 1;
+	float attack_ = 1;
 	//体力
-	int hitPoint_ = 2;
+	float hitPoint_ = 30;
 	//回復力
-	int recovery_ = 1;
+	float recovery_ = 5;
 };
