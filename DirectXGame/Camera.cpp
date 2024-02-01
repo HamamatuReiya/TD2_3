@@ -66,10 +66,6 @@ void Camera::CameraShake() {
 		shakeTimer = 0;
 		shakeFlag = false;
 	}
-	
-	ImGui::Begin("CAMERA");
-	ImGui::Text("model:%d,%d,\n%f", shakeTransX, shakeTransY, worldTransform_.translation_.x);
-	ImGui::End();
 
 	worldTransform_.UpdateMatrix();
 

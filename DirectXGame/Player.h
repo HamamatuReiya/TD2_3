@@ -21,6 +21,8 @@ public:
 	void Draw(ViewProjection& viewProjection);
 
 	void Move(ViewProjection& viewProjection);
+
+	void Recovery();
 	
 	/// ワールド座標を取得
 	Vector3 GetWorldPosition();
@@ -36,12 +38,14 @@ public:
 
 public:
 
-	bool IsDead() const { return isDead_; }
+	
 
 	enum class PlayerState {
 		isAlive,
 		isDead,
 	};
+
+	int GetState() { return isDead_; }
 
 private:
 	//ワールド変換データ
@@ -54,6 +58,7 @@ private:
 	//プレイヤーの体力
 	const float kPlayerHP_ = 300.0f;
 	float playerHP_ = kPlayerHP_;
+	float recoveryPower = 10.0f;
 
 	// プレイヤーの攻撃力
 	int attackPower = 1;

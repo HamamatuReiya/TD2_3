@@ -41,11 +41,16 @@ void CurveEnemy::Update() {
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
 
+	#ifdef DEBUG
+
 	ImGui::Begin("StrongEnemy");
 	ImGui::Text(
 	    "model:%f,%f,%f", worldTransform_.translation_.x, worldTransform_.translation_.y,
 	    worldTransform_.translation_.z);
 	ImGui::End();
+
+#endif // DEBUG
+
 }
 
 void CurveEnemy::Draw(ViewProjection& viewProjection) {
@@ -139,7 +144,7 @@ void CurveEnemy::OnCollision() { isCollision_ = false; }
 void CurveEnemy::NotCollision() { isCollision_ = true; }
 
 float CurveEnemy::AttackPlayer(float playerHP) {
-	if (isDamageFlag_ == true && playerHP >= 1.0f) {
+	if (isDamageFlag_ == true) {
 		playerHP -= enemyAttack;
 		isDamageFlag_ = false;
 	}

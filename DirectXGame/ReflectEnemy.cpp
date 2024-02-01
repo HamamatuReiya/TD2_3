@@ -33,11 +33,15 @@ void ReflectEnemy::Update() {
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
 
+	#ifdef DEBUG
+
 	ImGui::Begin("ReflectENEMY");
 	ImGui::Text(
 	    "model:%f,%f,%f", worldTransform_.translation_.x, worldTransform_.translation_.y,
 	    worldTransform_.translation_.z);
 	ImGui::End();
+#endif // DEBUG
+
 }
 
 void ReflectEnemy::Draw(ViewProjection& viewProjection) {
@@ -119,7 +123,7 @@ void ReflectEnemy::OnCollision() { isCollision_ = false; }
 void ReflectEnemy::NotCollision() { isCollision_ = true; }
 
 float ReflectEnemy::AttackPlayer(float playerHP) {
-	if (isDamageFlag_ == true && playerHP >= 1.0f) {
+	if (isDamageFlag_ == true) {
 		playerHP -= enemyAttack;
 		isDamageFlag_ = false;
 	}

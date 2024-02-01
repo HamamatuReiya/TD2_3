@@ -34,11 +34,16 @@ void Enemy::Update() {
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
 
+	#ifdef DEBUG
+
 		ImGui::Begin("ENEMY");
 	    ImGui::Text(
 	    "model:%f,%f,%f", worldTransform_.translation_.x, worldTransform_.translation_.y,
 	    worldTransform_.translation_.z);
 	    ImGui::End();
+
+    #endif // DEBUG
+
 }
 
 void Enemy::Draw(ViewProjection& viewProjection) {
@@ -108,7 +113,7 @@ void Enemy::NotCollision() {
 }
 
 float Enemy::AttackPlayer(float playerHP) {
-	if (isDamageFlag_ == true&&playerHP>=1.0f) {
+	if (isDamageFlag_ == true) {
 		    playerHP -= enemyAttack;
 		    isDamageFlag_ = false;
 	}

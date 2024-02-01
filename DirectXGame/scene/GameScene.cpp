@@ -97,8 +97,12 @@ void GameScene::Update() {
 	UpdateReflectEnemyPopCommands();
 	// 曲がる敵の更新
 	UpdateCurveEnemyPopCommands();
-	// 当たり判定
-	CheakAllCollisions();
+
+	//プレイヤーが死亡してるときは敵との接触判定を行わないようにする
+	if (player_->GetHP() > 0.0f&&player_->GetState()==0) {
+		// 当たり判定
+		CheakAllCollisions();
+	}
 
 	// プレイヤーHP
 	HPber_ = playerHPSprite_->GetSize();

@@ -26,11 +26,25 @@ void Player::Update(ViewProjection& viewProjection) {
 	switch (playerState) { 
 	case PlayerState::isAlive:
 
+		//生きているときはフラグをTRUE
+		isDead_ = false;
+
 		Move(viewProjection);
+
+		#ifdef DEBUG
+		
+		if (input_->IsTriggerMouse(1) == 1) {
+			playerHP_ = 0.0f;
+		}
+
+         #endif // DEBUG
+
+		
 		// HP0の処理
 		if (playerHP_ <= 0.0f) {
 			playerHP_ = 0.0f;
 		}
+		
 		worldTransform_.UpdateMatrix();
 
 		//体力が0になったら状態を切り替える
@@ -42,7 +56,10 @@ void Player::Update(ViewProjection& viewProjection) {
 
 		case PlayerState::isDead:
 
+		//死んでいるときはフラグをFALSE
+		isDead_ = true;
 
+		Recovery();
 
 		break;
 	}
@@ -100,6 +117,8 @@ void Player::Move(ViewProjection& viewProjection) {
 		////Z軸を固定化
 		worldTransform_.translation_.z = 130.0f;
 
+		#ifdef DEBUG
+
 		ImGui::Begin("Player");
 		ImGui::Text(
 		    "model:%f,%f,%f,HP:%f,\nnormal:%d", worldTransform_.translation_.x,
@@ -107,6 +126,19 @@ void Player::Move(ViewProjection& viewProjection) {
 
 		ImGui::Text("model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
 		ImGui::End();
+
+#endif // DEBUG
+
+	}
+}
+
+void Player::Recovery() { 
+	if (input_->IsTriggerMouse(0) == 1) {
+		playerHP_ += recoveryPower;
+	}
+	if (playerHP_ >= kPlayerHP_) {
+		playerHP_ = kPlayerHP_;
+		playerState = PlayerState::isAlive;
 	}
 }
 

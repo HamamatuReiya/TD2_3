@@ -36,11 +36,15 @@ void StrongEnemy::Update() {
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
 
+	#ifdef DEBUG
 	ImGui::Begin("StrongEnemy");
 	ImGui::Text(
 	    "model:%f,%f,%f,%d", worldTransform_.translation_.x, worldTransform_.translation_.y,
 	    worldTransform_.translation_.z, enemyHP);
 	ImGui::End();
+
+#endif // DEBUG
+
 }
 
 void StrongEnemy::Draw(ViewProjection& viewProjection) {
@@ -100,7 +104,7 @@ void StrongEnemy::NotCollision() {
 }
 
 float StrongEnemy::AttackPlayer(float playerHP) {
-	if (isDamageFlag_ == true && playerHP >= 1.0f) {
+	if (isDamageFlag_ == true) {
 		playerHP -= enemyAttack;
 		isDamageFlag_ = false;
 	}
