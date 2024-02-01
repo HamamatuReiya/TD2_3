@@ -71,10 +71,10 @@ private:
 	Model* model_ = nullptr;
 
 	// 敵の体力
-	int enemyHP = 4;
+	int enemyHP = 6;
 
 	// 敵の攻撃力
-	int enemyAttack = 2;
+	int enemyAttack = 6;
 
 	// 接触判定
 	bool isCollision_ = false;
