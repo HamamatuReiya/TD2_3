@@ -43,7 +43,7 @@ private:
 	Input* input_ = nullptr;
 
 	//プレイヤーの体力
-	const float kPlayerHP_ = 230.0f;
+	const float kPlayerHP_ = 300.0f;
 	float playerHP_ = kPlayerHP_;
 
 	// プレイヤーの攻撃力
