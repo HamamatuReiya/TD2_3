@@ -35,7 +35,7 @@ void GameScene::Initialize() {
 
 	#pragma endregion
 	
-	#pragma region 敵
+#pragma region 敵
 	// 敵の生成
 	modelEnemy_.reset(Model::CreateFromOBJ("Enemy", true));
 	LoadEnemyPopData("./Resources/enemyPop.csv");
