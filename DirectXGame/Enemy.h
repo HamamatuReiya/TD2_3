@@ -45,7 +45,7 @@ public:
 	bool IsDead() const { return isDead_; }
 
 	// プレイヤーにダメージを与える関数
-	int AttackPlayer(int playerHP);
+	float AttackPlayer(float playerHP);
 
 	// ダメージフラグをリセットする関数
 	void ResetFlag();

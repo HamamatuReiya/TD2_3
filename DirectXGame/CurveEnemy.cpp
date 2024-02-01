@@ -138,7 +138,7 @@ void CurveEnemy::OnCollision() { isCollision_ = false; }
 
 void CurveEnemy::NotCollision() { isCollision_ = true; }
 
-int CurveEnemy::AttackPlayer(int playerHP) {
+float CurveEnemy::AttackPlayer(float playerHP) {
 	if (isDamageFlag_ == true) {
 		playerHP -= enemyAttack;
 		isDamageFlag_ = false;

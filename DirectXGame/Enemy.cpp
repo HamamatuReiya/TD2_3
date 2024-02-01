@@ -107,7 +107,7 @@ void Enemy::NotCollision() {
 	isCollision_ = true;
 }
 
-int Enemy::AttackPlayer(int playerHP) {
+float Enemy::AttackPlayer(float playerHP) {
 	if (isDamageFlag_ == true) {
 		    playerHP -= enemyAttack;
 		    isDamageFlag_ = false;

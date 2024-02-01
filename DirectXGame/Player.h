@@ -25,10 +25,10 @@ public:
 	int GetAttackPow() { return attackPower; }
 
 	//自分のHPを渡す関数
-	int GetHP() { return playerHP_; }
+	float GetHP() { return playerHP_; }
 
 	//敵から減らされたダメージを貰う関数
-	void GetDamageAfter(int hp);
+	void GetDamageAfter(float hp);
 
 public:
 
@@ -43,8 +43,8 @@ private:
 	Input* input_ = nullptr;
 
 	//プレイヤーの体力
-	const int kPlayerHP_ = 30;
-	int playerHP_ = kPlayerHP_;
+	const float kPlayerHP_ = 230.0f;
+	float playerHP_ = kPlayerHP_;
 
 	// プレイヤーの攻撃力
 	int attackPower = 1;
