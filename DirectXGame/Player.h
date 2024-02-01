@@ -29,7 +29,7 @@ public:
 	//自分の攻撃力を渡す関数
 	int GetAttackPow() { return attackPower; }
 
-	int GetHP() { return HP_; }
+	float GetHP() { return playerHP_; }
 
 public:
 	void HitJudge();
@@ -45,8 +45,8 @@ private:
 	Input* input_ = nullptr;
 
 	//プレイヤーの体力
-	const int kPlayerHP_ = 30;
-	int playerHP_ = kPlayerHP_;
+	const float kPlayerHP_ = 230.0f;
+	float playerHP_ = kPlayerHP_;
 
 	// プレイヤーの攻撃力
 	int attackPower = 1;
@@ -56,7 +56,4 @@ private:
 
 	// 接触判定
 	bool isCollision_ = false;
-
-	// HP
-	int HP_;
 };

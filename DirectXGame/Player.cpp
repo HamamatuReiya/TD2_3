@@ -18,6 +18,7 @@ void Player::Initialize(Model* model, Vector3 position) {
 
 	//シングルインスタンスを取得する
 	input_ = Input::GetInstance();
+
 }
 
 void Player::Update(ViewProjection& viewProjection) { 
@@ -77,7 +78,6 @@ void Player::Update(ViewProjection& viewProjection) {
 		    "model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
 		ImGui::End();
 	}
-	
 
 	worldTransform_.UpdateMatrix();
 }
@@ -101,10 +101,10 @@ void Player::NotCollision() { isCollision_ = true; }
 void Player::HitJudge() {
 	if (isCollision_ == true) {
 		isCollision_ = false;
-		playerHP_ -= 1;
+		playerHP_ -= 10.0f;
 	};
 
-	if (playerHP_ <= 0) {
+	if (playerHP_ <= 0.0f) {
 		isDead_ = true;
 	}
 }
