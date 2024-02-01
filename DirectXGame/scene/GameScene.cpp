@@ -63,6 +63,9 @@ void GameScene::Initialize() {
 	borderline_->Initialize(modelBorderline_.get());
 
 	// プレイヤーのHPのテクスチャ読み込み
+	playerHPTexture_ = TextureManager::Load("hp.png");
+	// プレイヤーのHPの生成
+	playerHPSprite_ = Sprite::Create(playerHPTexture_, {0, 0});
 
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
@@ -90,12 +93,20 @@ void GameScene::Update() {
 	UpdateEnemyPopCommands();
 	// 強めの敵の更新
 	UpdateStrongEnemyPopCommands();
-	//反射する敵の更新
+	// 反射する敵の更新
 	UpdateReflectEnemyPopCommands();
-	//曲がる敵の更新
+	// 曲がる敵の更新
 	UpdateCurveEnemyPopCommands();
-	//当たり判定
+	// 当たり判定
 	CheakAllCollisions();
+
+	// プレイヤーHP
+	HPber_ = playerHPSprite_->GetSize();
+	HPber_.x = player_->GetHP();
+
+	playerHPSprite_->SetSize(HPber_);
+
+	
 
 	// 敵の更新
 	for (Enemy* enemy : enemys_) {
@@ -230,6 +241,7 @@ void GameScene::Draw() {
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
+
 	// 深度バッファクリア
 	dxCommon_->ClearDepthBuffer();
 #pragma endregion
@@ -279,6 +291,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+
+	playerHPSprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

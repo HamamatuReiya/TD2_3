@@ -118,7 +118,7 @@ void ReflectEnemy::OnCollision() { isCollision_ = false; }
 
 void ReflectEnemy::NotCollision() { isCollision_ = true; }
 
-int ReflectEnemy::AttackPlayer(int playerHP) {
+float ReflectEnemy::AttackPlayer(float playerHP) {
 	if (isDamageFlag_ == true) {
 		playerHP -= enemyAttack;
 		isDamageFlag_ = false;
