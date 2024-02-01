@@ -70,6 +70,11 @@ void GameScene::Initialize() {
 	// プレイヤーのHPの生成
 	playerHPSprite_ = Sprite::Create(playerHPTexture_, {10, 10});
 
+	// プレイヤーのHPバーのテクスチャ読み込み
+	playerHPberTexture_ = TextureManager::Load("kHp.png");
+	// プレイヤーのHPバーの生成
+	playerHPberSprite_ = Sprite::Create(playerHPberTexture_, {10, 10});
+
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
 	// カメラの初期化
@@ -108,12 +113,16 @@ void GameScene::Update() {
 	}
 
 	// プレイヤーHP
-	HPber_ = playerHPSprite_->GetSize();
-	HPber_.x = player_->GetHP();
+	HP_ = playerHPSprite_->GetSize();
+	HP_.x = player_->GetHP();
 
-	playerHPSprite_->SetSize(HPber_);
+	playerHPSprite_->SetSize(HP_);
 
-	
+	// プレイヤーHPバー
+	HPber_ = playerHPberSprite_->GetSize();
+	HPber_.x = 300.0f;
+
+	playerHPberSprite_->SetSize(HPber_);
 
 	// 敵の更新
 	for (Enemy* enemy : enemys_) {
@@ -301,6 +310,7 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
+	playerHPberSprite_->Draw();
 	playerHPSprite_->Draw();
 
 	// スプライト描画後処理

@@ -252,6 +252,13 @@ private: // メンバ変数
 	// スプライト
 	Sprite* playerHPSprite_ = nullptr;
 	//表示範囲
+	Vector2 HP_;
+
+	// プレイヤーのHPバー
+	uint_fast32_t playerHPberTexture_ = 0;
+	// スプライト
+	Sprite* playerHPberSprite_ = nullptr;
+	//表示範囲
 	Vector2 HPber_;
 
 };
