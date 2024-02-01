@@ -53,7 +53,7 @@ public:
 	int GetHP() { return enemyHP; }
 
 		// プレイヤーにダメージを与える関数
-	int AttackPlayer(int playerHP);
+	float AttackPlayer(float playerHP);
 
 	// ダメージフラグをリセットする関数
 	void ResetFlag();
@@ -89,7 +89,7 @@ private:
 	int enemyHP = 2;
 
 	// 敵の攻撃力
-	int enemyAttack = 2;
+	int enemyAttack = 12;
 
 	// 接触判定
 	bool isCollision_ = false;

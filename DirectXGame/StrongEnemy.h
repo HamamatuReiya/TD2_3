@@ -54,7 +54,7 @@ public:
 	int GetPower() { return enemyAttack; }
 
 	//プレイヤーにダメージを与える関数
-	int AttackPlayer(int playerHP);
+	float AttackPlayer(float playerHP);
 
 	//ダメージフラグをリセットする関数
 	void ResetFlag();
@@ -66,10 +66,10 @@ private:
 	Model* model_ = nullptr;
 
 	// 敵の体力
-	int enemyHP = 5;
+	int enemyHP = 8;
 
 	// 敵の攻撃力
-	int enemyAttack = 2;
+	int enemyAttack = 7;
 
 	// 接触判定
 	bool isCollision_ = false;

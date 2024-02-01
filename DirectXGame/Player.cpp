@@ -18,11 +18,61 @@ void Player::Initialize(Model* model, Vector3 position) {
 
 	//シングルインスタンスを取得する
 	input_ = Input::GetInstance();
+
 }
 
 void Player::Update(ViewProjection& viewProjection) { 
 
-	{
+	switch (playerState) { 
+	case PlayerState::isAlive:
+
+		//生きているときはフラグをTRUE
+		isDead_ = false;
+
+		Move(viewProjection);
+
+		#ifdef DEBUG
+		
+		if (input_->IsTriggerMouse(1) == 1) {
+			playerHP_ = 0.0f;
+		}
+
+         #endif // DEBUG
+
+		
+		// HP0の処理
+		if (playerHP_ <= 0.0f) {
+			playerHP_ = 0.0f;
+		}
+		
+		worldTransform_.UpdateMatrix();
+
+		//体力が0になったら状態を切り替える
+		if (playerHP_ <= 0) {
+			playerState = PlayerState::isDead;
+		}
+
+		break;
+
+		case PlayerState::isDead:
+
+		//死んでいるときはフラグをFALSE
+		isDead_ = true;
+
+		Recovery();
+
+		break;
+	}
+
+	
+}
+
+void Player::Draw(ViewProjection& viewProjection) { model_->Draw(worldTransform_, viewProjection); }
+
+void Player::Move(ViewProjection& viewProjection) {
+
+		{
+
 		// 自機の現在座標を取得
 		Vector2 playerPosition = {worldTransform_.translation_.x, worldTransform_.translation_.y};
 
@@ -67,23 +117,30 @@ void Player::Update(ViewProjection& viewProjection) {
 		////Z軸を固定化
 		worldTransform_.translation_.z = 130.0f;
 
+		#ifdef DEBUG
+
 		ImGui::Begin("Player");
 		ImGui::Text(
-		    "model:%f,%f,%f,HP:%d,\nnormal:%d", worldTransform_.translation_.x,
-			worldTransform_.translation_.y,
-		    worldTransform_.translation_.z,
-			playerHP_,damageFlag_);
+		    "model:%f,%f,%f,HP:%f,\nnormal:%d", worldTransform_.translation_.x,
+		    worldTransform_.translation_.y, worldTransform_.translation_.z, playerHP_, damageFlag_);
 
-		ImGui::Text(
-		    "model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
+		ImGui::Text("model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
 		ImGui::End();
-	}
-	
 
-	worldTransform_.UpdateMatrix();
+#endif // DEBUG
+
+	}
 }
 
-void Player::Draw(ViewProjection& viewProjection) { model_->Draw(worldTransform_, viewProjection); }
+void Player::Recovery() { 
+	if (input_->IsTriggerMouse(0) == 1) {
+		playerHP_ += recoveryPower;
+	}
+	if (playerHP_ >= kPlayerHP_) {
+		playerHP_ = kPlayerHP_;
+		playerState = PlayerState::isAlive;
+	}
+}
 
 Vector3 Player::GetWorldPosition() {
 	Vector3 worldPos;
@@ -95,5 +152,5 @@ Vector3 Player::GetWorldPosition() {
 	return worldPos;
 }
 
-void Player::GetDamageAfter(int hp) { playerHP_ = hp; }
+void Player::GetDamageAfter(float hp) { playerHP_ = hp; }
 

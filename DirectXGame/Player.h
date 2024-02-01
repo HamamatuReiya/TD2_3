@@ -9,6 +9,8 @@
 #include "WorldTransform.h"
 #include "compute.h"
 
+
+
 class Player {
 public:
 
@@ -17,6 +19,10 @@ public:
 	void Update(ViewProjection& viewProjection);
 
 	void Draw(ViewProjection& viewProjection);
+
+	void Move(ViewProjection& viewProjection);
+
+	void Recovery();
 	
 	/// ワールド座標を取得
 	Vector3 GetWorldPosition();
@@ -25,14 +31,21 @@ public:
 	int GetAttackPow() { return attackPower; }
 
 	//自分のHPを渡す関数
-	int GetHP() { return playerHP_; }
+	float GetHP() { return playerHP_; }
 
 	//敵から減らされたダメージを貰う関数
-	void GetDamageAfter(int hp);
+	void GetDamageAfter(float hp);
 
 public:
 
-	bool IsDead() const { return isDead_; }
+	
+
+	enum class PlayerState {
+		isAlive,
+		isDead,
+	};
+
+	int GetState() { return isDead_; }
 
 private:
 	//ワールド変換データ
@@ -43,8 +56,9 @@ private:
 	Input* input_ = nullptr;
 
 	//プレイヤーの体力
-	const int kPlayerHP_ = 30;
-	int playerHP_ = kPlayerHP_;
+	const float kPlayerHP_ = 300.0f;
+	float playerHP_ = kPlayerHP_;
+	float recoveryPower = 10.0f;
 
 	// プレイヤーの攻撃力
 	int attackPower = 1;
@@ -56,5 +70,9 @@ private:
 	bool isCollision_ = false;
 	//ダメージを一瞬だけ受けるためのフラグ
 	bool damageFlag_ = true;
+
+	//////////プレイヤーが倒れたときに連打で回復するのに使う物たち↓
+	
+	PlayerState playerState = PlayerState::isAlive;
 
 };

@@ -63,16 +63,19 @@ void GameScene::Initialize() {
 	borderline_->Initialize(modelBorderline_.get());
 
 	// プレイヤーのHPのテクスチャ読み込み
+	playerHPTexture_ = TextureManager::Load("hp.png");
+	// プレイヤーのHPの生成
+	playerHPSprite_ = Sprite::Create(playerHPTexture_, {0, 0});
 
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
 	// カメラの初期化
 	camera_->Initialize();
 
-#ifdef _DEBUG	
-
 	// デバッグカメラの生成
 	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
+
+#ifdef _DEBUG	
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
@@ -90,12 +93,24 @@ void GameScene::Update() {
 	UpdateEnemyPopCommands();
 	// 強めの敵の更新
 	UpdateStrongEnemyPopCommands();
-	//反射する敵の更新
+	// 反射する敵の更新
 	UpdateReflectEnemyPopCommands();
-	//曲がる敵の更新
+	// 曲がる敵の更新
 	UpdateCurveEnemyPopCommands();
-	//当たり判定
-	CheakAllCollisions();
+
+	//プレイヤーが死亡してるときは敵との接触判定を行わないようにする
+	if (player_->GetHP() > 0.0f&&player_->GetState()==0) {
+		// 当たり判定
+		CheakAllCollisions();
+	}
+
+	// プレイヤーHP
+	HPber_ = playerHPSprite_->GetSize();
+	HPber_.x = player_->GetHP();
+
+	playerHPSprite_->SetSize(HPber_);
+
+	
 
 	// 敵の更新
 	for (Enemy* enemy : enemys_) {
@@ -134,7 +149,7 @@ void GameScene::Update() {
 			delete strongEnemy;
 			return true;
 		}
-		if (strongEnemy->GetWorldPosition().y <= -40.0f) {
+		if (strongEnemy->GetWorldPosition().y <= -80.0f) {
 			delete strongEnemy;
 			return true;
 		}
@@ -182,10 +197,12 @@ void GameScene::Update() {
 	// ボーダーラインの更新
 	borderline_->Update();
 
+
+#ifdef _DEBUG
+
 	// デバッグカメラ
 	debugCamera_->Update();
 
-#ifdef _DEBUG
 	// Cを押して起動
 	if (input_->TriggerKey(DIK_C) && isDebugCameraActive_ == false) {
 		isDebugCameraActive_ = true;
@@ -234,6 +251,7 @@ void GameScene::Draw() {
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
+
 	// 深度バッファクリア
 	dxCommon_->ClearDepthBuffer();
 #pragma endregion
@@ -283,6 +301,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+
+	playerHPSprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
