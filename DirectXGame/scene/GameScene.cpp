@@ -145,7 +145,7 @@ void GameScene::Update() {
 			delete strongEnemy;
 			return true;
 		}
-		if (strongEnemy->GetWorldPosition().y <= -40.0f) {
+		if (strongEnemy->GetWorldPosition().y <= -80.0f) {
 			delete strongEnemy;
 			return true;
 		}

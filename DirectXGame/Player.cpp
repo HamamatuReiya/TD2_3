@@ -27,7 +27,10 @@ void Player::Update(ViewProjection& viewProjection) {
 	case PlayerState::isAlive:
 
 		Move(viewProjection);
-
+		// HP0の処理
+		if (playerHP_ <= 0.0f) {
+			playerHP_ = 0.0f;
+		}
 		worldTransform_.UpdateMatrix();
 
 		//体力が0になったら状態を切り替える
@@ -52,6 +55,7 @@ void Player::Draw(ViewProjection& viewProjection) { model_->Draw(worldTransform_
 void Player::Move(ViewProjection& viewProjection) {
 
 		{
+
 		// 自機の現在座標を取得
 		Vector2 playerPosition = {worldTransform_.translation_.x, worldTransform_.translation_.y};
 
