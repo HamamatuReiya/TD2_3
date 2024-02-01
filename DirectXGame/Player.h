@@ -14,7 +14,7 @@
 class Player {
 public:
 
-	void Initialize(Model* model, Vector3 position);
+	void Initialize(Model* model,Model* model2, Vector3 position);
 
 	void Update(ViewProjection& viewProjection);
 
@@ -52,6 +52,7 @@ private:
 	WorldTransform worldTransform_;
 	//モデル
 	Model* model_ = nullptr;
+	Model* model2_ = nullptr;
 	//キーボード入力
 	Input* input_ = nullptr;
 

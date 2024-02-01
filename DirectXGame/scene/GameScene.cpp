@@ -29,9 +29,12 @@ void GameScene::Initialize() {
 	//自キャラ関連
 	player_ = std::make_unique<Player>();
 	modelPlayer_.reset(Model::CreateFromOBJ("Player", true));
+	modelDeadPlayer_.reset(Model::CreateFromOBJ("DeadPlayer", true));
 	//(自キャラの位置)
 	PlayerPosition = {0, 0, 0};
-	player_->Initialize(modelPlayer_.get(), PlayerPosition);
+	player_->Initialize(modelPlayer_.get(), modelDeadPlayer_.get(), PlayerPosition);
+
+
 
 	#pragma endregion
 	

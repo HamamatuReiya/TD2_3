@@ -2,12 +2,12 @@
 #include<cassert>
 #include"ImGuiManager.h"
 
-void Player::Initialize(Model* model, Vector3 position) {
+void Player::Initialize(Model* model, Model* model2, Vector3 position) {
 	//NULLポインタチェック
 	assert(model);
 	//引数からデータを受け取る
 	model_ = model;
-
+	model2_ = model2;
 	//スケールの設定
 	worldTransform_.scale_ = {2.0f, 2.0f, 2.0f};
 
@@ -67,7 +67,13 @@ void Player::Update(ViewProjection& viewProjection) {
 	
 }
 
-void Player::Draw(ViewProjection& viewProjection) { model_->Draw(worldTransform_, viewProjection); }
+void Player::Draw(ViewProjection& viewProjection) {
+	if (isDead_ == true) {
+	model2_->Draw(worldTransform_, viewProjection); 
+	} else {
+	model_->Draw(worldTransform_, viewProjection); 
+	}
+}
 
 void Player::Move(ViewProjection& viewProjection) {
 

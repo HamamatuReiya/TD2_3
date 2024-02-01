@@ -165,8 +165,12 @@ private: // メンバ変数
 	//自キャラの3Dモデル
 	std::unique_ptr<Model> modelPlayer_;
 
+	std::unique_ptr<Model> modelDeadPlayer_;
+
 	//自キャラのモデル
 	std::unique_ptr<Player> player_;
+
+	std::unique_ptr<Player> deadPlayer_;
 
 	Vector3 PlayerPosition;
 
@@ -249,4 +253,5 @@ private: // メンバ変数
 	Sprite* playerHPSprite_ = nullptr;
 	//表示範囲
 	Vector2 HPber_;
+
 };
