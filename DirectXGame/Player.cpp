@@ -18,6 +18,7 @@ void Player::Initialize(Model* model, Vector3 position) {
 
 	//シングルインスタンスを取得する
 	input_ = Input::GetInstance();
+
 }
 
 void Player::Update(ViewProjection& viewProjection) { 
@@ -78,7 +79,6 @@ void Player::Update(ViewProjection& viewProjection) {
 		    "model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
 		ImGui::End();
 	}
-	
 
 	worldTransform_.UpdateMatrix();
 }

@@ -247,4 +247,6 @@ private: // メンバ変数
 	uint_fast32_t playerHPTexture_ = 0;
 	// スプライト
 	Sprite* playerHPSprite_ = nullptr;
+	//表示範囲
+	Vector2 HPber_;
 };
