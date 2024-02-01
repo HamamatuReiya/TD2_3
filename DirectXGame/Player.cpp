@@ -69,9 +69,10 @@ void Player::Update(ViewProjection& viewProjection) {
 
 		ImGui::Begin("Player");
 		ImGui::Text(
-		    "model:%f,%f,%f", worldTransform_.translation_.x,
+		    "model:%f,%f,%f,HP:%d,\nnormal:%d", worldTransform_.translation_.x,
 			worldTransform_.translation_.y,
-		    worldTransform_.translation_.z);
+		    worldTransform_.translation_.z,
+			playerHP_,damageFlag_);
 
 		ImGui::Text(
 		    "model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
@@ -94,17 +95,5 @@ Vector3 Player::GetWorldPosition() {
 	return worldPos;
 }
 
-void Player::OnCollision() { isCollision_ = false; }
+void Player::GetDamageAfter(int hp) { playerHP_ = hp; }
 
-void Player::NotCollision() { isCollision_ = true; }
-
-void Player::HitJudge() {
-	if (isCollision_ == true) {
-		isCollision_ = false;
-		playerHP_ -= 1;
-	};
-
-	if (playerHP_ <= 0) {
-		isDead_ = true;
-	}
-}

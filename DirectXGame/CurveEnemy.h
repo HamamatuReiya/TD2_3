@@ -35,6 +35,9 @@ public:
 
 	void ChangePos(ViewProjection& viewProjection);
 
+	// 敵の攻撃力を獲得
+	int GetPower() { return enemyAttack; }
+
 public:
 	void NotCollision();
 
@@ -48,6 +51,12 @@ public:
 
 	// 敵の体力を獲得
 	int GetHP() { return enemyHP; }
+
+		// プレイヤーにダメージを与える関数
+	int AttackPlayer(int playerHP);
+
+	// ダメージフラグをリセットする関数
+	void ResetFlag();
 
 private:
 	//カーブの初期化
@@ -79,6 +88,12 @@ private:
 	// 敵の体力
 	int enemyHP = 2;
 
+	// 敵の攻撃力
+	int enemyAttack = 2;
+
 	// 接触判定
 	bool isCollision_ = false;
+
+		// ダメージを与えるフラグ
+	bool isDamageFlag_ = true;
 };
