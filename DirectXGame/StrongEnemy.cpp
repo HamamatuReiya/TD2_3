@@ -100,7 +100,7 @@ void StrongEnemy::NotCollision() {
 }
 
 float StrongEnemy::AttackPlayer(float playerHP) {
-	if (isDamageFlag_ == true) {
+	if (isDamageFlag_ == true && playerHP >= 1.0f) {
 		playerHP -= enemyAttack;
 		isDamageFlag_ = false;
 	}

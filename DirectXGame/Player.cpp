@@ -23,7 +23,35 @@ void Player::Initialize(Model* model, Vector3 position) {
 
 void Player::Update(ViewProjection& viewProjection) { 
 
-	{
+	switch (playerState) { 
+	case PlayerState::isAlive:
+
+		Move(viewProjection);
+
+		worldTransform_.UpdateMatrix();
+
+		//体力が0になったら状態を切り替える
+		if (playerHP_ <= 0) {
+			playerState = PlayerState::isDead;
+		}
+
+		break;
+
+		case PlayerState::isDead:
+
+
+
+		break;
+	}
+
+	
+}
+
+void Player::Draw(ViewProjection& viewProjection) { model_->Draw(worldTransform_, viewProjection); }
+
+void Player::Move(ViewProjection& viewProjection) {
+
+		{
 		// 自機の現在座標を取得
 		Vector2 playerPosition = {worldTransform_.translation_.x, worldTransform_.translation_.y};
 
@@ -70,20 +98,13 @@ void Player::Update(ViewProjection& viewProjection) {
 
 		ImGui::Begin("Player");
 		ImGui::Text(
-		    "model:%f,%f,%f,HP:%d,\nnormal:%d", worldTransform_.translation_.x,
-			worldTransform_.translation_.y,
-		    worldTransform_.translation_.z,
-			playerHP_,damageFlag_);
+		    "model:%f,%f,%f,HP:%f,\nnormal:%d", worldTransform_.translation_.x,
+		    worldTransform_.translation_.y, worldTransform_.translation_.z, playerHP_, damageFlag_);
 
-		ImGui::Text(
-		    "model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
+		ImGui::Text("model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
 		ImGui::End();
 	}
-
-	worldTransform_.UpdateMatrix();
 }
-
-void Player::Draw(ViewProjection& viewProjection) { model_->Draw(worldTransform_, viewProjection); }
 
 Vector3 Player::GetWorldPosition() {
 	Vector3 worldPos;

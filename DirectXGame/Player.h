@@ -9,6 +9,8 @@
 #include "WorldTransform.h"
 #include "compute.h"
 
+
+
 class Player {
 public:
 
@@ -17,6 +19,8 @@ public:
 	void Update(ViewProjection& viewProjection);
 
 	void Draw(ViewProjection& viewProjection);
+
+	void Move(ViewProjection& viewProjection);
 	
 	/// ワールド座標を取得
 	Vector3 GetWorldPosition();
@@ -33,6 +37,11 @@ public:
 public:
 
 	bool IsDead() const { return isDead_; }
+
+	enum class PlayerState {
+		isAlive,
+		isDead,
+	};
 
 private:
 	//ワールド変換データ
@@ -57,7 +66,8 @@ private:
 	//ダメージを一瞬だけ受けるためのフラグ
 	bool damageFlag_ = true;
 
-	//////////プレイヤーが倒れたときに連打で回復する↓
+	//////////プレイヤーが倒れたときに連打で回復するのに使う物たち↓
 	
+	PlayerState playerState = PlayerState::isAlive;
 
 };
