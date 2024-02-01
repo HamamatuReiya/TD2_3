@@ -28,7 +28,7 @@ public:
 	float GetHP() { return playerHP_; }
 
 	//敵から減らされたダメージを貰う関数
-	void GetDamageAfter(float hp);
+	void GetDamageAfter(int hp);
 
 public:
 
