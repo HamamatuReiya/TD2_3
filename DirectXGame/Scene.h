@@ -2,4 +2,5 @@
 enum class SceneType {
 	kTitle,
 	kGamePlay,
+	kGameOver,
 };

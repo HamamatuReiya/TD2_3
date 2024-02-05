@@ -156,6 +156,13 @@ public:
 	bool IsSceneEnd() { return isSceneEnd; }
 	SceneType NextScene() { return SceneType::kTitle; }
 
+	//ゲームオーバー関係（シーン）
+	bool isGameOver = false;
+
+	bool IsGameOver() { return isGameOver; }
+	SceneType GameOverScene() { return SceneType::kGameOver; }
+
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;

@@ -140,6 +140,9 @@ void GameScene::Update() {
 	for (CurveEnemy* curveEnemy : curveEnemys_) {
 		curveEnemy->Update();
 	}
+
+	//耐久値を減らす関数の呼び出し
+	DamageLine();
 	
 	//敵の消滅
 	enemys_.remove_if([](Enemy* enemy) {
@@ -207,6 +210,12 @@ void GameScene::Update() {
 
 	// ボーダーラインの更新
 	borderline_->Update();
+
+	//耐久値が0になったフラグが立てばシーン切り替え
+	if (borderline_->ReturnFlag() == 1) {
+		//IsGameOver();
+		isGameOver = true;
+	}
 
 
 #ifdef _DEBUG
@@ -448,6 +457,33 @@ void GameScene::CheakAllCollisions() {
 		}
 	}
 
+}
+
+void GameScene::DamageLine() {
+	//雫ちゃん
+	for (Enemy* enemy : enemys_) {
+		if (enemy->GetWorldPosition().y <= -55.0f) {
+			borderline_->ReduceEND();
+		}
+	}
+	//強い敵
+	for (StrongEnemy* strongEnemy : strongEnemys_) {
+		if (strongEnemy->GetWorldPosition().y <= -45.0f) {
+			borderline_->ReduceEND();
+		}
+	}
+	//硬い敵
+	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+		if (reflectEnemy->GetWorldPosition().y <= -50.0f) {
+			borderline_->ReduceEND();
+		}
+	}
+	//カーブする敵
+	for (CurveEnemy* curveEnemy : curveEnemys_) {
+		if (curveEnemy->GetWorldPosition().y <= -55.0f) {
+			borderline_->ReduceEND();
+		}
+	}
 }
 
 void GameScene::CheakHPCameraShake() {
@@ -842,7 +878,6 @@ void GameScene::UpdateBorderLine() {
 	}
 }
 
-void GameScene::DamageLine() {}
 
 void GameScene::Wave1Initialize() {
 	LoadEnemyPopData("./Resources/enemyPop.csv");

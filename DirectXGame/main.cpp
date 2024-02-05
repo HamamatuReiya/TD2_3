@@ -113,6 +113,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				// ゲームシーンの初期化、フラグリセット等
 				gameScene->sceneReset();
 			}
+			if (gameScene->IsGameOver()) {
+				sceneNo = gameScene->GameOverScene();
+			}
+		case SceneType::kGameOver:
+
+		break;
 		}
 
 		// 軸表示の更新
@@ -130,6 +136,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case SceneType::kGamePlay:
 			gameScene->Draw();
 			break;
+		case SceneType::kGameOver:
+
+		    break;
 		}
 		// 軸表示の描画
 		axisIndicator->Draw();

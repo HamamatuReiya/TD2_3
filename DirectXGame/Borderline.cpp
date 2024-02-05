@@ -15,6 +15,11 @@ void Borderline::Initialize(Model* model) {
 void Borderline::Update() {
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
+
+	//耐久値が0以下になったらゲームオーバーフラグを出す
+	if (lineEND <= 0) {
+		breakLineFlag = true;
+	}
 	
 //#ifdef DEBUG
 	ImGui::Begin("borderLine");
@@ -34,8 +39,9 @@ void Borderline::ReduceEND() { lineEND -= 1; }
 void Borderline::ResetEND() { lineEND = maxLineEND; }
 
 int Borderline::ReturnFlag() {
-	if (lineEND <= 0) {
+	if (breakLineFlag==false) {
+		return 0;
+	} else {
 		return 1;
 	}
-	return 0; 
 }
