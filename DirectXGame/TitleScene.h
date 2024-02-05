@@ -48,4 +48,10 @@ private: // メンバ変数
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 
+	// タイトル画面
+	uint_fast32_t titleTexture_ = 0;
+	//スプライト
+	Sprite* titleSprite_ = nullptr;
+
+
 };
