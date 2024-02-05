@@ -131,6 +131,9 @@ private:
 	/// </summary>
 	void UpdateBorderLine();
 
+	//敵がラインに触れたら耐久値を減らす
+	void DamageLine();
+
 public:
 	void Wave1Initialize();
 
