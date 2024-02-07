@@ -74,6 +74,17 @@ void GameScene::Initialize() {
 	// プレイヤーのHPバーの生成
 	playerHPberSprite_ = Sprite::Create(playerHPberTexture_, {10, 10});
 
+	////強化画面のスプライトの初期化
+	//攻撃力
+	attackTexture_ = TextureManager::Load("ATKUPUP.png");
+	attackSprite_ = Sprite::Create(attackTexture_, {200, 500});
+	//体力
+	lifeTexture_ = TextureManager::Load("HPUP.png");
+	lifeSprite_ = Sprite::Create(lifeTexture_, {580, 500});
+	//回復力
+	recoveryTexture_ = TextureManager::Load("heel.png");
+	recoverySprite_ = Sprite::Create(recoveryTexture_, {950, 500});
+
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
 	// カメラの初期化
@@ -90,10 +101,6 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 #endif // _DEBUG
 
-	// タイトルのテクスチャ読み込み
-	gameTexture_ = TextureManager::Load("uvChecker.png");
-	// タイトルの生成
-	gameSprite_ = Sprite::Create(gameTexture_, {760, 0});
 }
 
 void GameScene::Update() {
@@ -227,6 +234,13 @@ void GameScene::Update() {
 		break;
 
 	case GameScene::gameState::Upgrade:
+
+		Vector2 pos = input_->GetMousePosition();
+
+		ImGui::Begin("mousePos");
+		ImGui::Text("x : %f\n:%f\n", pos.x, pos.y);
+		ImGui::End();
+
 		borderline_->ResetEND();
 
 		if (IsWave1End()) {
@@ -253,6 +267,8 @@ void GameScene::Update() {
 		}
 
 		if (isUpgrade2End == true) {
+			stateNo = gameState::Wave;
+		if (input_->TriggerKey(DIK_A)) {
 			stateNo = gameState::Wave;
 		}
 
@@ -361,21 +377,25 @@ void GameScene::Draw() {
 	//自キャラの描画
 	player_->Draw(viewProjection_);
 
-	//敵の描画
-	for (Enemy* enemy : enemys_) {
-		enemy->Draw(viewProjection_);
-	}
-	//強めの敵の描画
-	for (StrongEnemy* strongEnemy : strongEnemys_) {
-		strongEnemy->Draw(viewProjection_);
-	}
-	//反射する敵の描画
-	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
-		reflectEnemy->Draw(viewProjection_);
-	}
-	//曲がる敵の描画
-	for (CurveEnemy* curveEnemy : curveEnemys_) {
-		curveEnemy->Draw(viewProjection_);
+	switch (stateNo) {
+	case GameScene::gameState::Wave:
+
+		// 敵の描画
+		for (Enemy* enemy : enemys_) {
+			enemy->Draw(viewProjection_);
+		}
+		// 強めの敵の描画
+		for (StrongEnemy* strongEnemy : strongEnemys_) {
+			strongEnemy->Draw(viewProjection_);
+		}
+		// 反射する敵の描画
+		for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+			reflectEnemy->Draw(viewProjection_);
+		}
+		// 曲がる敵の描画
+		for (CurveEnemy* curveEnemy : curveEnemys_) {
+			curveEnemy->Draw(viewProjection_);
+		}
 	}
 
 	// 天球の描画
@@ -402,12 +422,15 @@ void GameScene::Draw() {
 		playerHPSprite_->Draw();
 		break;
 	case GameScene::gameState::Upgrade:
-		gameSprite_->Draw();
+		attackSprite_->Draw();
+		lifeSprite_->Draw();
+		recoverySprite_->Draw();
 		break;
 	}
-
-	// スプライト描画後処理
-	Sprite::PostDraw();
+		// スプライト描画後処理
+		Sprite::PostDraw();
+	
+	
 
 #pragma endregion
 }
@@ -1013,6 +1036,13 @@ void GameScene::IsUpgradeEndReset() {
 void GameScene::sceneReset() {
 	//敵のリセット
 	enemys_.clear();
+	// シーン移行のリセット
+	isSceneEnd = false;
+	// 防衛耐久値のリセット
+	borderline_->ResetEND();
+	// ゲームオーバーのフラグのリセット
+	borderline_->ResetFlag();
+	isGameOver = false;
 	//シーン移行のリセット
 	isSceneEnd = false;
 

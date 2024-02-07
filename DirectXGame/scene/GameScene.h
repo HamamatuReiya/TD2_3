@@ -306,8 +306,15 @@ private: // メンバ変数
 	//表示範囲
 	Vector2 HPber_;
 
-	//  タイトル画面
-	uint32_t gameTexture_ = 0;
-	// スプライト
-	Sprite* gameSprite_ = nullptr;
+	////強化画面用のスプライト
+	//攻撃
+	uint32_t attackTexture_ = 0;
+	Sprite* attackSprite_ = nullptr;
+	//体力
+	uint32_t lifeTexture_ = 0;
+	Sprite* lifeSprite_ = nullptr;
+	//回復力
+	uint32_t recoveryTexture_ = 0;
+	Sprite* recoverySprite_ = nullptr;
+
 };
