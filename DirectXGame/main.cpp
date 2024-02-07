@@ -8,6 +8,7 @@
 #include "WinApp.h"
 
 #include "TitleScene.h"
+#include "GameOverScene.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -20,6 +21,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PrimitiveDrawer* primitiveDrawer = nullptr;
 	GameScene* gameScene = nullptr;
 	TitleScene* titleScene = nullptr;
+	GameOverScene* gameoverScene = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -67,6 +69,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// タイトルシーンの初期化
 	titleScene = new TitleScene();
 	titleScene->Initialize();
+
+	//ゲームオーバーシーンの初期化
+	gameoverScene = new GameOverScene();
+	gameoverScene->Initialize();
+
+	
 
 	SceneType sceneNo = SceneType::kTitle;
 
@@ -117,6 +125,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				sceneNo = gameScene->GameOverScene();
 			}
 		case SceneType::kGameOver:
+
+			gameoverScene->Update();
+
+			if (gameoverScene->IsSceneEnd()) {
+				// ゲームシーンの初期化、フラグリセット等
+				gameScene->sceneReset();
+				// 次のシーンの値を代入してシーン切り替え
+				sceneNo = gameoverScene->NextScene();
+				// タイトルシーンの初期化、フラグリセット等
+				gameoverScene->sceneReset();
+
+			}
 
 		break;
 		}

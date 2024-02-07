@@ -160,3 +160,5 @@ Vector3 Player::GetWorldPosition() {
 
 void Player::GetDamageAfter(float hp) { playerHP_ = hp; }
 
+void Player::ResetHP() { playerHP_ = kPlayerHP_; }
+

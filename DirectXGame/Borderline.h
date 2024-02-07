@@ -32,6 +32,9 @@ public:
 	//ゲームオーバーのフラグを返す
 	int ReturnFlag();
 
+	//フラグのリセット
+	void ResetFlag();
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;

@@ -36,6 +36,9 @@ public:
 	//敵から減らされたダメージを貰う関数
 	void GetDamageAfter(float hp);
 
+	//プレイヤーの体力を最大値にまで戻す関数
+	void ResetHP();
+
 public:
 
 	

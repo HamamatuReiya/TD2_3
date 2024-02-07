@@ -89,6 +89,7 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetVisible(true);
 	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+
 #endif // _DEBUG
 }
 
@@ -900,5 +901,12 @@ void GameScene::sceneReset() {
 	enemys_.clear();
 	//シーン移行のリセット
 	isSceneEnd = false;
+	//防衛耐久値のリセット
+	borderline_->ResetEND();
+	//ゲームオーバーのフラグのリセット
+	borderline_->ResetFlag();
+	isGameOver = false;
+	//プレイヤーの体力をリセット
+	player_->ResetHP();
 
 }
