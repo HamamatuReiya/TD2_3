@@ -148,7 +148,6 @@ private:
 
 	void Wave1Initialize();
 	void Wave2Initialize();
-	void Wave3Initialize();
 
 	void WaveReset();
 
@@ -160,11 +159,9 @@ private:
 	
 	bool isWave1End = false;
 	bool isWave2End = false;
-	bool isWave3End = false;
 
 	bool IsWave1End() { return isWave1End; }
 	bool IsWave2End() { return isWave2End; }
-	bool IsWave3End() { return isWave3End; }
 
 	Wave NextWave2() { return Wave::Wave2; }
 	Wave NextWave3() { return Wave::Wave3; }
@@ -195,7 +192,6 @@ public:
 private:
 	Wave waveNo1 = Wave::Wave1;
 	Wave waveNo2 = Wave::Wave2;
-	Wave waveNo3 = Wave::Wave3;
 
 private:
 	void TextureInitialize();
