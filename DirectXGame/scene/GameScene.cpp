@@ -126,6 +126,27 @@ void GameScene::Update() {
 			CheakAllCollisions();
 		}
 
+		for (Enemy* enemy : enemys_) {
+			if (enemy->IsDead()) {
+				enemyDeath_ += 1;
+			}
+		}
+		for (StrongEnemy* strongEnemy : strongEnemys_) {
+			if (strongEnemy->IsDead()) {
+				enemyDeath_ += 1;
+			}
+		}
+		for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+			if (reflectEnemy->IsDead()) {
+				enemyDeath_ += 1;
+			}
+		}
+		for (CurveEnemy* curveEnemy : curveEnemys_) {
+			if (curveEnemy->IsDead()) {
+				enemyDeath_ += 1;
+			}
+		}
+
 		// 敵の消滅
 		enemys_.remove_if([](Enemy* enemy) {
 			if (enemy->IsDead()) {
@@ -177,6 +198,12 @@ void GameScene::Update() {
 			}
 			return false;
 		});
+
+		
+
+		ImGui::Begin("enemyDeath");
+		ImGui::Text("%d", enemyDeath_);
+		ImGui::End();
 
 		// プレイヤーHP
 		HP_ = playerHPSprite_->GetSize();
@@ -450,8 +477,6 @@ void GameScene::Draw() {
 	}
 		// スプライト描画後処理
 		Sprite::PostDraw();
-	
-	
 
 #pragma endregion
 }
@@ -593,24 +618,28 @@ void GameScene::DamageLine() {
 	for (Enemy* enemy : enemys_) {
 		if (enemy->GetWorldPosition().y <= -55.0f) {
 			borderline_->ReduceEND();
+			enemyDeath_ += 1;
 		}
 	}
 	//強い敵
 	for (StrongEnemy* strongEnemy : strongEnemys_) {
 		if (strongEnemy->GetWorldPosition().y <= -45.0f) {
 			borderline_->ReduceEND();
+			enemyDeath_ += 1;
 		}
 	}
 	//硬い敵
 	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
 		if (reflectEnemy->GetWorldPosition().y <= -50.0f) {
 			borderline_->ReduceEND();
+			enemyDeath_ += 1;
 		}
 	}
 	//カーブする敵
 	for (CurveEnemy* curveEnemy : curveEnemys_) {
 		if (curveEnemy->GetWorldPosition().y <= -55.0f) {
 			borderline_->ReduceEND();
+			enemyDeath_ += 1;
 		}
 	}
 }
