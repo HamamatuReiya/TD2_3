@@ -212,6 +212,10 @@ void GameScene::Update() {
 	case GameScene::gameState::Upgrade:
 		borderline_->ResetEND();
 
+		if (input_->TriggerKey(DIK_A)) {
+			stateNo = gameState::Wave;
+		}
+
 		if (isUpgradeEnd == true){
 			isUpgradeEnd = false;
 		}
@@ -315,21 +319,25 @@ void GameScene::Draw() {
 	//自キャラの描画
 	player_->Draw(viewProjection_);
 
-	//敵の描画
-	for (Enemy* enemy : enemys_) {
-		enemy->Draw(viewProjection_);
-	}
-	//強めの敵の描画
-	for (StrongEnemy* strongEnemy : strongEnemys_) {
-		strongEnemy->Draw(viewProjection_);
-	}
-	//反射する敵の描画
-	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
-		reflectEnemy->Draw(viewProjection_);
-	}
-	//曲がる敵の描画
-	for (CurveEnemy* curveEnemy : curveEnemys_) {
-		curveEnemy->Draw(viewProjection_);
+	switch (stateNo) {
+	case GameScene::gameState::Wave:
+
+		// 敵の描画
+		for (Enemy* enemy : enemys_) {
+			enemy->Draw(viewProjection_);
+		}
+		// 強めの敵の描画
+		for (StrongEnemy* strongEnemy : strongEnemys_) {
+			strongEnemy->Draw(viewProjection_);
+		}
+		// 反射する敵の描画
+		for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+			reflectEnemy->Draw(viewProjection_);
+		}
+		// 曲がる敵の描画
+		for (CurveEnemy* curveEnemy : curveEnemys_) {
+			curveEnemy->Draw(viewProjection_);
+		}
 	}
 
 	// 天球の描画
@@ -355,6 +363,7 @@ void GameScene::Draw() {
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
+	
 
 #pragma endregion
 }
