@@ -135,6 +135,9 @@ private:
 	//敵がラインに触れたら耐久値を減らす
 	void DamageLine();
 
+	//敵の死亡数を確認してアップグレード画面に行く
+	void CheakEnemyDeath();
+
 private:
 	enum class gameState { 
 		Wave, 

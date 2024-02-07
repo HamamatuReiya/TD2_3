@@ -268,7 +268,7 @@ void GameScene::Update() {
 
 			if (pos.x >= 930.0f && pos.y >= 200.0f && pos.x <= 1180.0f && pos.y <= 450.0f) {
 				if (input_->IsTriggerMouse(0)) {
-					player_->SetRecoveryUp(10.0f);
+					player_->SetRecoveryUp(5.0f);
 					player_->NewPlayer();
 					isUpgrade1End = true;
 				}
@@ -621,6 +621,10 @@ void GameScene::DamageLine() {
 			borderline_->ReduceEND();
 		}
 	}
+}
+
+void GameScene::CheakEnemyDeath() {
+
 }
 
 void GameScene::CheakHPCameraShake() {
