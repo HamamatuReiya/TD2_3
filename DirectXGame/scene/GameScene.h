@@ -194,6 +194,11 @@ private:
 	Wave waveNo2 = Wave::Wave2;
 	Wave waveNo3 = Wave::Wave3;
 
+private:
+	void TextureInitialize();
+
+	void BreakLineHPUpdate(int32_t num);
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;

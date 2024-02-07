@@ -93,6 +93,9 @@ void GameScene::Initialize() {
 	// デバッグカメラの生成
 	debugCamera_ = std::make_unique<DebugCamera>(1280, 720);
 
+	//テクスチャイニシャライズ
+	TextureInitialize();
+
 #ifdef _DEBUG	
 
 	// 軸方向表示の表示を有効にする
@@ -101,6 +104,7 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 #endif // _DEBUG
 
+	
 }
 
 void GameScene::Update() {
@@ -209,6 +213,8 @@ void GameScene::Update() {
 		// ボーダーラインの更新
 		borderline_->Update();
 
+		BreakLineHPUpdate(borderline_->GetLineEND());
+
 		// 耐久値が0になったフラグが立てばシーン切り替え
 		if (borderline_->ReturnFlag() == 1) {
 			// IsGameOver();
@@ -268,9 +274,7 @@ void GameScene::Update() {
 
 		if (isUpgrade2End == true) {
 			stateNo = gameState::Wave;
-			if (input_->TriggerKey(DIK_A)) {
-				stateNo = gameState::Wave;
-			}
+		}
 
 			break;
 		}
@@ -419,6 +423,8 @@ void GameScene::Draw() {
 	case GameScene::gameState::Wave:
 		playerHPberSprite_->Draw();
 		playerHPSprite_->Draw();
+
+		textureNumber_[num1]->Draw();
 		break;
 	case GameScene::gameState::Upgrade:
 		attackSprite_->Draw();
@@ -1030,6 +1036,48 @@ void GameScene::Upgrade() {
 void GameScene::IsUpgradeEndReset() { 
 	isUpgrade1End = false;
 	isUpgrade2End = false;
+}
+
+void GameScene::TextureInitialize() {
+	// 数字の画像
+	uint32_t numHandle[10];
+	numHandle[0] = TextureManager::Load("./Resources/number/0.png");
+	numHandle[1] = TextureManager::Load("./Resources/number/1.png");
+	numHandle[2] = TextureManager::Load("./Resources/number/2.png");
+	numHandle[3] = TextureManager::Load("./Resources/number/3.png");
+	numHandle[4] = TextureManager::Load("./Resources/number/4.png");
+	numHandle[5] = TextureManager::Load("./Resources/number/5.png");
+	numHandle[6] = TextureManager::Load("./Resources/number/6.png");
+	numHandle[7] = TextureManager::Load("./Resources/number/7.png");
+	numHandle[8] = TextureManager::Load("./Resources/number/8.png");
+	numHandle[9] = TextureManager::Load("./Resources/number/9.png");
+
+	// 取得した数
+	textureNumber_[0] = Sprite::Create(
+	    numHandle[0], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+	textureNumber_[1] = Sprite::Create(
+	    numHandle[1], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+	textureNumber_[2] = Sprite::Create(
+	    numHandle[2], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+	textureNumber_[3] = Sprite::Create(
+	    numHandle[3], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+	textureNumber_[4] = Sprite::Create(
+	    numHandle[4], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+	textureNumber_[5] = Sprite::Create(
+	    numHandle[5], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+	textureNumber_[6] = Sprite::Create(
+	    numHandle[6], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+	textureNumber_[7] = Sprite::Create(
+	    numHandle[7], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+	textureNumber_[8] = Sprite::Create(
+	    numHandle[8], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+	textureNumber_[9] = Sprite::Create(
+	    numHandle[9], {texturePos.x, texturePos.y}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+}
+
+void GameScene::BreakLineHPUpdate(int32_t num) {
+	// 1桁
+	num1 = num;
 }
 
 void GameScene::sceneReset() {
