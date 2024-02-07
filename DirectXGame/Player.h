@@ -62,6 +62,8 @@ public:
 
 	int GetState() { return isDead_; }
 
+	void PlayerReset();
+
 private:
 	//ワールド変換データ
 	WorldTransform worldTransform_;

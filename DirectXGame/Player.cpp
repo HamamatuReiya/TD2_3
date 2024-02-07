@@ -159,4 +159,9 @@ void Player::NewPlayer() {
 	recoveryPower = kRecoveryPower;
 }
 
+void Player::PlayerReset() { 
+	kPlayerHP_ = 300.0f;
+	playerHP_ = kPlayerHP_; 
+}
+
 

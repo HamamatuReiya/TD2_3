@@ -1142,5 +1142,5 @@ void GameScene::sceneReset() {
 	isGameClear = false;
 	//シーン移行のリセット
 	isSceneEnd = false;
-
+	player_->PlayerReset();
 }
