@@ -163,9 +163,41 @@ void GameScene::Update() {
 			return false;
 		});
 
+		// プレイヤーHP
+		HP_ = playerHPSprite_->GetSize();
+		HP_.x = player_->GetHP();
+
+		playerHPSprite_->SetSize(HP_);
+
+		// プレイヤーHPバー
+		HPber_ = playerHPberSprite_->GetSize();
+		HPber_.x = 300.0f;
+
+		playerHPberSprite_->SetSize(HPber_);
+
+		// 敵の更新
+		for (Enemy* enemy : enemys_) {
+			enemy->Update();
+		}
+		// 強い敵
+		for (StrongEnemy* strongEnemy : strongEnemys_) {
+			strongEnemy->Update();
+		}
+		// 反射する敵
+		for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+			reflectEnemy->Update();
+		}
+		// 曲がる敵
+		for (CurveEnemy* curveEnemy : curveEnemys_) {
+			curveEnemy->Update();
+		}
+
+		// 耐久値を減らす関数の呼び出し
+		DamageLine();
+
 		break;
 	case GameScene::gameState::Upgrade:
-
+		borderline_->ResetEND();
 
 		break;
 	}
@@ -173,41 +205,6 @@ void GameScene::Update() {
 	//プレイヤーの更新
 	player_->Update(viewProjection_);
 	
-
-	// プレイヤーHP
-	HP_ = playerHPSprite_->GetSize();
-	HP_.x = player_->GetHP();
-
-	playerHPSprite_->SetSize(HP_);
-
-	// プレイヤーHPバー
-	HPber_ = playerHPberSprite_->GetSize();
-	HPber_.x = 300.0f;
-
-	playerHPberSprite_->SetSize(HPber_);
-
-	// 敵の更新
-	for (Enemy* enemy : enemys_) {
-		enemy->Update();
-	}
-	// 強い敵
-	for (StrongEnemy* strongEnemy : strongEnemys_) {
-		strongEnemy->Update();
-	}
-	// 反射する敵
-	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
-		reflectEnemy->Update();
-	}
-	// 曲がる敵
-	for (CurveEnemy* curveEnemy : curveEnemys_) {
-		curveEnemy->Update();
-	}
-
-	//耐久値を減らす関数の呼び出し
-	DamageLine();
-	
-	
-
 	// カメラの更新
 	camera_->Update();
 
