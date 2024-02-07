@@ -642,7 +642,7 @@ void GameScene::DamageLine() {
 }
 
 void GameScene::CheakEnemyDeath() { 
-	if (enemyDeath_ >= 2) {
+	if (enemyDeath_ >= 20) {
 		a++;
 		if (a == 2) {
 			isWave1End = true;
