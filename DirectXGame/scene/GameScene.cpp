@@ -228,7 +228,7 @@ void GameScene::Update() {
 		if (isWave3End == true) {
 			stateNo = gameState::Upgrade;
 		}
-		
+
 #endif // _DEBUG
 
 		break;
@@ -261,90 +261,89 @@ void GameScene::Update() {
 			}
 		}
 
-		if (isUpgrade1End == true){
+		if (isUpgrade1End == true) {
 
 			stateNo = gameState::Wave;
 		}
 
 		if (isUpgrade2End == true) {
 			stateNo = gameState::Wave;
-		if (input_->TriggerKey(DIK_A)) {
-			stateNo = gameState::Wave;
+			if (input_->TriggerKey(DIK_A)) {
+				stateNo = gameState::Wave;
+			}
+
+			break;
+		}
+	}
+
+		// プレイヤーの更新
+		player_->Update(viewProjection_);
+
+		// カメラの更新
+		camera_->Update();
+
+		// 天球の更新
+		skydome_->Update();
+
+#ifdef _DEBUG
+
+		// デバッグカメラ
+		debugCamera_->Update();
+
+		// Cを押して起動
+		if (input_->TriggerKey(DIK_C) && isDebugCameraActive_ == false) {
+			isDebugCameraActive_ = true;
+		}
+		// Cを押して解除
+		if (input_->TriggerKey(DIK_V) && isDebugCameraActive_ == true) {
+			isDebugCameraActive_ = false;
+		}
+#endif // _DEBUG
+
+		// カメラの処理
+		if (isDebugCameraActive_ == true) {
+			viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+			viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+			// ビュープロジェクション行列の転送
+			viewProjection_.TransferMatrix();
+		} else {
+			viewProjection_.matView = camera_->GetViewProjection().matView;
+			viewProjection_.matProjection = camera_->GetViewProjection().matProjection;
+			// ビュープロジェクション行列の転送
+			viewProjection_.TransferMatrix();
 		}
 
-		break;
-	}
-
-	//プレイヤーの更新
-	player_->Update(viewProjection_);
-	
-	// カメラの更新
-	camera_->Update();
-
-	// 天球の更新
-	skydome_->Update();
-
-
 #ifdef _DEBUG
 
-	// デバッグカメラ
-	debugCamera_->Update();
+		ImGui::Begin("flagy");
+		ImGui::Text(
+		    "isWave1End : %d\n isWave2End : %d\n isUpgrade1End : %d\n isUpgrade2End : %d\n",
+		    isWave1End, isWave2End, isUpgrade1End, isUpgrade2End);
+		ImGui::End();
 
-	// Cを押して起動
-	if (input_->TriggerKey(DIK_C) && isDebugCameraActive_ == false) {
-		isDebugCameraActive_ = true;
-	}
-	// Cを押して解除
-	if (input_->TriggerKey(DIK_V) && isDebugCameraActive_ == true) {
-		isDebugCameraActive_ = false;
-	}
-#endif // _DEBUG
+		// ウェーブ切り替えデバッグ用
+		if (input_->TriggerKey(DIK_1)) {
+			isWave1End = true;
+		}
 
-	// カメラの処理
-	if (isDebugCameraActive_ == true) {
-		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
-		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
-		// ビュープロジェクション行列の転送
-		viewProjection_.TransferMatrix();
-	} else {
-		viewProjection_.matView = camera_->GetViewProjection().matView;
-		viewProjection_.matProjection = camera_->GetViewProjection().matProjection;
-		// ビュープロジェクション行列の転送
-		viewProjection_.TransferMatrix();
-	}
+		if (input_->TriggerKey(DIK_2)) {
+			isWave2End = true;
+		}
 
-#ifdef _DEBUG
+		if (input_->TriggerKey(DIK_3)) {
+			isWave3End = true;
+		}
 
-	ImGui::Begin("flagy");
-	ImGui::Text(
-	    "isWave1End : %d\n isWave2End : %d\n isUpgrade1End : %d\n isUpgrade2End : %d\n", isWave1End, isWave2End, isUpgrade1End, isUpgrade2End);
-	ImGui::End();
+		if (input_->TriggerKey(DIK_RETURN)) {
+			isUpgrade1End = true;
+		}
 
-	//ウェーブ切り替えデバッグ用
-	if (input_->TriggerKey(DIK_1)) {
-		isWave1End = true;
-	}
-
-	if (input_->TriggerKey(DIK_2)) {
-		isWave2End = true;
-	}
-
-	if (input_->TriggerKey(DIK_3)) {
-		isWave3End = true;
-	}
-
-	if (input_->TriggerKey(DIK_RETURN)) {
-		isUpgrade1End = true;
-	}
-
-	if (input_->TriggerKey(DIK_RETURN) && isWave2End == true) {
-		isUpgrade2End = true;
-	}
-
-	
+		if (input_->TriggerKey(DIK_RETURN) && isWave2End == true) {
+			isUpgrade2End = true;
+		}
 
 #endif // _DEBUG
-}
+	}
 
 void GameScene::Draw() {
 
