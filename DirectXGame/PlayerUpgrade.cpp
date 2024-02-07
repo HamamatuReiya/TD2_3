@@ -1,14 +1,26 @@
 ﻿#include "PlayerUpgrade.h"
 #include "Player.h"
 
-void PlayerUpgrade::AttackUpgrade(int attackPower) {
+void PlayerUpgrade::Initialize() {
+	// 加算する攻撃力
+	attack_ = 1;
+	// 体力
+	hitPoint_ = 30;
+	// 回復力
+	recovery_ = 5;
+}
+
+int PlayerUpgrade::AttackUpgrade(int attackPower) {
 	attackPower += attack_; 
+	return attackPower;
 }
 
-void PlayerUpgrade::HitPointUpgrade(float playerHP) { 
+float PlayerUpgrade::HitPointUpgrade(float playerHP) { 
 	playerHP += hitPoint_;
+	return playerHP;
 }
 
-void PlayerUpgrade::RecoveryUpgrade(float recovery) { 
+float PlayerUpgrade::RecoveryUpgrade(float recovery) { 
 	recovery += recovery_; 
+	return recovery;
 }

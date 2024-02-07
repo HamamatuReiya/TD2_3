@@ -22,7 +22,7 @@ public:
     /// <summary>
     /// /耐久値関連
     /// </summary>
-
+public:
 	//耐久値を減らす
 	void ReduceEND();
 
@@ -31,6 +31,9 @@ public:
 
 	//ゲームオーバーのフラグを返す
 	int ReturnFlag();
+
+public:
+	int GetLineEND() { return lineEND; }
 
 	void ResetFlag();
 

@@ -122,17 +122,12 @@ void Player::Move(ViewProjection& viewProjection) {
 		////Z軸を固定化
 		worldTransform_.translation_.z = 130.0f;
 
-		#ifdef DEBUG
+		
 
 		ImGui::Begin("Player");
-		ImGui::Text(
-		    "model:%f,%f,%f,HP:%f,\nnormal:%d", worldTransform_.translation_.x,
-		    worldTransform_.translation_.y, worldTransform_.translation_.z, playerHP_, damageFlag_);
-
-		ImGui::Text("model:%f,%f,%f", mouseDirection.x, mouseDirection.y, mouseDirection.z);
+		ImGui::Text("kAttack:%d\nAttack:%d", kAttackPower,attackPower);
 		ImGui::End();
 
-#endif // DEBUG
 
 	}
 }
@@ -158,4 +153,17 @@ Vector3 Player::GetWorldPosition() {
 }
 
 void Player::GetDamageAfter(float hp) { playerHP_ = hp; }
+
+void Player::SetAttackUp(int attack) { kAttackPower += attack; }
+
+void Player::SetLifeUp(float life) { kPlayerHP_ += life; }
+
+void Player::SetRecoveryUp(float recovery) { kRecoveryPower += recovery; }
+
+void Player::NewPlayer() { 
+	attackPower = kAttackPower;
+	playerHP_ = kPlayerHP_;
+	recoveryPower = kRecoveryPower;
+}
+
 

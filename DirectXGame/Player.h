@@ -38,7 +38,22 @@ public:
 
 public:
 
-	
+	//強化画面に値を渡す
+	int AttackUp() { return kAttackPower; }
+
+	float LifeUp() { return kPlayerHP_; }
+
+    float RecoveryUp() { return kRecoveryPower; }
+
+	//強化した値をセットする
+	void SetAttackUp(int attack);
+
+	void SetLifeUp(float life);
+
+	void SetRecoveryUp(float recovery);
+
+	//プレイヤーに強化した値に更新する
+	void NewPlayer();
 
 	enum class PlayerState {
 		isAlive,
@@ -57,12 +72,14 @@ private:
 	Input* input_ = nullptr;
 
 	//プレイヤーの体力
-	const float kPlayerHP_ = 300.0f;
+	float kPlayerHP_ = 300.0f;
 	float playerHP_ = kPlayerHP_;
 	float recoveryPower = 15.0f;
+	float kRecoveryPower = 15.0f;
 
 	// プレイヤーの攻撃力
 	int attackPower = 1;
+	int kAttackPower = 1;
 
 	// 死亡判定
 	bool isDead_ = false;
