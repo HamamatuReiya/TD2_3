@@ -615,8 +615,13 @@ void GameScene::DamageLine() {
 	}
 }
 
-void GameScene::CheakEnemyDeath() {
-
+void GameScene::CheakEnemyDeath() { 
+	if (enemyDeath_ >= 20) {
+		isWave1End = true;
+	}
+	if (enemyDeath_ >= 40) {
+	
+	}
 }
 
 void GameScene::CheakHPCameraShake() {
@@ -1095,6 +1100,7 @@ void GameScene::BreakLineHPUpdate(int32_t num) {
 void GameScene::sceneReset() {
 	//敵のリセット
 	enemys_.clear();
+	enemyDeath_ = 0;
 	// シーン移行のリセット
 	isSceneEnd = false;
 	// 防衛耐久値のリセット
