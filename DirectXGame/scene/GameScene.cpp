@@ -210,6 +210,13 @@ void GameScene::Update() {
 		break;
 
 	case GameScene::gameState::Upgrade:
+
+		Vector2 pos = input_->GetMousePosition();
+
+		ImGui::Begin("mousePos");
+		ImGui::Text("x : %f\n:%f\n", pos.x, pos.y);
+		ImGui::End();
+
 		borderline_->ResetEND();
 
 		if (input_->TriggerKey(DIK_A)) {
