@@ -18,7 +18,7 @@ void GameOverScene::Update() {
 	if (input_->IsTriggerMouse(0)) {
 		isSceneEnd = true;
 	}
-    }
+}
 
 void GameOverScene::Draw() {
 	// コマンドリストの取得

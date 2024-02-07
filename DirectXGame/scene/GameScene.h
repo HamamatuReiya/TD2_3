@@ -14,7 +14,7 @@
 
 #include"Player.h"
 
-#include"Enemy.h"
+#include "Enemy.h"
 #include "StrongEnemy.h"
 #include "ReflectEnemy.h"
 #include "CurveEnemy.h"
@@ -188,6 +188,13 @@ public:
 
 	bool IsGameOver() { return isGameOver; }
 	SceneType GameOverScene() { return SceneType::kGameOver; }
+	
+	//ゲームクリア関係（シーン）
+	bool isGameClear = false;
+
+	bool IsGameClear() { return isGameClear; }
+	SceneType GameClearScene() { return SceneType::kGameClear; }
+
 
 private:
 	Wave waveNo1 = Wave::Wave1;

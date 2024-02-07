@@ -21,13 +21,13 @@ void Borderline::Update() {
 		breakLineFlag = true;
 	}
 	
-//#ifdef DEBUG
+#ifdef DEBUG
 	ImGui::Begin("borderLine");
 	ImGui::Text(
 	    "lineEND:%d,maxlineEND:%d,breakLineFlag:%d",lineEND , maxLineEND, breakLineFlag);
 	ImGui::End();
 
-//#endif // DEBUG
+#endif // DEBUG
 }
 
 void Borderline::Draw(ViewProjection& viewProjection) {

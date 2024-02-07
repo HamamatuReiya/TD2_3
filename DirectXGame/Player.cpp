@@ -122,13 +122,6 @@ void Player::Move(ViewProjection& viewProjection) {
 		////Z軸を固定化
 		worldTransform_.translation_.z = 130.0f;
 
-		
-
-		ImGui::Begin("Player");
-		ImGui::Text("kAttack:%d\nAttack:%d", kAttackPower,attackPower);
-		ImGui::End();
-
-
 	}
 }
 

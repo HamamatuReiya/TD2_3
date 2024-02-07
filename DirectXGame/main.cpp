@@ -125,6 +125,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				gameScene->sceneReset();
 			}
 
+			if (gameScene->IsGameClear()) {
+				sceneNo = gameScene->GameClearScene();
+				// ゲームシーンの初期化、フラグリセット等
+				gameScene->sceneReset();
+			}
+
 			break;
 		case SceneType::kGameClear:
 			gameClearScene->Update();

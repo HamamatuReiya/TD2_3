@@ -5,7 +5,6 @@
 #include "AxisIndicator.h"
 #include <fstream>
 #include "Vector3.h"
-#include <ImGui.cpp>
 
 GameScene::GameScene() {}
 
@@ -199,11 +198,6 @@ void GameScene::Update() {
 			return false;
 		});
 
-		
-
-		ImGui::Begin("enemyDeath");
-		ImGui::Text("%d", enemyDeath_);
-		ImGui::End();
 
 		// プレイヤーHP
 		HP_ = playerHPSprite_->GetSize();
@@ -266,10 +260,7 @@ void GameScene::Update() {
 
 		Vector2 pos = input_->GetMousePosition();
 
-		ImGui::Begin("mousePos");
-		ImGui::Text("x : %f\n:%f\n", pos.x, pos.y);
-		ImGui::End();
-
+		
 		borderline_->ResetEND();
 
 		if (isUpgrade1End == false) {
@@ -381,6 +372,12 @@ void GameScene::Update() {
 
 		if (input_->TriggerKey(DIK_2)) {
 			isWave2End = true;
+		}
+
+	    if (input_->TriggerKey(DIK_3)) {
+	    
+			//isGameOver = true;
+	        isGameClear = true;
 		}
 
 		if (input_->TriggerKey(DIK_RETURN)) {
@@ -655,6 +652,7 @@ void GameScene::CheakEnemyDeath() {
 	}
 	if (enemyDeath_ >= 40) {
 	//ここにゲームクリアへの切り替え処理を書く	
+		isGameClear = true;
 	}
 }
 
@@ -1143,6 +1141,7 @@ void GameScene::sceneReset() {
 	// ゲームオーバーのフラグのリセット
 	borderline_->ResetFlag();
 	isGameOver = false;
+	isGameClear = false;
 	//シーン移行のリセット
 	isSceneEnd = false;
 
