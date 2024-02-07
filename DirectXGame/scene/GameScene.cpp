@@ -77,13 +77,13 @@ void GameScene::Initialize() {
 	////強化画面のスプライトの初期化
 	//攻撃力
 	attackTexture_ = TextureManager::Load("ATKUPUP.png");
-	attackSprite_ = Sprite::Create(attackTexture_, {200, 500});
+	attackSprite_ = Sprite::Create(attackTexture_, {100, 200});
 	//体力
 	lifeTexture_ = TextureManager::Load("HPUP.png");
-	lifeSprite_ = Sprite::Create(lifeTexture_, {580, 500});
+	lifeSprite_ = Sprite::Create(lifeTexture_, {510, 200});
 	//回復力
 	recoveryTexture_ = TextureManager::Load("heel.png");
-	recoverySprite_ = Sprite::Create(recoveryTexture_, {950, 500});
+	recoverySprite_ = Sprite::Create(recoveryTexture_, {930, 200});
 
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
@@ -243,15 +243,41 @@ void GameScene::Update() {
 
 		borderline_->ResetEND();
 
-		if (IsWave1End()) {
-			if (IsUpgrade1End()) {
-				NextWave2();
-				Wave2Initialize();
-				WaveReset();
-				IsUpgradeEndReset();
+		if (isUpgrade1End == false) {
+			if (pos.x >= 100.0f && pos.y >= 200.0f && pos.x <= 350.0f && pos.y <= 450.0f) {
+				if (input_->IsTriggerMouse(0)) {
+					player_->SetAttackUp(1);
+					player_->NewPlayer();
+					isUpgrade1End = true;
+				}
+			}
+
+			if (pos.x >= 510.0f && pos.y >= 200.0f && pos.x <= 760.0f && pos.y <= 450.0f) {
+				if (input_->IsTriggerMouse(0)) {
+					player_->SetLifeUp(30.0f);
+					player_->NewPlayer();
+					isUpgrade1End = true;
+				}
+			}
+
+			if (pos.x >= 930.0f && pos.y >= 200.0f && pos.x <= 1180.0f && pos.y <= 450.0f) {
+				if (input_->IsTriggerMouse(0)) {
+					player_->SetRecoveryUp(10.0f);
+					player_->NewPlayer();
+					isUpgrade1End = true;
+				}
 			}
 		}
 
+	    if (IsWave1End()) {
+		    if (IsUpgrade1End()) {
+			    NextWave2();
+			    Wave2Initialize();
+			    WaveReset();
+				//↓これsceneResetでいいかも
+			    IsUpgradeEndReset();
+		    }
+	    }
 		if (IsWave2End()) {
 			if (IsUpgrade2End()) {
 				NextWave3();
