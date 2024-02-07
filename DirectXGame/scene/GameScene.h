@@ -23,6 +23,7 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "Borderline.h"
+#include "PlayerUpgrade.h"
 
 /// <summary>
 /// ゲームシーン
@@ -155,9 +156,12 @@ public:
 	};
 	
 	bool isWave1End = false;
+	bool isWave2End = false;
 
 	bool IsWave1End() { return isWave1End; }
 	Wave NextWave2() { return Wave::Wave2; }
+
+	void Upgrade();
 
 	bool isSceneEnd = false;
 
@@ -264,6 +268,10 @@ private: // メンバ変数
 	std::unique_ptr<Model> modelBorderline_;
 	// ボーダーラインの上限
 	int border_ = 5;
+
+	//アップグレード
+	std::unique_ptr<PlayerUpgrade> playerUpgrade_;
+
 
 	// プレイヤーのHP
 	uint_fast32_t playerHPTexture_ = 0;

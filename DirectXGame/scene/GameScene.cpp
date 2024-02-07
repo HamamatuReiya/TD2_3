@@ -24,7 +24,7 @@ void GameScene::Initialize() {
 	viewProjection_.farZ = 600;
 	viewProjection_.Initialize();
 
-	#pragma region 自キャラ
+#pragma region 自キャラ
 
 	//自キャラ関連
 	player_ = std::make_unique<Player>();
@@ -34,9 +34,7 @@ void GameScene::Initialize() {
 	PlayerPosition = {0, 0, 0};
 	player_->Initialize(modelPlayer_.get(), modelDeadPlayer_.get(), PlayerPosition);
 
-
-
-	#pragma endregion
+#pragma endregion
 	
 #pragma region 敵
 	// 敵の生成
@@ -901,6 +899,20 @@ void GameScene::Wave2Initialize() {
 }
 
 void GameScene::WaveReset() { isWave1End = false; }
+
+void GameScene::Upgrade() {
+	/*if (1) {
+		playerUpgrade_->AttackUpgrade(player_->GetAttackPow());
+	}
+
+	if (2) {
+		playerUpgrade_->HitPointUpgrade()
+	}
+
+	if (3) {
+		playerUpgrade_->RecoveryUpgrade()
+	}*/
+}
 
 void GameScene::sceneReset() {
 	//敵のリセット
