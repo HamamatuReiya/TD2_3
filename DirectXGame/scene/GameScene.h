@@ -232,6 +232,7 @@ private: // メンバ変数
 	int32_t enemyPopWaitTimer = 0;
 	// 敵の死んだ数
 	int enemyDeath_ = 0;
+	int a = 0;
 
 	// 強めの敵リスト
 	std::list<StrongEnemy*> strongEnemys_;

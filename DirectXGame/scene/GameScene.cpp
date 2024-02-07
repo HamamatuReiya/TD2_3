@@ -336,6 +336,8 @@ void GameScene::Update() {
 	// 天球の更新
 	skydome_->Update();
 
+	CheakEnemyDeath();
+
 #ifdef _DEBUG
 
 		// デバッグカメラ
@@ -645,8 +647,11 @@ void GameScene::DamageLine() {
 }
 
 void GameScene::CheakEnemyDeath() { 
-	if (enemyDeath_ >= 10) {
-		isWave1End = true;
+	if (enemyDeath_ >= 3) {
+		a++;
+		if (a == 2) {
+			isWave1End = true;
+		}
 	}
 	if (enemyDeath_ >= 40) {
 	
