@@ -226,6 +226,8 @@ private: // メンバ変数
 	bool enemyPopWaitFlag = true;
 	// 待機タイマー
 	int32_t enemyPopWaitTimer = 0;
+	// 敵の死んだ数
+	int enemyDeath_ = 0;
 
 	// 強めの敵リスト
 	std::list<StrongEnemy*> strongEnemys_;
