@@ -5,6 +5,7 @@
 #include "AxisIndicator.h"
 #include <fstream>
 #include "Vector3.h"
+#include <ImGui.cpp>
 
 GameScene::GameScene() {}
 
@@ -193,9 +194,27 @@ void GameScene::Update() {
 		// 耐久値を減らす関数の呼び出し
 		DamageLine();
 
+		// ボーダーラインの更新
+		borderline_->Update();
+
+		// 耐久値が0になったフラグが立てばシーン切り替え
+		if (borderline_->ReturnFlag() == 1) {
+			// IsGameOver();
+			isGameOver = true;
+		}
+
+		if (isWave1End == true) {
+			stateNo = gameState::Upgrade;
+		}
+
 		break;
+
 	case GameScene::gameState::Upgrade:
 		borderline_->ResetEND();
+
+		if (isUpgradeEnd == true){
+			isUpgradeEnd = false;
+		}
 
 		break;
 	}
@@ -208,15 +227,6 @@ void GameScene::Update() {
 
 	// 天球の更新
 	skydome_->Update();
-
-	// ボーダーラインの更新
-	borderline_->Update();
-
-	//耐久値が0になったフラグが立てばシーン切り替え
-	if (borderline_->ReturnFlag() == 1) {
-		//IsGameOver();
-		isGameOver = true;
-	}
 
 
 #ifdef _DEBUG
@@ -249,9 +259,26 @@ void GameScene::Update() {
 
 #ifdef _DEBUG
 
+	ImGui::Begin("flagy");
+	ImGui::Text("isWave1End : %d\nisUpgradeEnd : %d\n", isWave1End, isUpgradeEnd);
+	ImGui::End();
+
 	//ウェーブ切り替えデバッグ用
-	if (input_->TriggerKey(DIK_SPACE)) {
+	if (input_->TriggerKey(DIK_SPACE) && waveNo1 == Wave::Wave1) {
 		isWave1End = true;
+	}
+
+	if (input_->TriggerKey(DIK_RETURN)) {
+		isUpgradeEnd = true;
+	}
+
+
+	if (input_->TriggerKey(DIK_SPACE) && waveNo2 == Wave::Wave3) {
+		isWave2End = true;
+	}
+
+	if (input_->TriggerKey(DIK_SPACE) && waveNo3 == Wave::Wave3) {
+		isWave3End = true;
 	}
 
 #endif // _DEBUG
@@ -898,7 +925,18 @@ void GameScene::Wave2Initialize() {
 	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv");
 }
 
-void GameScene::WaveReset() { isWave1End = false; }
+void GameScene::Wave3Initialize() {
+	LoadEnemyPopData("./Resources/enemyPop.csv");
+	LoadStrongEnemyPopData("./Resources/strongEnemyPop.csv");
+	LoadReflectEnemyPopData("./Resources/reflectEnemyPop.csv");
+	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv");
+}
+
+void GameScene::WaveReset() { 
+	isWave1End = false;
+	isWave2End = false;
+	isWave3End = false;
+}
 
 void GameScene::Upgrade() {
 	/*if (1) {

@@ -101,9 +101,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			gameScene->Update();
 
 			if (gameScene->IsWave1End()) {
-				gameScene->NextWave2();
-				gameScene->Wave2Initialize();
-				gameScene->WaveReset();
+				if (gameScene->IsUpgradeEnd()) {
+					gameScene->NextWave2();
+					gameScene->Wave2Initialize();
+					gameScene->WaveReset();
+				}
+			}
+			if (gameScene->IsWave2End()) {
+				if (gameScene->IsUpgradeEnd()) {
+					gameScene->NextWave3();
+					gameScene->Wave3Initialize();
+					gameScene->WaveReset();
+				}
 			}
 
 			if (gameScene->IsSceneEnd()) {
