@@ -647,14 +647,14 @@ void GameScene::DamageLine() {
 }
 
 void GameScene::CheakEnemyDeath() { 
-	if (enemyDeath_ >= 3) {
+	if (enemyDeath_ >= 20) {
 		a++;
 		if (a == 2) {
 			isWave1End = true;
 		}
 	}
 	if (enemyDeath_ >= 40) {
-	
+	//ここにゲームクリアへの切り替え処理を書く	
 	}
 }
 
@@ -1135,6 +1135,7 @@ void GameScene::sceneReset() {
 	//敵のリセット
 	enemys_.clear();
 	enemyDeath_ = 0;
+	a = 0;
 	// シーン移行のリセット
 	isSceneEnd = false;
 	// 防衛耐久値のリセット
