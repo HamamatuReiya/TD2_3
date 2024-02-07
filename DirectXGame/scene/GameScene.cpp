@@ -89,6 +89,11 @@ void GameScene::Initialize() {
 	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 #endif // _DEBUG
+
+	// タイトルのテクスチャ読み込み
+	gameTexture_ = TextureManager::Load("uvChecker.png");
+	// タイトルの生成
+	gameSprite_ = Sprite::Create(gameTexture_, {760, 0});
 }
 
 void GameScene::Update() {
@@ -203,17 +208,35 @@ void GameScene::Update() {
 			isGameOver = true;
 		}
 
+#ifdef _DEBUG
+
 		if (isWave1End == true) {
 			stateNo = gameState::Upgrade;
 		}
+
+		if (isWave2End == true) {
+			stateNo = gameState::Upgrade;
+		}
+
+		if (isWave3End == true) {
+			stateNo = gameState::Upgrade;
+		}
+		
+#endif // _DEBUG
+
 
 		break;
 
 	case GameScene::gameState::Upgrade:
 		borderline_->ResetEND();
 
-		if (isUpgradeEnd == true){
-			isUpgradeEnd = false;
+		if (isUpgrade1End == true){
+
+			stateNo = gameState::Wave;
+		}
+
+		if (isUpgrade2End == true) {
+			stateNo = gameState::Wave;
 		}
 
 		break;
@@ -260,27 +283,53 @@ void GameScene::Update() {
 #ifdef _DEBUG
 
 	ImGui::Begin("flagy");
-	ImGui::Text("isWave1End : %d\nisUpgradeEnd : %d\n", isWave1End, isUpgradeEnd);
+	ImGui::Text(
+	    "isWave1End : %d\n isWave2End : %d\n isUpgrade1End : %d\n isUpgrade2End : %d\n", isWave1End, isWave2End, isUpgrade1End, isUpgrade2End);
 	ImGui::End();
 
 	//ウェーブ切り替えデバッグ用
-	if (input_->TriggerKey(DIK_SPACE) && waveNo1 == Wave::Wave1) {
+	if (input_->TriggerKey(DIK_1)) {
 		isWave1End = true;
 	}
 
-	if (input_->TriggerKey(DIK_RETURN) && isWave1End == true) {
-		isUpgradeEnd = true;
-	}
-
-	if (input_->TriggerKey(DIK_SPACE) && waveNo2 == Wave::Wave3) {
+	if (input_->TriggerKey(DIK_2)) {
 		isWave2End = true;
 	}
 
-	if (input_->TriggerKey(DIK_SPACE) && waveNo3 == Wave::Wave3) {
+	if (input_->TriggerKey(DIK_3)) {
 		isWave3End = true;
 	}
 
+	if (input_->TriggerKey(DIK_RETURN)) {
+		isUpgrade1End = true;
+	}
+
+	if (input_->TriggerKey(DIK_RETURN) && isWave2End == true) {
+		isUpgrade2End = true;
+	}
+
+	
+
 #endif // _DEBUG
+
+	if (IsWave1End()) {
+		if (IsUpgrade1End()) {
+			NextWave2();
+
+			Wave2Initialize();
+			WaveReset();
+			IsUpgradeEndReset();
+		}
+	}
+	if (IsWave2End()) {
+		if (IsUpgrade2End()) {
+			NextWave3();
+			Wave3Initialize();
+			WaveReset();
+			IsUpgradeEndReset();
+		}
+	}
+
 }
 
 void GameScene::Draw() {
@@ -349,8 +398,15 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
-	playerHPberSprite_->Draw();
-	playerHPSprite_->Draw();
+	switch (stateNo) {
+	case GameScene::gameState::Wave:
+		playerHPberSprite_->Draw();
+		playerHPSprite_->Draw();
+		break;
+	case GameScene::gameState::Upgrade:
+		gameSprite_->Draw();
+		break;
+	}
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -949,6 +1005,11 @@ void GameScene::Upgrade() {
 	if (3) {
 		playerUpgrade_->RecoveryUpgrade()
 	}*/
+}
+
+void GameScene::IsUpgradeEndReset() { 
+	isUpgrade1End = false;
+	isUpgrade2End = false;
 }
 
 void GameScene::sceneReset() {

@@ -168,10 +168,14 @@ public:
 	Wave NextWave3() { return Wave::Wave3; }
 
 	void Upgrade();
+	
+	void IsUpgradeEndReset();
 
-	bool isUpgradeEnd = false;
+	bool isUpgrade1End = false;
+	bool IsUpgrade1End() { return isUpgrade1End; }
 
-	bool IsUpgradeEnd() { return isUpgradeEnd; }
+	bool isUpgrade2End = false;
+	bool IsUpgrade2End() { return isUpgrade2End; }
 
 	bool isSceneEnd = false;
 
@@ -301,4 +305,8 @@ private: // メンバ変数
 	//表示範囲
 	Vector2 HPber_;
 
+	//  タイトル画面
+	uint32_t gameTexture_ = 0;
+	// スプライト
+	Sprite* gameSprite_ = nullptr;
 };
