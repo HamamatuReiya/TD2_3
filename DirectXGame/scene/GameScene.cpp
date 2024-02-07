@@ -242,7 +242,6 @@ void GameScene::Update() {
 			isGameOver = true;
 		}
 
-#ifdef _DEBUG
 
 		if (isWave1End == true) {
 			stateNo = gameState::Upgrade;
@@ -252,7 +251,6 @@ void GameScene::Update() {
 			stateNo = gameState::Upgrade;
 		}
 
-#endif // _DEBUG
 
 		break;
 
@@ -644,7 +642,7 @@ void GameScene::DamageLine() {
 }
 
 void GameScene::CheakEnemyDeath() { 
-	if (enemyDeath_ >= 20) {
+	if (enemyDeath_ >= 2) {
 		a++;
 		if (a == 2) {
 			isWave1End = true;
