@@ -45,3 +45,5 @@ int Borderline::ReturnFlag() {
 		return 1;
 	}
 }
+
+void Borderline::ResetFlag() { breakLineFlag = false; }
