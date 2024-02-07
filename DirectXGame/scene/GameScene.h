@@ -131,6 +131,9 @@ private:
 	/// </summary>
 	void UpdateBorderLine();
 
+	//敵がラインに触れたら耐久値を減らす
+	void DamageLine();
+
 public:
 	void Wave1Initialize();
 
@@ -152,6 +155,13 @@ public:
 
 	bool IsSceneEnd() { return isSceneEnd; }
 	SceneType NextScene() { return SceneType::kTitle; }
+
+	//ゲームオーバー関係（シーン）
+	bool isGameOver = false;
+
+	bool IsGameOver() { return isGameOver; }
+	SceneType GameOverScene() { return SceneType::kGameOver; }
+
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -251,6 +261,13 @@ private: // メンバ変数
 	uint_fast32_t playerHPTexture_ = 0;
 	// スプライト
 	Sprite* playerHPSprite_ = nullptr;
+	//表示範囲
+	Vector2 HP_;
+
+	// プレイヤーのHPバー
+	uint_fast32_t playerHPberTexture_ = 0;
+	// スプライト
+	Sprite* playerHPberSprite_ = nullptr;
 	//表示範囲
 	Vector2 HPber_;
 

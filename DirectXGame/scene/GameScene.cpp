@@ -70,6 +70,11 @@ void GameScene::Initialize() {
 	// プレイヤーのHPの生成
 	playerHPSprite_ = Sprite::Create(playerHPTexture_, {10, 10});
 
+	// プレイヤーのHPバーのテクスチャ読み込み
+	playerHPberTexture_ = TextureManager::Load("kHp.png");
+	// プレイヤーのHPバーの生成
+	playerHPberSprite_ = Sprite::Create(playerHPberTexture_, {10, 10});
+
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
 	// カメラの初期化
@@ -108,12 +113,16 @@ void GameScene::Update() {
 	}
 
 	// プレイヤーHP
-	HPber_ = playerHPSprite_->GetSize();
-	HPber_.x = player_->GetHP();
+	HP_ = playerHPSprite_->GetSize();
+	HP_.x = player_->GetHP();
 
-	playerHPSprite_->SetSize(HPber_);
+	playerHPSprite_->SetSize(HP_);
 
-	
+	// プレイヤーHPバー
+	HPber_ = playerHPberSprite_->GetSize();
+	HPber_.x = 300.0f;
+
+	playerHPberSprite_->SetSize(HPber_);
 
 	// 敵の更新
 	for (Enemy* enemy : enemys_) {
@@ -131,7 +140,9 @@ void GameScene::Update() {
 	for (CurveEnemy* curveEnemy : curveEnemys_) {
 		curveEnemy->Update();
 	}
-	
+
+	//耐久値を減らす関数の呼び出し
+	DamageLine();
 	
 	//敵の消滅
 	enemys_.remove_if([](Enemy* enemy) {
@@ -199,6 +210,12 @@ void GameScene::Update() {
 
 	// ボーダーラインの更新
 	borderline_->Update();
+
+	//耐久値が0になったフラグが立てばシーン切り替え
+	if (borderline_->ReturnFlag() == 1) {
+		//IsGameOver();
+		isGameOver = true;
+	}
 
 
 #ifdef _DEBUG
@@ -305,6 +322,7 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
+	playerHPberSprite_->Draw();
 	playerHPSprite_->Draw();
 
 	// スプライト描画後処理
@@ -443,6 +461,33 @@ void GameScene::CheakAllCollisions() {
 		}
 	}
 
+}
+
+void GameScene::DamageLine() {
+	//雫ちゃん
+	for (Enemy* enemy : enemys_) {
+		if (enemy->GetWorldPosition().y <= -55.0f) {
+			borderline_->ReduceEND();
+		}
+	}
+	//強い敵
+	for (StrongEnemy* strongEnemy : strongEnemys_) {
+		if (strongEnemy->GetWorldPosition().y <= -45.0f) {
+			borderline_->ReduceEND();
+		}
+	}
+	//硬い敵
+	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+		if (reflectEnemy->GetWorldPosition().y <= -50.0f) {
+			borderline_->ReduceEND();
+		}
+	}
+	//カーブする敵
+	for (CurveEnemy* curveEnemy : curveEnemys_) {
+		if (curveEnemy->GetWorldPosition().y <= -55.0f) {
+			borderline_->ReduceEND();
+		}
+	}
 }
 
 void GameScene::CheakHPCameraShake() {
@@ -614,7 +659,7 @@ void GameScene::UpdateStrongEnemyPopCommands() {
 			float z = (float)std::atof(word.c_str());
 
 			// 敵を発生させる
-			StrongEnemySpawn(Vector3(x, y, z), {0.0f, -0.05f, 0.0f});
+			StrongEnemySpawn(Vector3(x, y, z), {0.0f, -0.2f, 0.0f});
 		}
 		// WAITコマンド
 		else if (word.find("WAIT") == 0) {
@@ -836,6 +881,7 @@ void GameScene::UpdateBorderLine() {
 	
 	}
 }
+
 
 void GameScene::Wave1Initialize() {
 	LoadEnemyPopData("./Resources/enemyPop.csv");

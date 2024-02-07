@@ -8,6 +8,12 @@ void TitleScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+
+	// タイトルのテクスチャ読み込み
+	titleTexture_ = TextureManager::Load("title3.png");
+	// タイトルの生成
+	titleSprite_ = Sprite::Create(titleTexture_, {0, 0});
+
 }
 
 void TitleScene::Update() {
@@ -53,6 +59,8 @@ void TitleScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+
+	titleSprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

@@ -19,10 +19,31 @@ public:
 	/// </summary>
 	void Draw(ViewProjection& viewProjection);
 
+    /// <summary>
+    /// /耐久値関連
+    /// </summary>
+
+	//耐久値を減らす
+	void ReduceEND();
+
+	//耐久値を最大耐久値まで戻す
+	void ResetEND();
+
+	//ゲームオーバーのフラグを返す
+	int ReturnFlag();
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
+
+	//防衛線の最大耐久値
+	int maxLineEND = 5;
+	//防衛線の耐久値
+	int lineEND;
+	//ゲームオーバーのフラグ
+	int breakLineFlag=false;
+	
 
 };
