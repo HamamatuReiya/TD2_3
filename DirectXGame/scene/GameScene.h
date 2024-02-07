@@ -194,6 +194,11 @@ private:
 	Wave waveNo2 = Wave::Wave2;
 	Wave waveNo3 = Wave::Wave3;
 
+private:
+	void TextureInitialize();
+
+	void BreakLineHPUpdate(int32_t num);
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -306,8 +311,8 @@ private: // メンバ変数
 	//表示範囲
 	Vector2 HPber_;
 
-	//  タイトル画面
-	uint32_t gameTexture_ = 0;
-	// スプライト
-	Sprite* gameSprite_ = nullptr;
+	//ボーダーラインの体力の追加
+	int32_t num1;
+	Sprite* textureNumber_[10];
+	Vector2 texturePos = {630, 650};
 };
