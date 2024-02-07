@@ -36,8 +36,21 @@ public:
 	/// </summary>
 	void Draw();
 
+	void sceneReset();
+
+	bool isSceneEnd = false;
+
+	bool IsSceneEnd() { return isSceneEnd; }
+	SceneType NextScene() { return SceneType::kTitle; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
+
+	// タイトル画面
+	uint32_t gameClearTexture_ = 0;
+	// スプライト
+	Sprite* gameClearSprite_ = nullptr;
+
 };

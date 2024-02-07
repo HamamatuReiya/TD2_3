@@ -68,4 +68,7 @@ void TitleScene::Draw() {
 #pragma endregion
 }
 
-void TitleScene::sceneReset() { isSceneEnd = false; }
+void TitleScene::sceneReset() { 
+	//シーン移行のリセット
+	isSceneEnd = false;
+}

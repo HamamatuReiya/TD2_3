@@ -52,6 +52,4 @@ private: // メンバ変数
 	uint_fast32_t titleTexture_ = 0;
 	//スプライト
 	Sprite* titleSprite_ = nullptr;
-
-
 };

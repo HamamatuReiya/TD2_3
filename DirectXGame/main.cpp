@@ -8,6 +8,8 @@
 #include "WinApp.h"
 
 #include "TitleScene.h"
+#include "GameOverScene.h"
+#include "GameClearScene.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -20,6 +22,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PrimitiveDrawer* primitiveDrawer = nullptr;
 	GameScene* gameScene = nullptr;
 	TitleScene* titleScene = nullptr;
+	GameClearScene* gameClearScene = nullptr;
+	GameOverScene* gameOverScene = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -67,6 +71,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// タイトルシーンの初期化
 	titleScene = new TitleScene();
 	titleScene->Initialize();
+
+	// ゲームクリアシーンの初期化
+	gameClearScene = new GameClearScene();
+	gameClearScene->Initialize();
+
+	// ゲームオーバーシーンの初期化
+	gameOverScene = new GameOverScene();
+	gameOverScene->Initialize();
 
 	SceneType sceneNo = SceneType::kTitle;
 
@@ -125,8 +137,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (gameScene->IsGameOver()) {
 				sceneNo = gameScene->GameOverScene();
 			}
-		case SceneType::kGameOver:
+		case SceneType::kGameClear:
+			gameClearScene->Update();
 
+			if (gameClearScene->IsSceneEnd()) {
+				// 次のシーンの値を代入してシーン切り替え
+				sceneNo = gameClearScene->NextScene();
+
+				// タイトルシーンの初期化、フラグリセット等
+				gameClearScene->sceneReset();
+			}
+		break;
+
+		case SceneType::kGameOver:
+		gameOverScene->Update();
+
+		if (gameOverScene->IsSceneEnd()) {
+				// 次のシーンの値を代入してシーン切り替え
+				sceneNo = gameOverScene->NextScene();
+
+				// タイトルシーンの初期化、フラグリセット等
+				gameOverScene->sceneReset();
+			}
 		break;
 		}
 
