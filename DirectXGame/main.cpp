@@ -177,9 +177,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case SceneType::kGamePlay:
 			gameScene->Draw();
 			break;
-		case SceneType::kGameOver:
-
+		case SceneType::kGameClear:
+			//gameClearScene->Draw();
 		    break;
+		case SceneType::kGameOver:
+			//gameOverScene->Draw();
+			break;
 		}
 		// 軸表示の描画
 		axisIndicator->Draw();

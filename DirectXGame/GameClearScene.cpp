@@ -12,9 +12,9 @@ void GameClearScene::Initialize() {
 }
 
 void GameClearScene::Update() {
-	if (input_->TriggerKey(DIK_SPACE)) {
+	/*if (input_->TriggerKey(DIK_SPACE)) {
 		isSceneEnd = true;
-	}
+	}*/
 }
 
 void GameClearScene::Draw() {

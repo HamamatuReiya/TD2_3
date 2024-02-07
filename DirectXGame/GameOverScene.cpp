@@ -12,9 +12,9 @@ void GameOverScene::Initialize() {
 	}
 
 void GameOverScene::Update() {
-	if (input_->TriggerKey(DIK_SPACE)) {
+	/*if (input_->TriggerKey(DIK_SPACE)) {
 		isSceneEnd = true;
-	}
+	}*/
     }
 
 void GameOverScene::Draw() {
@@ -61,7 +61,7 @@ void GameOverScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
-}
+ }
 
 void GameOverScene::sceneReset() {
 	// シーン移行のリセット
