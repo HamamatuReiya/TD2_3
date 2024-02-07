@@ -9,17 +9,17 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 
-class TitleScene {
+class GameClearScene {
 public:
 	/// <summary>
 	/// コンストクラタ
 	/// </summary>
-	TitleScene();
+	GameClearScene();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~TitleScene();
+	~GameClearScene();
 
 	/// <summary>
 	/// 初期化
@@ -41,7 +41,7 @@ public:
 	bool isSceneEnd = false;
 
 	bool IsSceneEnd() { return isSceneEnd; }
-	SceneType NextScene() { return SceneType::kGamePlay; }
+	SceneType NextScene() { return SceneType::kTitle; }
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -49,14 +49,8 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 
 	// タイトル画面
-	uint_fast32_t titleTexture_ = 0;
+	uint_fast32_t gameClearTexture_ = 0;
 	// スプライト
-	Sprite* titleSprite_ = nullptr;
+	Sprite* gameClearSprite_ = nullptr;
 
-	// 遊び方
-	uint_fast32_t tutorialTexture_ = 0;
-	// スプライト
-	Sprite* tutorialSprite_ = nullptr;
-	// 遊び方のフラク
-	bool isTutorial = false;
 };

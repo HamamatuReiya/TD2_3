@@ -114,6 +114,8 @@
     <ClCompile Include="compute.cpp" />
     <ClCompile Include="CurveEnemy.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameClearScene.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerUpgrade.cpp" />
@@ -153,6 +155,8 @@
     <ClInclude Include="compute.h" />
     <ClInclude Include="CurveEnemy.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameClearScene.h" />
+    <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\Vector2.h" />
