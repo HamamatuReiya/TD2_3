@@ -143,7 +143,6 @@ private:
 
 	gameState stateNo = gameState::Wave;
 
-public:
 	void Wave1Initialize();
 	void Wave2Initialize();
 	void Wave3Initialize();
@@ -176,6 +175,8 @@ public:
 
 	bool isUpgrade2End = false;
 	bool IsUpgrade2End() { return isUpgrade2End; }
+
+public:
 
 	bool isSceneEnd = false;
 

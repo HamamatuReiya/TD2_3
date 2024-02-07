@@ -224,11 +224,28 @@ void GameScene::Update() {
 		
 #endif // _DEBUG
 
-
 		break;
 
 	case GameScene::gameState::Upgrade:
 		borderline_->ResetEND();
+
+		if (IsWave1End()) {
+			if (IsUpgrade1End()) {
+				NextWave2();
+				Wave2Initialize();
+				WaveReset();
+				IsUpgradeEndReset();
+			}
+		}
+
+		if (IsWave2End()) {
+			if (IsUpgrade2End()) {
+				NextWave3();
+				Wave3Initialize();
+				WaveReset();
+				IsUpgradeEndReset();
+			}
+		}
 
 		if (isUpgrade1End == true){
 
@@ -311,25 +328,6 @@ void GameScene::Update() {
 	
 
 #endif // _DEBUG
-
-	if (IsWave1End()) {
-		if (IsUpgrade1End()) {
-			NextWave2();
-
-			Wave2Initialize();
-			WaveReset();
-			IsUpgradeEndReset();
-		}
-	}
-	if (IsWave2End()) {
-		if (IsUpgrade2End()) {
-			NextWave3();
-			Wave3Initialize();
-			WaveReset();
-			IsUpgradeEndReset();
-		}
-	}
-
 }
 
 void GameScene::Draw() {
