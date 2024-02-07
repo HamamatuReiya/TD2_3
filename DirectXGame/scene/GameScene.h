@@ -134,6 +134,14 @@ private:
 	//敵がラインに触れたら耐久値を減らす
 	void DamageLine();
 
+private:
+	enum class gameState { 
+		Wave, 
+		Upgrade,
+	};
+
+	gameState stateNo = gameState::Wave;
+
 public:
 	void Wave1Initialize();
 
@@ -146,10 +154,10 @@ public:
 		Wave2
 	};
 	
-	bool isWaveEnd = false;
+	bool isWave1End = false;
 
-	bool IsWaveEnd() { return isWaveEnd; }
-	Wave NextWave() { return Wave::Wave2; }
+	bool IsWave1End() { return isWave1End; }
+	Wave NextWave2() { return Wave::Wave2; }
 
 	bool isSceneEnd = false;
 

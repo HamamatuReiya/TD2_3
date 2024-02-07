@@ -94,23 +94,85 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
+	switch (stateNo) {
+	case GameScene::gameState::Wave:
+		// 敵キャラの更新
+		UpdateEnemyPopCommands();
+		// 強めの敵の更新
+		UpdateStrongEnemyPopCommands();
+		// 反射する敵の更新
+		UpdateReflectEnemyPopCommands();
+		// 曲がる敵の更新
+		UpdateCurveEnemyPopCommands();
+
+		// プレイヤーが死亡してるときは敵との接触判定を行わないようにする
+		if (player_->GetHP() > 0.0f && player_->GetState() == 0) {
+			// 当たり判定
+			CheakAllCollisions();
+		}
+
+		// 敵の消滅
+		enemys_.remove_if([](Enemy* enemy) {
+			if (enemy->IsDead()) {
+				delete enemy;
+				return true;
+			}
+			if (enemy->GetWorldPosition().y <= -55.0f) {
+				delete enemy;
+				return true;
+			}
+			return false;
+		});
+
+		// 強い敵の消滅
+		strongEnemys_.remove_if([](StrongEnemy* strongEnemy) {
+			if (strongEnemy->IsDead()) {
+				delete strongEnemy;
+				return true;
+			}
+			if (strongEnemy->GetWorldPosition().y <= -45.0f) {
+				delete strongEnemy;
+				return true;
+			}
+			return false;
+		});
+
+		// 反射する敵の消滅
+		reflectEnemys_.remove_if([](ReflectEnemy* reflectEnemy) {
+			if (reflectEnemy->IsDead()) {
+				delete reflectEnemy;
+				return true;
+			}
+			if (reflectEnemy->GetWorldPosition().y <= -50.0f) {
+				delete reflectEnemy;
+				return true;
+			}
+			return false;
+		});
+
+		// カーブする敵の消滅
+		curveEnemys_.remove_if([](CurveEnemy* curveEnemy) {
+			if (curveEnemy->IsDead()) {
+				delete curveEnemy;
+				return true;
+			}
+			if (curveEnemy->GetWorldPosition().y <= -55.0f) {
+				delete curveEnemy;
+				return true;
+			}
+			return false;
+		});
+
+		break;
+	case GameScene::gameState::Upgrade:
+
+
+		break;
+	}
+
 	//プレイヤーの更新
 	player_->Update(viewProjection_);
-
-	// 敵キャラの更新
-	UpdateEnemyPopCommands();
-	// 強めの敵の更新
-	UpdateStrongEnemyPopCommands();
-	// 反射する敵の更新
-	UpdateReflectEnemyPopCommands();
-	// 曲がる敵の更新
-	UpdateCurveEnemyPopCommands();
-
-	//プレイヤーが死亡してるときは敵との接触判定を行わないようにする
-	if (player_->GetHP() > 0.0f&&player_->GetState()==0) {
-		// 当たり判定
-		CheakAllCollisions();
-	}
+	
 
 	// プレイヤーHP
 	HP_ = playerHPSprite_->GetSize();
@@ -144,63 +206,7 @@ void GameScene::Update() {
 	//耐久値を減らす関数の呼び出し
 	DamageLine();
 	
-	//敵の消滅
-	enemys_.remove_if([](Enemy* enemy) {
-		if (enemy->IsDead()) {
-			delete enemy;
-			return true;
-		}
-		if (enemy->GetWorldPosition().y <= -55.0f) {
-			delete enemy;
-			return true;
-		}
-		return false;
-	});
-
-	// 強い敵の消滅
-	strongEnemys_.remove_if([](StrongEnemy* strongEnemy) {
-		if (strongEnemy->IsDead()) {
-			delete strongEnemy;
-			return true;
-		}
-		if (strongEnemy->GetWorldPosition().y <= -45.0f) {
-			delete strongEnemy;
-			return true;
-		}
-		return false;
-	});
-
-	// 反射する敵の消滅
-	reflectEnemys_.remove_if([](ReflectEnemy* reflectEnemy) {
-		if (reflectEnemy->IsDead()) {
-			delete reflectEnemy;
-			return true;
-		}
-		if (reflectEnemy->GetWorldPosition().y <= -50.0f) {
-			delete reflectEnemy;
-			return true;
-		}
-		return false;
-	});
-
-	//カーブする敵の消滅
-	curveEnemys_.remove_if([](CurveEnemy* curveEnemy) {
-		if (curveEnemy->IsDead()) {
-			delete curveEnemy;
-			return true;
-		}
-		if (curveEnemy->GetWorldPosition().y <= -55.0f) {
-			delete curveEnemy;
-			return true;
-		}
-		return false;
-	});
-
-
-	////デスフラグの立ったアイテムを削除
-	//enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)) {
-	//
-	//}
+	
 
 	// カメラの更新
 	camera_->Update();
@@ -250,7 +256,7 @@ void GameScene::Update() {
 
 	//ウェーブ切り替えデバッグ用
 	if (input_->TriggerKey(DIK_SPACE)) {
-		isWaveEnd = true;
+		isWave1End = true;
 	}
 
 #endif // _DEBUG
@@ -897,7 +903,7 @@ void GameScene::Wave2Initialize() {
 	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv");
 }
 
-void GameScene::WaveReset() { isWaveEnd = false; }
+void GameScene::WaveReset() { isWave1End = false; }
 
 void GameScene::sceneReset() {
 	//敵のリセット

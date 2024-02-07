@@ -100,8 +100,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			// ゲームシーンの毎フレーム処理
 			gameScene->Update();
 
-			if (gameScene->IsWaveEnd()) {
-				gameScene->NextWave();
+			if (gameScene->IsWave1End()) {
+				gameScene->NextWave2();
 				gameScene->Wave2Initialize();
 				gameScene->WaveReset();
 			}
