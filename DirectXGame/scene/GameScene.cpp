@@ -991,6 +991,13 @@ void GameScene::Upgrade() {
 void GameScene::sceneReset() {
 	//敵のリセット
 	enemys_.clear();
+	// シーン移行のリセット
+	isSceneEnd = false;
+	// 防衛耐久値のリセット
+	borderline_->ResetEND();
+	// ゲームオーバーのフラグのリセット
+	borderline_->ResetFlag();
+	isGameOver = false;
 	//シーン移行のリセット
 	isSceneEnd = false;
 
