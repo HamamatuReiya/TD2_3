@@ -231,10 +231,6 @@ void GameScene::Update() {
 			stateNo = gameState::Upgrade;
 		}
 
-		if (isWave3End == true) {
-			stateNo = gameState::Upgrade;
-		}
-
 #endif // _DEBUG
 
 		break;
@@ -284,10 +280,10 @@ void GameScene::Update() {
 			    IsUpgradeEndReset();
 		    }
 	    }
+
 		if (IsWave2End()) {
 			if (IsUpgrade2End()) {
 				NextWave3();
-				Wave3Initialize();
 				WaveReset();
 				IsUpgradeEndReset();
 			}
@@ -356,10 +352,6 @@ void GameScene::Update() {
 
 		if (input_->TriggerKey(DIK_2)) {
 			isWave2End = true;
-		}
-
-		if (input_->TriggerKey(DIK_3)) {
-			isWave3End = true;
 		}
 
 		if (input_->TriggerKey(DIK_RETURN)) {
@@ -1030,17 +1022,9 @@ void GameScene::Wave2Initialize() {
 	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv");
 }
 
-void GameScene::Wave3Initialize() {
-	LoadEnemyPopData("./Resources/enemyPop.csv");
-	LoadStrongEnemyPopData("./Resources/strongEnemyPop.csv");
-	LoadReflectEnemyPopData("./Resources/reflectEnemyPop.csv");
-	LoadCurveEnemyPopData("./Resources/curveEnemyPop.csv");
-}
-
 void GameScene::WaveReset() { 
 	isWave1End = false;
 	isWave2End = false;
-	isWave3End = false;
 }
 
 void GameScene::Upgrade() {
