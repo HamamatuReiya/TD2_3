@@ -74,6 +74,17 @@ void GameScene::Initialize() {
 	// プレイヤーのHPバーの生成
 	playerHPberSprite_ = Sprite::Create(playerHPberTexture_, {10, 10});
 
+	////強化画面のスプライトの初期化
+	//攻撃力
+	attackTexture_ = TextureManager::Load("ATKUPUP.png");
+	attackSprite_ = Sprite::Create(attackTexture_, {200, 500});
+	//体力
+	lifeTexture_ = TextureManager::Load("HPUP.png");
+	lifeSprite_ = Sprite::Create(lifeTexture_, {580, 500});
+	//回復力
+	recoveryTexture_ = TextureManager::Load("heel.png");
+	recoverySprite_ = Sprite::Create(recoveryTexture_, {950, 500});
+
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
 	// カメラの初期化
@@ -365,11 +376,20 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
-	playerHPberSprite_->Draw();
-	playerHPSprite_->Draw();
-
-	// スプライト描画後処理
-	Sprite::PostDraw();
+	switch (stateNo) {
+	case GameScene::gameState::Wave:
+		playerHPberSprite_->Draw();
+		playerHPSprite_->Draw();
+		break;
+	case GameScene::gameState::Upgrade:
+		attackSprite_->Draw();
+		lifeSprite_->Draw();
+		recoverySprite_->Draw();
+		break;
+	}
+		// スプライト描画後処理
+		Sprite::PostDraw();
+	
 	
 
 #pragma endregion
