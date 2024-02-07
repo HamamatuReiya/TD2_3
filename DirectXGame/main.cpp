@@ -137,6 +137,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (gameScene->IsGameOver()) {
 				sceneNo = gameScene->GameOverScene();
 			}
+
+		break;
+
 		case SceneType::kGameClear:
 			gameClearScene->Update();
 
