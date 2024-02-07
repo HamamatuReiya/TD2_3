@@ -112,21 +112,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			// ゲームシーンの毎フレーム処理
 			gameScene->Update();
 
-			if (gameScene->IsWave1End()) {
-				if (gameScene->IsUpgradeEnd()) {
-					gameScene->NextWave2();
-					gameScene->Wave2Initialize();
-					gameScene->WaveReset();
-				}
-			}
-			if (gameScene->IsWave2End()) {
-				if (gameScene->IsUpgradeEnd()) {
-					gameScene->NextWave3();
-					gameScene->Wave3Initialize();
-					gameScene->WaveReset();
-				}
-			}
-
 			if (gameScene->IsSceneEnd()) {
 				// 次のシーンの値を代入してシーン切り替え
 				sceneNo = gameScene->NextScene();
@@ -136,10 +121,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			if (gameScene->IsGameOver()) {
 				sceneNo = gameScene->GameOverScene();
+				// ゲームシーンの初期化、フラグリセット等
+				gameScene->sceneReset();
 			}
 
-		break;
-
+			break;
 		case SceneType::kGameClear:
 			gameClearScene->Update();
 
@@ -158,7 +144,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (gameOverScene->IsSceneEnd()) {
 				// 次のシーンの値を代入してシーン切り替え
 				sceneNo = gameOverScene->NextScene();
-
 				// タイトルシーンの初期化、フラグリセット等
 				gameOverScene->sceneReset();
 			}

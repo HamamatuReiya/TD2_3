@@ -143,7 +143,6 @@ private:
 
 	gameState stateNo = gameState::Wave;
 
-public:
 	void Wave1Initialize();
 	void Wave2Initialize();
 	void Wave3Initialize();
@@ -168,10 +167,16 @@ public:
 	Wave NextWave3() { return Wave::Wave3; }
 
 	void Upgrade();
+	
+	void IsUpgradeEndReset();
 
-	bool isUpgradeEnd = false;
+	bool isUpgrade1End = false;
+	bool IsUpgrade1End() { return isUpgrade1End; }
 
-	bool IsUpgradeEnd() { return isUpgradeEnd; }
+	bool isUpgrade2End = false;
+	bool IsUpgrade2End() { return isUpgrade2End; }
+
+public:
 
 	bool isSceneEnd = false;
 
@@ -300,5 +305,16 @@ private: // メンバ変数
 	Sprite* playerHPberSprite_ = nullptr;
 	//表示範囲
 	Vector2 HPber_;
+
+	////強化画面用のスプライト
+	//攻撃
+	uint32_t attackTexture_ = 0;
+	Sprite* attackSprite_ = nullptr;
+	//体力
+	uint32_t lifeTexture_ = 0;
+	Sprite* lifeSprite_ = nullptr;
+	//回復力
+	uint32_t recoveryTexture_ = 0;
+	Sprite* recoverySprite_ = nullptr;
 
 };

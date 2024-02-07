@@ -1,7 +1,7 @@
 ﻿#include "PlayerUpgrade.h"
 #include "Player.h"
 
-void PlayerUpgrade::AttackUpgrade(float attackPower) {
+void PlayerUpgrade::AttackUpgrade(int attackPower) {
 	attackPower += attack_; 
 }
 

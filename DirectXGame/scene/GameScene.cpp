@@ -74,6 +74,17 @@ void GameScene::Initialize() {
 	// プレイヤーのHPバーの生成
 	playerHPberSprite_ = Sprite::Create(playerHPberTexture_, {10, 10});
 
+	////強化画面のスプライトの初期化
+	//攻撃力
+	attackTexture_ = TextureManager::Load("ATKUPUP.png");
+	attackSprite_ = Sprite::Create(attackTexture_, {200, 500});
+	//体力
+	lifeTexture_ = TextureManager::Load("HPUP.png");
+	lifeSprite_ = Sprite::Create(lifeTexture_, {580, 500});
+	//回復力
+	recoveryTexture_ = TextureManager::Load("heel.png");
+	recoverySprite_ = Sprite::Create(recoveryTexture_, {950, 500});
+
 	// カメラの生成
 	camera_ = std::make_unique<Camera>();
 	// カメラの初期化
@@ -89,6 +100,7 @@ void GameScene::Initialize() {
 	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 #endif // _DEBUG
+
 }
 
 void GameScene::Update() {
@@ -203,86 +215,135 @@ void GameScene::Update() {
 			isGameOver = true;
 		}
 
+#ifdef _DEBUG
+
 		if (isWave1End == true) {
 			stateNo = gameState::Upgrade;
 		}
 
+		if (isWave2End == true) {
+			stateNo = gameState::Upgrade;
+		}
+
+		if (isWave3End == true) {
+			stateNo = gameState::Upgrade;
+		}
+
+#endif // _DEBUG
+
 		break;
 
 	case GameScene::gameState::Upgrade:
+
+		Vector2 pos = input_->GetMousePosition();
+
+		ImGui::Begin("mousePos");
+		ImGui::Text("x : %f\n:%f\n", pos.x, pos.y);
+		ImGui::End();
+
 		borderline_->ResetEND();
 
-		if (isUpgradeEnd == true){
-			isUpgradeEnd = false;
+		if (IsWave1End()) {
+			if (IsUpgrade1End()) {
+				NextWave2();
+				Wave2Initialize();
+				WaveReset();
+				IsUpgradeEndReset();
+			}
 		}
 
-		break;
+		if (IsWave2End()) {
+			if (IsUpgrade2End()) {
+				NextWave3();
+				Wave3Initialize();
+				WaveReset();
+				IsUpgradeEndReset();
+			}
+		}
+
+		if (isUpgrade1End == true) {
+
+			stateNo = gameState::Wave;
+		}
+
+		if (isUpgrade2End == true) {
+			stateNo = gameState::Wave;
+			if (input_->TriggerKey(DIK_A)) {
+				stateNo = gameState::Wave;
+			}
+
+			break;
+		}
 	}
 
-	//プレイヤーの更新
-	player_->Update(viewProjection_);
-	
-	// カメラの更新
-	camera_->Update();
+		// プレイヤーの更新
+		player_->Update(viewProjection_);
 
-	// 天球の更新
-	skydome_->Update();
+		// カメラの更新
+		camera_->Update();
 
+		// 天球の更新
+		skydome_->Update();
 
 #ifdef _DEBUG
 
-	// デバッグカメラ
-	debugCamera_->Update();
+		// デバッグカメラ
+		debugCamera_->Update();
 
-	// Cを押して起動
-	if (input_->TriggerKey(DIK_C) && isDebugCameraActive_ == false) {
-		isDebugCameraActive_ = true;
-	}
-	// Cを押して解除
-	if (input_->TriggerKey(DIK_V) && isDebugCameraActive_ == true) {
-		isDebugCameraActive_ = false;
-	}
+		// Cを押して起動
+		if (input_->TriggerKey(DIK_C) && isDebugCameraActive_ == false) {
+			isDebugCameraActive_ = true;
+		}
+		// Cを押して解除
+		if (input_->TriggerKey(DIK_V) && isDebugCameraActive_ == true) {
+			isDebugCameraActive_ = false;
+		}
 #endif // _DEBUG
 
-	// カメラの処理
-	if (isDebugCameraActive_ == true) {
-		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
-		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
-		// ビュープロジェクション行列の転送
-		viewProjection_.TransferMatrix();
-	} else {
-		viewProjection_.matView = camera_->GetViewProjection().matView;
-		viewProjection_.matProjection = camera_->GetViewProjection().matProjection;
-		// ビュープロジェクション行列の転送
-		viewProjection_.TransferMatrix();
-	}
+		// カメラの処理
+		if (isDebugCameraActive_ == true) {
+			viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+			viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+			// ビュープロジェクション行列の転送
+			viewProjection_.TransferMatrix();
+		} else {
+			viewProjection_.matView = camera_->GetViewProjection().matView;
+			viewProjection_.matProjection = camera_->GetViewProjection().matProjection;
+			// ビュープロジェクション行列の転送
+			viewProjection_.TransferMatrix();
+		}
 
 #ifdef _DEBUG
 
-	ImGui::Begin("flagy");
-	ImGui::Text("isWave1End : %d\nisUpgradeEnd : %d\n", isWave1End, isUpgradeEnd);
-	ImGui::End();
+		ImGui::Begin("flagy");
+		ImGui::Text(
+		    "isWave1End : %d\n isWave2End : %d\n isUpgrade1End : %d\n isUpgrade2End : %d\n",
+		    isWave1End, isWave2End, isUpgrade1End, isUpgrade2End);
+		ImGui::End();
 
-	//ウェーブ切り替えデバッグ用
-	if (input_->TriggerKey(DIK_SPACE) && waveNo1 == Wave::Wave1) {
-		isWave1End = true;
-	}
+		// ウェーブ切り替えデバッグ用
+		if (input_->TriggerKey(DIK_1)) {
+			isWave1End = true;
+		}
 
-	if (input_->TriggerKey(DIK_RETURN)) {
-		isUpgradeEnd = true;
-	}
+		if (input_->TriggerKey(DIK_2)) {
+			isWave2End = true;
+		}
 
+		if (input_->TriggerKey(DIK_3)) {
+			isWave3End = true;
+		}
 
-	if (input_->TriggerKey(DIK_SPACE) && waveNo2 == Wave::Wave3) {
-		isWave2End = true;
-	}
+		if (input_->TriggerKey(DIK_RETURN)) {
+			isUpgrade1End = true;
+		}
 
-	if (input_->TriggerKey(DIK_SPACE) && waveNo3 == Wave::Wave3) {
-		isWave3End = true;
-	}
+		if (input_->TriggerKey(DIK_RETURN) && isWave2End == true) {
+			isUpgrade2End = true;
+		}
 
 #endif // _DEBUG
-}
+	}
 
 void GameScene::Draw() {
 
@@ -315,21 +376,25 @@ void GameScene::Draw() {
 	//自キャラの描画
 	player_->Draw(viewProjection_);
 
-	//敵の描画
-	for (Enemy* enemy : enemys_) {
-		enemy->Draw(viewProjection_);
-	}
-	//強めの敵の描画
-	for (StrongEnemy* strongEnemy : strongEnemys_) {
-		strongEnemy->Draw(viewProjection_);
-	}
-	//反射する敵の描画
-	for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
-		reflectEnemy->Draw(viewProjection_);
-	}
-	//曲がる敵の描画
-	for (CurveEnemy* curveEnemy : curveEnemys_) {
-		curveEnemy->Draw(viewProjection_);
+	switch (stateNo) {
+	case GameScene::gameState::Wave:
+
+		// 敵の描画
+		for (Enemy* enemy : enemys_) {
+			enemy->Draw(viewProjection_);
+		}
+		// 強めの敵の描画
+		for (StrongEnemy* strongEnemy : strongEnemys_) {
+			strongEnemy->Draw(viewProjection_);
+		}
+		// 反射する敵の描画
+		for (ReflectEnemy* reflectEnemy : reflectEnemys_) {
+			reflectEnemy->Draw(viewProjection_);
+		}
+		// 曲がる敵の描画
+		for (CurveEnemy* curveEnemy : curveEnemys_) {
+			curveEnemy->Draw(viewProjection_);
+		}
 	}
 
 	// 天球の描画
@@ -350,11 +415,21 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
-	playerHPberSprite_->Draw();
-	playerHPSprite_->Draw();
-
-	// スプライト描画後処理
-	Sprite::PostDraw();
+	switch (stateNo) {
+	case GameScene::gameState::Wave:
+		playerHPberSprite_->Draw();
+		playerHPSprite_->Draw();
+		break;
+	case GameScene::gameState::Upgrade:
+		attackSprite_->Draw();
+		lifeSprite_->Draw();
+		recoverySprite_->Draw();
+		break;
+	}
+		// スプライト描画後処理
+		Sprite::PostDraw();
+	
+	
 
 #pragma endregion
 }
@@ -952,9 +1027,21 @@ void GameScene::Upgrade() {
 	}*/
 }
 
+void GameScene::IsUpgradeEndReset() { 
+	isUpgrade1End = false;
+	isUpgrade2End = false;
+}
+
 void GameScene::sceneReset() {
 	//敵のリセット
 	enemys_.clear();
+	// シーン移行のリセット
+	isSceneEnd = false;
+	// 防衛耐久値のリセット
+	borderline_->ResetEND();
+	// ゲームオーバーのフラグのリセット
+	borderline_->ResetFlag();
+	isGameOver = false;
 	//シーン移行のリセット
 	isSceneEnd = false;
 
