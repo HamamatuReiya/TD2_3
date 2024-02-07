@@ -1,37 +1,26 @@
-﻿#include "TitleScene.h"
+﻿#include "GameOverScene.h"
 
-TitleScene::TitleScene() {}
+GameOverScene::GameOverScene() {}
 
-TitleScene::~TitleScene() {}
+GameOverScene::~GameOverScene() {}
 
-void TitleScene::Initialize() {
+void GameOverScene::Initialize() { 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
-
 	// タイトルのテクスチャ読み込み
-	titleTexture_ = TextureManager::Load("title3.png");
+	gameOverTexture_ = TextureManager::Load("gameover.png");
 	// タイトルの生成
-	titleSprite_ = Sprite::Create(titleTexture_, {0, 0});
+	gameOverSprite_ = Sprite::Create(gameOverTexture_, {0, 0});
+	}
 
-	// タイトルのテクスチャ読み込み
-	tutorialTexture_ = TextureManager::Load("tutorial.png");
-	// タイトルの生成
-	tutorialSprite_ = Sprite::Create(tutorialTexture_, {0, 0});
-
-}
-
-void TitleScene::Update() {
-	if (input_->IsTriggerMouse(0) && isTutorial == true) {
+void GameOverScene::Update() {
+	if (input_->IsTriggerMouse(0)) {
 		isSceneEnd = true;
 	}
+    }
 
-	if (input_->IsTriggerMouse(0) && isTutorial == false) {
-		isTutorial = true;
-	}
-}
-
-void TitleScene::Draw() {
+void GameOverScene::Draw() {
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
@@ -69,21 +58,15 @@ void TitleScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
-	if (isTutorial == false) {
-		titleSprite_->Draw();
-	} else {
-		tutorialSprite_->Draw();
-	}
+	gameOverSprite_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
 #pragma endregion
-}
+ }
 
-void TitleScene::sceneReset() { 
-	//シーン移行のリセット
+void GameOverScene::sceneReset() {
+	// シーン移行のリセット
 	isSceneEnd = false;
-	// 遊び方のフラグのリセット
-	isTutorial = false;
 }
