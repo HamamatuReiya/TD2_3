@@ -5,6 +5,9 @@ GameOverScene::GameOverScene() {}
 GameOverScene::~GameOverScene() {}
 
 void GameOverScene::Initialize() { 
+	dxCommon_ = DirectXCommon::GetInstance();
+	input_ = Input::GetInstance();
+	audio_ = Audio::GetInstance();
 	// タイトルのテクスチャ読み込み
 	gameOverTexture_ = TextureManager::Load("gameover.png");
 	// タイトルの生成
@@ -61,7 +64,7 @@ void GameOverScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
-}
+ }
 
 void GameOverScene::sceneReset() {
 	// シーン移行のリセット

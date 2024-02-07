@@ -49,7 +49,7 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 
 	// タイトル画面
-	uint32_t gameClearTexture_ = 0;
+	uint_fast32_t gameClearTexture_ = 0;
 	// スプライト
 	Sprite* gameClearSprite_ = nullptr;
 

@@ -5,6 +5,9 @@ GameClearScene::GameClearScene() {}
 GameClearScene::~GameClearScene() {}
 
 void GameClearScene::Initialize() {
+	dxCommon_ = DirectXCommon::GetInstance();
+	input_ = Input::GetInstance();
+	audio_ = Audio::GetInstance();
 	// タイトルのテクスチャ読み込み
 	gameClearTexture_ = TextureManager::Load("clear.png");
 	// タイトルの生成
