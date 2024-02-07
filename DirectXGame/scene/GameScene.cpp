@@ -268,10 +268,9 @@ void GameScene::Update() {
 		isWave1End = true;
 	}
 
-	if (input_->TriggerKey(DIK_RETURN)) {
+	if (input_->TriggerKey(DIK_RETURN) && isWave1End == true) {
 		isUpgradeEnd = true;
 	}
-
 
 	if (input_->TriggerKey(DIK_SPACE) && waveNo2 == Wave::Wave3) {
 		isWave2End = true;
