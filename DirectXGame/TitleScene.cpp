@@ -14,11 +14,20 @@ void TitleScene::Initialize() {
 	// タイトルの生成
 	titleSprite_ = Sprite::Create(titleTexture_, {0, 0});
 
+	// タイトルのテクスチャ読み込み
+	tutorialTexture_ = TextureManager::Load("tutorial.png");
+	// タイトルの生成
+	tutorialSprite_ = Sprite::Create(tutorialTexture_, {0, 0});
+
 }
 
 void TitleScene::Update() {
-	if (input_->TriggerKey(DIK_SPACE)) {
+	if (input_->IsTriggerMouse(0) && isTutorial == true) {
 		isSceneEnd = true;
+	}
+
+	if (input_->IsTriggerMouse(0) && isTutorial == false) {
+		isTutorial = true;
 	}
 }
 
@@ -60,7 +69,11 @@ void TitleScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
-	titleSprite_->Draw();
+	if (isTutorial == false) {
+		titleSprite_->Draw();
+	} else {
+		tutorialSprite_->Draw();
+	}
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -71,4 +84,6 @@ void TitleScene::Draw() {
 void TitleScene::sceneReset() { 
 	//シーン移行のリセット
 	isSceneEnd = false;
+	// 遊び方のフラグのリセット
+	isTutorial = false;
 }

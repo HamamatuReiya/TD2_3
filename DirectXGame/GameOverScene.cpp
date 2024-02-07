@@ -15,7 +15,7 @@ void GameOverScene::Initialize() {
 	}
 
 void GameOverScene::Update() {
-	if (input_->TriggerKey(DIK_SPACE)) {
+	if (input_->IsTriggerMouse(0)) {
 		isSceneEnd = true;
 	}
     }

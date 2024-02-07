@@ -15,7 +15,7 @@ void GameClearScene::Initialize() {
 }
 
 void GameClearScene::Update() {
-	if (input_->TriggerKey(DIK_SPACE)) {
+	if (input_->IsTriggerMouse(0)) {
 		isSceneEnd = true;
 	}
 }

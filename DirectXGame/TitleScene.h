@@ -50,6 +50,13 @@ private: // メンバ変数
 
 	// タイトル画面
 	uint_fast32_t titleTexture_ = 0;
-	//スプライト
+	// スプライト
 	Sprite* titleSprite_ = nullptr;
+
+	// 遊び方
+	uint_fast32_t tutorialTexture_ = 0;
+	// スプライト
+	Sprite* tutorialSprite_ = nullptr;
+	// 遊び方のフラク
+	bool isTutorial = false;
 };
