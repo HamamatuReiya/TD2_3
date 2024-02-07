@@ -322,4 +322,8 @@ private: // メンバ変数
 	uint32_t recoveryTexture_ = 0;
 	Sprite* recoverySprite_ = nullptr;
 
+	//ボーダーラインの体力表示
+	int32_t num1;
+	Sprite* textureNumber_[10];
+	Vector2 texturePos = {640, 650};
 };

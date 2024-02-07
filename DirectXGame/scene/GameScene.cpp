@@ -276,18 +276,16 @@ void GameScene::Update() {
 			stateNo = gameState::Wave;
 		}
 
-			break;
-		}
+		break;
 	}
+	// プレイヤーの更新
+	player_->Update(viewProjection_);
 
-		// プレイヤーの更新
-		player_->Update(viewProjection_);
+	// カメラの更新
+	camera_->Update();
 
-		// カメラの更新
-		camera_->Update();
-
-		// 天球の更新
-		skydome_->Update();
+	// 天球の更新
+	skydome_->Update();
 
 #ifdef _DEBUG
 
